@@ -3,70 +3,70 @@
   
   
   <url>
-    <loc>https://domenic.me/blog/the-revealing-constructor-pattern/</loc>
+    <loc>https://blog.domenic.me//the-revealing-constructor-pattern/</loc>
     <lastmod>2014-02-13T19:00:00-05:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/continual-progress-in-the-w3c-tag/</loc>
+    <loc>https://blog.domenic.me//continual-progress-in-the-w3c-tag/</loc>
     <lastmod>2013-12-01T19:00:00-05:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/the-extensible-web/</loc>
+    <loc>https://blog.domenic.me//the-extensible-web/</loc>
     <lastmod>2013-10-06T20:00:00-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/es6-iterators-generators-and-iterables/</loc>
+    <loc>https://blog.domenic.me//es6-iterators-generators-and-iterables/</loc>
     <lastmod>2013-09-05T20:00:00-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/explaining-away-the-webs-magic/</loc>
+    <loc>https://blog.domenic.me//explaining-away-the-webs-magic/</loc>
     <lastmod>2013-06-09T20:00:00-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/strict-mode-static-scoping/</loc>
+    <loc>https://blog.domenic.me//strict-mode-static-scoping/</loc>
     <lastmod>2013-03-18T20:00:00-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/peer-dependencies/</loc>
+    <loc>https://blog.domenic.me//peer-dependencies/</loc>
     <lastmod>2013-02-07T19:00:00-05:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/youre-missing-the-point-of-promises/</loc>
+    <loc>https://blog.domenic.me//youre-missing-the-point-of-promises/</loc>
     <lastmod>2012-10-14T18:05:55-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/portable-nodejs-code/</loc>
+    <loc>https://blog.domenic.me//portable-nodejs-code/</loc>
     <lastmod>2012-10-01T20:00:00-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   
   <url>
-    <loc>https://domenic.me/blog/archives/</loc>
-    <lastmod>2014-10-25T19:02:27-04:00</lastmod>
+    <loc>https://blog.domenic.me//archives/</loc>
+    <lastmod>2014-10-25T22:32:29-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://domenic.me/blog/</loc>
-    <lastmod>2014-10-25T19:02:27-04:00</lastmod>
+    <loc>https://blog.domenic.me//</loc>
+    <lastmod>2014-10-25T22:32:29-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
