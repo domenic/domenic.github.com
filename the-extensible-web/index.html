@@ -26,8 +26,8 @@
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Hidden Variables" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet">
 
 
 
@@ -41,13 +41,13 @@ sense of cohesion. Most of its APIs have been poorly designed, by C++ developers
 
 
   
-  <script type="text/javascript">
+  <script>
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-37626687-1']);
     _gaq.push(['_trackPageview']);
 
     (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      var ga = document.createElement('script');
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
@@ -433,7 +433,7 @@ and I look forward not only to living in that future, but to helping shape it, t
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
 
@@ -515,7 +515,7 @@ and I look forward not only to living in that future, but to helping shape it, t
 </footer>
   
 
-<script type="text/javascript">
+<script>
       var disqus_shortname = 'hiddenvariables';
       
         
@@ -525,9 +525,9 @@ and I look forward not only to living in that future, but to helping shape it, t
         var disqus_script = 'embed.js';
       
     (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      var dsq = document.createElement('script');
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      document.body.appendChild(dsq);
     }());
 </script>
 
@@ -540,10 +540,8 @@ and I look forward not only to living in that future, but to helping shape it, t
   <script type="text/javascript">
     (function(){
       var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.head.appendChild(twitterWidgets);
     })();
   </script>
 
