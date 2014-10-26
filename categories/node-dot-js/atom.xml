@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: node.js | Hidden Variables]]></title>
-  <link href="https://blog.domenic.me//categories/node-dot-js/atom.xml" rel="self"/>
-  <link href="https://blog.domenic.me//"/>
-  <updated>2014-10-25T22:48:22-04:00</updated>
-  <id>https://blog.domenic.me//</id>
+  <link href="https://blog.domenic.me/categories/node-dot-js/atom.xml" rel="self"/>
+  <link href="https://blog.domenic.me/"/>
+  <updated>2014-10-25T22:49:09-04:00</updated>
+  <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
     <email><![CDATA[domenic@domenicdenicola.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Peer Dependencies]]></title>
-    <link href="https://blog.domenic.me//peer-dependencies/"/>
+    <link href="https://blog.domenic.me/peer-dependencies/"/>
     <updated>2013-02-07T19:00:00-05:00</updated>
-    <id>https://blog.domenic.me//peer-dependencies</id>
+    <id>https://blog.domenic.me/peer-dependencies</id>
     <content type="html"><![CDATA[<p>npm is awesome as a package manager. In particular, it handles sub-dependencies very well: if my package depends on
 <code>request</code> version 2 and <code>some-other-library</code>, but <code>some-other-library</code> depends on <code>request</code> version 1, the resulting
 dependency graph looks like:</p>
@@ -134,9 +134,9 @@ features introduced in 1.5.2, use <code>&quot;&gt;= 1.5.2 &lt; 2&quot;</code>.</
   
   <entry>
     <title type="html"><![CDATA[Portable Node.js Code]]></title>
-    <link href="https://blog.domenic.me//portable-nodejs-code/"/>
+    <link href="https://blog.domenic.me/portable-nodejs-code/"/>
     <updated>2012-10-01T20:00:00-04:00</updated>
-    <id>https://blog.domenic.me//portable-nodejs-code</id>
+    <id>https://blog.domenic.me/portable-nodejs-code</id>
     <content type="html"><![CDATA[<p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
 <a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>
 

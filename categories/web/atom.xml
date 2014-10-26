@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: web | Hidden Variables]]></title>
-  <link href="https://blog.domenic.me//categories/web/atom.xml" rel="self"/>
-  <link href="https://blog.domenic.me//"/>
-  <updated>2014-10-25T22:48:22-04:00</updated>
-  <id>https://blog.domenic.me//</id>
+  <link href="https://blog.domenic.me/categories/web/atom.xml" rel="self"/>
+  <link href="https://blog.domenic.me/"/>
+  <updated>2014-10-25T22:49:09-04:00</updated>
+  <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
     <email><![CDATA[domenic@domenicdenicola.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Continual Progress in the W3C TAG]]></title>
-    <link href="https://blog.domenic.me//continual-progress-in-the-w3c-tag/"/>
+    <link href="https://blog.domenic.me/continual-progress-in-the-w3c-tag/"/>
     <updated>2013-12-01T19:00:00-05:00</updated>
-    <id>https://blog.domenic.me//continual-progress-in-the-w3c-tag</id>
+    <id>https://blog.domenic.me/continual-progress-in-the-w3c-tag</id>
     <content type="html"><![CDATA[<p>The W3C Technical Architecture Group has made immeasurable progress this year since
 <a href="http://infrequently.org/2012/12/reforming-the-w3c-tag/">the original wave of reformist thought</a> swept through it last
 election season. The extensible web agenda, which I&rsquo;ve
@@ -104,9 +104,9 @@ feedback to help shape this vision, and working on specifications and interfacin
   
   <entry>
     <title type="html"><![CDATA[The Extensible Web]]></title>
-    <link href="https://blog.domenic.me//the-extensible-web/"/>
+    <link href="https://blog.domenic.me/the-extensible-web/"/>
     <updated>2013-10-06T20:00:00-04:00</updated>
-    <id>https://blog.domenic.me//the-extensible-web</id>
+    <id>https://blog.domenic.me/the-extensible-web</id>
     <content type="html"><![CDATA[<p><em>This post adapts <a href="http://2013.jsconf.eu/speakers/#/speakers/domenic-denicola-the-extensible-web-javascript-all-the-way-down">my talk from JSConf EU 2013</a>.</em></p>
 
 <p>The web platform has, historically, been somewhat of a kludge. It&rsquo;s grown, organically, into something with no real
@@ -374,9 +374,9 @@ and I look forward not only to living in that future, but to helping shape it, t
   
   <entry>
     <title type="html"><![CDATA[Explaining Away the Web's Magic]]></title>
-    <link href="https://blog.domenic.me//explaining-away-the-webs-magic/"/>
+    <link href="https://blog.domenic.me/explaining-away-the-webs-magic/"/>
     <updated>2013-06-09T20:00:00-04:00</updated>
-    <id>https://blog.domenic.me//explaining-away-the-webs-magic</id>
+    <id>https://blog.domenic.me/explaining-away-the-webs-magic</id>
     <content type="html"><![CDATA[<p>Today we revealed <a href="http://extensiblewebmanifesto.org/">The Extensible Web Manifesto</a>, calling for a new approach to
 web standards that prioritizes new local-level capabilities in order to explain and extend higher-end platform features.
 I want to take a minute to talk about what this means in practice, and why it&rsquo;s different from how we operate today.</p>

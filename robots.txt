@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: https://blog.domenic.me//sitemap.xml 
+Sitemap: https://blog.domenic.me/sitemap.xml 
