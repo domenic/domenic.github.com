@@ -4,7 +4,7 @@
   <title><![CDATA[Hidden Variables]]></title>
   <link href="https://blog.domenic.me/atom.xml" rel="self"/>
   <link href="https://blog.domenic.me/"/>
-  <updated>2015-03-03T20:41:22-05:00</updated>
+  <updated>2015-03-03T20:42:21-05:00</updated>
   <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
@@ -12,68 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Reading From Files]]></title>
-    <link href="https://blog.domenic.me/reading-from-files/"/>
-    <updated>2015-03-04T19:00:00-05:00</updated>
-    <id>https://blog.domenic.me/reading-from-files</id>
-    <content type="html"><![CDATA[<p><em>This post is part of a series on the byte sources underlying the readable streams in the Streams Standard. See <a href="https://blog.domenic.me/byte-sources-introduction/">the introductory post</a> for more background and links to the rest of the series.</em></p>
-
-<p>Once you have opened a file descriptor, you&rsquo;ll use the <a href="http://linux.die.net/man/2/read">read(2)</a> function to read bytes from it. In C the signature is</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='c'><span class="kt">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
-</code></pre></figure>
-
-<p>Translated into JavaScript this might look something like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">bytesRead</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">);</span>
-</code></pre></figure>
-
-<p>which will attempt to read <code>count</code> bytes into the <code>ArrayBuffer</code> <code>buffer</code>, starting at position <code>offset</code>. The returned number of bytes, <code>bytesRead</code>, might be less than the desired <code>count</code>, usually because you&rsquo;ve reached the end of the file.</p>
-
-<p>The most interesting thing to note about read(2) is that it is blocking. So our above naive translation into JavaScript would actually lock up your browser or server for the amount of time the I/O happens. This is obviously a no-go if you&rsquo;re trying to write a server that serves more than one user in parallel, or trying to create a responsive 60 fps web page.</p>
-
-<p>But of course we know how to fix this. We&rsquo;ll just turn it into a promise-returning function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">bytesRead</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
-</code></pre></figure>
-
-<p>Not so fast. How exactly do we plan on translating a blocking POSIX API into a non-blocking JavaScript API? The obvious answer is to use another thread. That is, off in a background thread, we pass the memory represented by <code>buffer</code> into read(2), and when read(2) finishes, we go back to the main thread and fulfill the promise we previously vended with read(2)&rsquo;s return value.</p>
-
-<p>This solution has a major issue, however: <strong>data races</strong>. That is, it makes it possible to observe the memory in <code>buffer</code> changing out from under us, with code like the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">);</span>
-<span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">bytesRead</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</code></pre></figure>
-
-<p>Because the memory in <code>buffer</code> is being filled in by read(2) in the background thread, it&rsquo;s possible for this program to output <code>false</code>! Oh no!</p>
-
-<p>In the io.js world, this is considered OK, and with some effort you can create situations like this using their native <code>Buffer</code> type. However, in the world of web browsers, and in general in any world where standards bodies need to get multiple vendors to agree, this is not going to fly. JavaScript&rsquo;s execution model is strongly based around a run-to-completion single-threaded paradigm, and if we poke holes in that by letting other threads modify our variables out from under us between two execution steps, all hell can break lose. No specs, libraries, or optimizing compilers are written to accomodate such a world.</p>
-
-<p>One proposed solution would be to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer/transfer"><em>transfer</em></a> the backing memory of the <code>ArrayBuffer</code> into a new <code>ArrayBuffer</code> that is only accessible once the read(2) call has finished. In code, that might look something like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(({</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">bytesRead</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// `result` is backed by the same memory `buffer` used to be</span>
-  <span class="c1">// backed by, but they are not equal:</span>
-  <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span> <span class="o">!==</span> <span class="nx">buffer</span><span class="p">);</span>
-<span class="p">});</span>
-
-<span class="c1">// `buffer`&#39;s backing memory has now been transferred, so trying to use</span>
-<span class="c1">// `buffer` directly (or any views onto `buffer`) will throw:</span>
-<span class="nx">assert</span><span class="p">.</span><span class="kr">throws</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">buffer</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">.</span><span class="kr">throws</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">));</span>
-</code></pre></figure>
-
-<p>Note how once <code>buffer</code> has been transferred, the <code>buffer</code> instance itself is now useless: it is &ldquo;detached&rdquo; in spec terms.</p>
-
-<p>We could also imagine other ways of avoiding the data races. For example, if we had an API that allowed the background thread to first detach, then &ldquo;reattach,&rdquo; the backing memory to <code>buffer</code>, we wouldn&rsquo;t need the separate <code>buffer</code> and <code>result</code> variables pointing to the same backing memory. Ideally such an API would allow us to detach and reattach <em>sections</em> of the <code>ArrayBuffer</code>, so that I could (for example) read multiple files in parallel into different sections of one large buffer. <a href="https://esdiscuss.org/topic/improving-detachment-for-array-buffers">I proposed this on es-discuss</a>, but nobody seemed to be interested.</p>
-
-<p>Alternately, we could decide that for a low-level JavaScript API representing a file descriptor, data races are OK after all. In that case, <a href="https://blog.mozilla.org/javascript/2015/02/26/the-path-to-parallel-javascript/">Mozilla&rsquo;s <code>SharedArrayBuffer</code> proposal</a> would be a good fit—we&rsquo;ll just write to the shared array buffer in the background thread, while still allowing reading in the main thread. As mentioned before, it might be hard to get such a primitive past multiple vendors and into standards—but the desire to transpile threaded C and C++ code into asm.js is proving to be a powerful motivator, which might push it into acceptance.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Byte Sources: Introduction]]></title>
