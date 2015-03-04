@@ -65,6 +65,155 @@ _gaq.push(['_trackPageview']);
       
   <header>
     
+      <h1 class="entry-title"><a href="/reading-from-files/">Reading From Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-04T19:00:00-05:00" pubdate data-updated="true">Mar 4<sup>th</sup>, 2015</time>
+        
+         | <a href="/reading-from-files/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post is part of a series on the byte sources underlying the readable streams in the Streams Standard. See <a href="/byte-sources-introduction/">the introductory post</a> for more background and links to the rest of the series.</em></p>
+
+<p>Once you have opened a file descriptor, you&rsquo;ll use the <a href="http://linux.die.net/man/2/read">read(2)</a> function to read bytes from it. In C the signature is</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='c'><span class="kt">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>Translated into JavaScript this might look something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">bytesRead</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>which will attempt to read <code>count</code> bytes into the <code>ArrayBuffer</code> <code>buffer</code>, starting at position <code>offset</code>. The returned number of bytes, <code>bytesRead</code>, might be less than the desired <code>count</code>, usually because you&rsquo;ve reached the end of the file.</p>
+
+<p>The most interesting thing to note about read(2) is that it is blocking. So our above naive translation into JavaScript would actually lock up your browser or server for the amount of time the I/O happens. This is obviously a no-go if you&rsquo;re trying to write a server that serves more than one user in parallel, or trying to create a responsive 60 fps web page.</p>
+
+<p>But of course we know how to fix this. We&rsquo;ll just turn it into a promise-returning function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">bytesRead</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+</code></pre></figure>
+
+<p>Not so fast. How exactly do we plan on translating a blocking POSIX API into a non-blocking JavaScript API? The obvious answer is to use another thread. That is, off in a background thread, we pass the memory represented by <code>buffer</code> into read(2), and when read(2) finishes, we go back to the main thread and fulfill the promise we previously vended with read(2)&rsquo;s return value.</p>
+
+<p>This solution has a major issue, however: <strong>data races</strong>. That is, it makes it possible to observe the memory in <code>buffer</code> changing out from under us, with code like the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">bytesRead</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</code></pre></figure>
+
+<p>Because the memory in <code>buffer</code> is being filled in by read(2) in the background thread, it&rsquo;s possible for this program to output <code>false</code>! Oh no!</p>
+
+<p>In the io.js world, this is considered OK, and with some effort you can create situations like this using their native <code>Buffer</code> type. However, in the world of web browsers, and in general in any world where standards bodies need to get multiple vendors to agree, this is not going to fly. JavaScript&rsquo;s execution model is strongly based around a run-to-completion single-threaded paradigm, and if we poke holes in that by letting other threads modify our variables out from under us between two execution steps, all hell can break lose. No specs, libraries, or optimizing compilers are written to accomodate such a world.</p>
+
+<p>One proposed solution would be to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer/transfer"><em>transfer</em></a> the backing memory of the <code>ArrayBuffer</code> into a new <code>ArrayBuffer</code> that is only accessible once the read(2) call has finished. In code, that might look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(({</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">bytesRead</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// `result` is backed by the same memory `buffer` used to be</span>
+  <span class="c1">// backed by, but they are not equal:</span>
+  <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span> <span class="o">!==</span> <span class="nx">buffer</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// `buffer`&#39;s backing memory has now been transferred, so trying to use</span>
+<span class="c1">// `buffer` directly (or any views onto `buffer`) will throw:</span>
+<span class="nx">assert</span><span class="p">.</span><span class="kr">throws</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">buffer</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="kr">throws</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">));</span>
+</code></pre></figure>
+
+<p>Note how once <code>buffer</code> has been transferred, the <code>buffer</code> instance itself is now useless: it is &ldquo;detached&rdquo; in spec terms.</p>
+
+<p>We could also imagine other ways of avoiding the data races. For example, if we had an API that allowed the background thread to first detach, then &ldquo;reattach,&rdquo; the backing memory to <code>buffer</code>, we wouldn&rsquo;t need the separate <code>buffer</code> and <code>result</code> variables pointing to the same backing memory. Ideally such an API would allow us to detach and reattach <em>sections</em> of the <code>ArrayBuffer</code>, so that I could (for example) read multiple files in parallel into different sections of one large buffer. <a href="https://esdiscuss.org/topic/improving-detachment-for-array-buffers">I proposed this on es-discuss</a>, but nobody seemed to be interested.</p>
+
+<p>Alternately, we could decide that for a low-level JavaScript API representing a file descriptor, data races are OK after all. In that case, <a href="https://blog.mozilla.org/javascript/2015/02/26/the-path-to-parallel-javascript/">Mozilla&rsquo;s <code>SharedArrayBuffer</code> proposal</a> would be a good fit—we&rsquo;ll just write to the shared array buffer in the background thread, while still allowing reading in the main thread. As mentioned before, it might be hard to get such a primitive past multiple vendors and into standards—but the desire to transpile threaded C and C++ code into asm.js is proving to be a powerful motivator, which might push it into acceptance.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/byte-sources-introduction/">Byte Sources: Introduction</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-03T19:00:00-05:00" pubdate data-updated="true">Mar 3<sup>rd</sup>, 2015</time>
+        
+         | <a href="/byte-sources-introduction/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post is the beginning of a series of posts regarding some of the more interesting issues I&rsquo;ve encountered while working on the Streams Standard.</em></p>
+
+<p>In the <a href="http://streams.spec.whatwg.org/">Streams Standard</a> we have the concept of readable streams, which are an abstraction on top of the lower-level <strong>underlying sources</strong>. In an abstract sense an underlying source is &ldquo;where the chunks of data come from.&rdquo; The most basic underlying sources are things like files or HTTP connections. (More complicated ones could be e.g. an underlying source that randomly generates data in-memory for test purposes, or one that synthesizes data from multiple concrete locations.) These basic underlying sources are concerned with direct production of bytes.</p>
+
+<p>The major goal of the Streams Standard is to provide an efficient abstraction specifically for I/O. Thus, to design a suitable readable stream abstraction, we can&rsquo;t just think about general concepts of <a href="https://github.com/kriskowal/gtor/">reactivity</a> or <a href="https://github.com/zenparsing/async-iteration/">async iterables</a> or <a href="https://github.com/jhusain/asyncgenerator#introducing-observable">observables</a>. We need to dig deeper into how, exactly, the underlying sources will work. Otherwise we might find ourselves <a href="https://github.com/whatwg/streams/issues/253">scrambling</a> to reform the API at the last minute when confronted with real-world implementation challenges. (Oops.)</p>
+
+<p>The current revision of the standard describes underlying sources as belonging to two broad categories: push sources, where data is constantly flowing in, and pull sources, where you specifically request it. The prototypal examples of these categories are TCP sockets and file descriptors. Once a TCP connection is open, the remote server will begin pushing data to you. Whereas, with a file, until you ask the OS to do a read, no I/O happens.</p>
+
+<p>This division is conceptually helpful, but it&rsquo;s instructive to go deeper and look at the actual system APIs in play here. Given that concepts like &ldquo;events&rdquo; are way too high-level for an OS API, they end up being shaped quite differently than how you might imagine. We&rsquo;ll assume a POSIX environment for most of this series, but I&rsquo;d like to talk about some Windows specifics toward the end. Along the way we&rsquo;ll continually be trying to bridge the gap between these C APIs and how they might manifest in JavaScript, both to give the less-C-inclined readers a chance, and to illustrate the issues we&rsquo;ve been wrestling with in the Streams Standard.</p>
+
+<p>So far these are the episodes I have planned:</p>
+
+<ol>
+<li>Reading from files</li>
+<li>Reading from sockets</li>
+<li>Byte source APIs on Windows</li>
+<li>Byte source APIs in libuv and io.js</li>
+<li>Readable streams</li>
+</ol>
+
+<p>I will update this post with links to them as they become available over the next few days.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a></h1>
     
     
@@ -1513,122 +1662,9 @@ assimilation utilities (usually under the name <code>when</code>) to convert to 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/portable-nodejs-code/">Portable Node.js Code</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-01T20:00:00-04:00" pubdate data-updated="true">Oct 1<sup>st</sup>, 2012</time>
-        
-         | <a href="/portable-nodejs-code/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
-<a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>
-
-<p>Node.js core does its best to treat every platform equally. Even if most Node developers use OS X day to day, some use
-Windows, and most everyone deploys to Linux or Solaris. So it&rsquo;s important to keep your code portable between platforms,
-whether you&rsquo;re writing a library or an application.</p>
-
-<p>Predictably, most cross-platform issues come from Windows. Things just work differently there! But if you&rsquo;re careful,
-and follow some simple best practices, your code can run just as well on Windows systems.</p>
-
-<h2 id="paths-and-urls">Paths and URLs</h2>
-
-<p>On Windows, paths are constructed with backslashes instead of forward slashes. So if you do your directory manipulation
-by splitting on <code>&quot;/&quot;</code> and playing with the resulting array, <a href="https://github.com/logicalparadox/codex/commit/7f91b451e7cdc9d794f30bd026029aea797bb1e0">your code will fail dramatically on Windows</a>.</p>
-
-<p>Instead, you should be using the <a href="http://nodejs.org/docs/latest/api/path.html">path module</a>. So instead of resolving paths with string contatenation, e.g.
-<code>x + &quot;/&quot; + y</code>, you should instead do <code>path.resolve(x, y)</code>. Similarly, instead of relativizing paths with string
-replacement, e.g. <code>x.replace(/^parent\/dirs\//, &quot;&quot;)</code>, you <a href="https://github.com/ryanmcgrath/wrench-js/commit/01190602dac64924fca2dae11912ffb560e636a0">should</a> do <code>path.relative(&quot;/parent/dirs&quot;, y)</code>.</p>
-
-<p>Another area of concern is that, when writing portable code, you cannot count on URLs and module IDs having the same
-separators as paths. If you use something like <code>path.join</code> <a href="https://github.com/domenic/knox/compare/eabef00df9bf79085229f4ed39b2679eb579ea20...9b1a4e9f644ababd5d9ced227de44709e1fccf4b">on a URL</a>, Windows users will get URLs containing
-backslashes! <a href="https://github.com/isaacs/npm-www/pull/88">Similarly</a> for <code>path.normalize</code>, or in general any path methods. All this applies if you&rsquo;re
-<a href="https://github.com/substack/node-browserify/pull/158">working with module IDs</a>, too: they are forward-slash delimited, so you shouldn&rsquo;t use path functions with
-them either.</p>
-
-<h2 id="non-portable-apis">Non-portable APIs</h2>
-
-<p>Windows is completely missing the <code>process.(get|set)(gid|uid)</code> methods, so calling them will instantly crash your
-program on Windows. Always <a href="https://github.com/flatiron/winston/commit/a32d92ba1be3c21859d8c1c9e8e0e701846fcaf4">guard such calls</a> with a conditional.</p>
-
-<p>The <a href="http://nodejs.org/docs/latest/api/fs.html#fs_fs_watchfile_filename_options_listener"><code>fs.watchFile</code></a> API is not sufficiently cross-platform, and is recommended against in the docs because
-of it. You <a href="https://github.com/logicalparadox/codex/commit/be2fe18f5561f7bbd3bd0099bb47f7e58c23638d">should</a> use <a href="http://nodejs.org/docs/latest/api/fs.html#fs_fs_watch_filename_options_listener"><code>fs.watch</code></a> instead.</p>
-
-<p>The <a href="http://nodejs.org/api/child_process.html">child_process module</a> requires care cross-platform. In particular, <code>spawn</code> and <code>execFile</code> do not execute in a
-shell, which means that on Windows only <code>.exe</code> files will run. This is rather problematic, as many cross-platform
-binaries are included on Windows as <code>.cmd</code> or <code>.bat</code> files, <a href="https://github.com/isaacs/npm/issues/2333">among them Git</a>, <a href="https://github.com/isaacs/npm-www/blob/fd3a96e861989338676937736599598f7c0fde8f/dev/go.js#L22-27">CouchDB</a>, and
-many others. So if you&rsquo;re using these APIs, things will likely work great on OS X, Linux, etc. But when you tell your
-users “just install the Git build for Windows, and make sure it&rsquo;s in your path!” that ends up not being sufficient.
-There is <a href="https://github.com/joyent/node/issues/2318">talk</a> of fixing this behavior in libuv, but that&rsquo;s still tentative. In the meantime, if you don&rsquo;t
-need to stream your output, <code>exec</code> works well. Otherwise you&rsquo;ll need <a href="https://github.com/isaacs/npm-www/blob/fd3a96e861989338676937736599598f7c0fde8f/dev/go.js#L22-27">branching logic</a> to take care
-of Windows.</p>
-
-<p>A final edge-case comes when using named sockets, e.g. with <code>net.connect</code>. On Unix, simple filenames suffice, but on
-Windows, they must conform to a <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365783%28v=vs.85%29.aspx">bizarre syntax</a>. There&rsquo;s not really a better solution for this than
-<a href="https://gist.github.com/2790533#gistcomment-331356">branching per-platform</a>.</p>
-
-<h2 id="being-windows-developer-friendly">Being Windows-Developer Friendly</h2>
-
-<p>One of the most egregious problems with many projects is their unnecessary use of Unix Makefiles. Windows does not have
-a <code>make</code> command, so the tasks stored in these files are entirely inaccessible to Windows users who might try to
-contribute to your project. This is especially annoying if you put your test command in there!</p>
-
-<p>Fortunately, we have a solution: npm comes with a <a href="https://npmjs.org/doc/scripts.html">scripts feature</a> where you can include commands to be
-run for testing (<code>test</code>), installation (<code>install</code>), building (<code>prepublish</code>), and starting your app (<code>start</code>), among many
-others. You can also create custom scripts, which are then run with <code>npm run &lt;script-name&gt;</code>; I often use this for
-<a href="https://github.com/domenic/sinon-chai/blob/baf878ee7ba98bae507ac8bc91c94ea1fe287964/package.json#L28">lint steps</a>. Also of note, you can reference any commands your app depends on by their short names here: for
-example, <code>&quot;mocha&quot;</code> instead of <code>&quot;./node_modules/.bin/mocha&quot;</code>. So, please use these! If you must have a Makefile for
-whatever reason, just have it <a href="https://github.com/LearnBoost/knox/blob/c1b680c80b7a4493970e3e9a92305387ef96c1eb/Makefile#L2-3">delegate to an npm script</a>.</p>
-
-<p>Another crucially important step is not using Unix shell scripts as part of your development process. Windows doesn&rsquo;t
-have bash, or <code>ls</code>, or <code>mv</code>, or any of those other commands you might use. Instead, write your shell scripts
-<a href="http://www.2ality.com/2011/12/nodejs-shell-scripting.html">in JavaScript</a>, using a tool like <a href="http://gruntjs.com/">Grunt</a> if you&rsquo;d like.</p>
-
-<h2 id="bonus:-something-that-breaks-on-linux-and-solaris!">Bonus: Something that Breaks on Linux and Solaris!</h2>
-
-<p>Both Windows and, by default, OS X, use case-insensitive file systems. That means if you install a package named foo,
-any of <code>require(&quot;foo&quot;)</code> or <code>require(&quot;FOO&quot;)</code> or <code>require(&quot;fOo&quot;)</code> will work—on Windows and OS X. But then when you go to
-deploy your code, out of your development environment and into your Linux or Solaris production system, the latter two
-will <em>not</em> work! So it&rsquo;s a little thing, but make sure you always get your module and package name casing right.</p>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>As you can see, writing cross-platform code is sometimes painful. Usually, it&rsquo;s just a matter of best practices, like
-using the path module or remembering that URLs are different from filesystem paths. But sometimes there are APIs that
-just don&rsquo;t work cross-platform, or have annoying quirks that necessitate branching code.</p>
-
-<p>Nevertheless, it&rsquo;s worth it. Node.js is the most exciting software development platform in recent memory, and one of its
-greatest strengths is its portable nature. Try your best to uphold that!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="2">&larr; Older</a>
     
     <a href="/archives">Blog Archives</a>
     
@@ -1641,6 +1677,14 @@ greatest strengths is its portable nature. Try your best to uphold that!</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/reading-from-files/">Reading From Files</a>
+      </li>
+    
+      <li class="post">
+        <a href="/byte-sources-introduction/">Byte Sources: Introduction</a>
+      </li>
+    
+      <li class="post">
         <a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a>
       </li>
     
@@ -1650,14 +1694,6 @@ greatest strengths is its portable nature. Try your best to uphold that!</p>
     
       <li class="post">
         <a href="/the-extensible-web/">The Extensible Web</a>
-      </li>
-    
-      <li class="post">
-        <a href="/es6-iterators-generators-and-iterables/">ES6 Iterators, Generators, and Iterables</a>
-      </li>
-    
-      <li class="post">
-        <a href="/explaining-away-the-webs-magic/">Explaining Away the Web&#8217;s Magic</a>
       </li>
     
   </ul>

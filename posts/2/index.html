@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>Portable Node.js Code</title>
+<title>Hidden Variables</title>
 
 
 <meta name="author" content="Domenic Denicola">
-<meta name="description" content="This post originally appeared as a gist, and then
-on the Node on Azure blog. Node.js core does its best to treat every platform equally. Even if most &hellip;">
+<meta name="description" content="Domenic's blog about coding and stuff">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="canonical" href="https://blog.domenic.me/portable-nodejs-code/">
+<link rel="canonical" href="https://blog.domenic.me/posts/2/">
 <link rel="alternate" href="/atom.xml" title="Hidden Variables" type="application/atom+xml">
 <link rel="icon" href="/favicon.png">
 
@@ -18,14 +17,8 @@ on the Node on Azure blog. Node.js core does its best to treat every platform eq
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic">
 
+<meta property="twitter:account_id" content="30968081" />
 
-
-<meta name="twitter:card" content="summary">
-<meta name="twitter:creator" content="@domenic">
-<meta property="og:title" content="Portable Node.js Code">
-<meta property="og:description" content="This post originally appeared as a gist, and then
-on the Node on Azure blog. Node.js core does its best to treat every platform equally. Even if most Node developers use OS X day to day, some use
-Windows, and most everyone deploys to Linux or &hellip;">
 
 <script>
 var _gaq = _gaq || [];
@@ -64,12 +57,15 @@ _gaq.push(['_trackPageview']);
 </nav>
 <div id="main">
 <div id="content">
-  <div>
-<article class="hentry" role="article">
+  <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Portable Node.js Code</h1>
+      <h1 class="entry-title"><a href="/portable-nodejs-code/">Portable Node.js Code</a></h1>
     
     
       <p class="meta">
@@ -87,14 +83,14 @@ _gaq.push(['_trackPageview']);
 
 <time datetime="2012-10-01T20:00:00-04:00" pubdate data-updated="true">Oct 1<sup>st</sup>, 2012</time>
         
-         | <a href="#disqus_thread">Comments</a>
+         | <a href="/portable-nodejs-code/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
+  <div class="entry-content"><p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
 <a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>
 
 <p>Node.js core does its best to treat every platform equally. Even if most Node developers use OS X day to day, some use
@@ -173,65 +169,20 @@ just don&rsquo;t work cross-platform, or have annoying quirks that necessitate b
 <p>Nevertheless, it&rsquo;s worth it. Node.js is the most exciting software development platform in recent memory, and one of its
 greatest strengths is its portable nature. Try your best to uphold that!</p>
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Domenic Denicola</span></span>
-
-      
-
-
-
-
-
-
-
-
   
 
 
-<time datetime="2012-10-01T20:00:00-04:00" pubdate data-updated="true">Oct 1<sup>st</sup>, 2012</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/categories/node-dot-js/'>node.js</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://blog.domenic.me/portable-nodejs-code/" data-via="domenic" data-counturl="https://blog.domenic.me/portable-nodejs-code/" >Tweet</a>
-  
-  
-  
-</div>
-
+    <a href="/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-      
-        <a class="basic-alignment right" href="/youre-missing-the-point-of-promises/" title="Next Post: You're Missing the Point of Promises">You're Missing the Point of Promises &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="1">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -264,7 +215,7 @@ greatest strengths is its portable nature. Try your best to uphold that!</p>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/domenic">@domenic</a> on GitHub
@@ -297,7 +248,6 @@ greatest strengths is its portable nature. Try your best to uphold that!</p>
   
 </aside>
 
-
 </div>
 </div>
 <footer><p>
@@ -312,10 +262,7 @@ greatest strengths is its portable nature. Try your best to uphold that!</p>
   var disqus_shortname = 'hiddenvariables';
   
     
-    // var disqus_developer = 1;
-    var disqus_identifier = 'https://blog.domenic.me/portable-nodejs-code/';
-    var disqus_url = 'https://blog.domenic.me/portable-nodejs-code/';
-    var disqus_script = 'embed.js';
+    var disqus_script = 'count.js';
   
 (function () {
   var dsq = document.createElement('script');
