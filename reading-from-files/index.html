@@ -103,7 +103,7 @@ _gaq.push(['_trackPageview']);
 <figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">bytesRead</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">);</span>
 </code></pre></figure>
 
-<p>which will attempt to read <code>count</code> bytes into the <code>ArrayBuffer</code> <code>buffer</code>, starting at position <code>offset</code>. The returned number of bytes, <code>bytesRead</code>, might be less than the desired <code>count</code>, usually because you&rsquo;ve reached the end of the file.</p>
+<p>which will attempt to read <code>count</code> bytes into the <code>ArrayBuffer</code> <code>buffer</code>, starting at position <code>offset</code> into the <code>ArrayBuffer</code>. The returned number of bytes, <code>bytesRead</code>, might be less than the desired <code>count</code>, usually because you&rsquo;ve reached the end of the file.</p>
 
 <p>The most interesting thing to note about read(2) is that it is blocking. So our above naive translation into JavaScript would actually lock up your browser or server for the amount of time the I/O happens. This is obviously a no-go if you&rsquo;re trying to write a server that serves more than one user in parallel, or trying to create a responsive 60 fps web page.</p>
 
