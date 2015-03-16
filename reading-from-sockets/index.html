@@ -131,7 +131,8 @@ _gaq.push(['_trackPageview']);
 
 <figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;readable&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">bytesRead</span> <span class="o">=</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">);</span>
-  <span class="c1">// `buffer`&#39;s bytes in the range (offset, offset + bytesRead) have been filled in</span>
+  <span class="c1">// `buffer`&#39;s bytes in the range (offset, offset + bytesRead)</span>
+  <span class="c1">// have been filled in</span>
 <span class="p">});</span>
 </code></pre></figure>
 
