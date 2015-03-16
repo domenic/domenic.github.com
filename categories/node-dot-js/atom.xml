@@ -4,7 +4,7 @@
   <title><![CDATA[Category: node.js | Hidden Variables]]></title>
   <link href="https://blog.domenic.me/categories/node-dot-js/atom.xml" rel="self"/>
   <link href="https://blog.domenic.me/"/>
-  <updated>2015-03-16T19:56:47+09:00</updated>
+  <updated>2015-03-16T11:00:55+00:00</updated>
   <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Peer Dependencies]]></title>
     <link href="https://blog.domenic.me/peer-dependencies/"/>
-    <updated>2013-02-08T09:00:00+09:00</updated>
+    <updated>2013-02-08T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/peer-dependencies</id>
     <content type="html"><![CDATA[<p>npm is awesome as a package manager. In particular, it handles sub-dependencies very well: if my package depends on
 <code>request</code> version 2 and <code>some-other-library</code>, but <code>some-other-library</code> depends on <code>request</code> version 1, the resulting
@@ -135,7 +135,7 @@ features introduced in 1.5.2, use <code>&quot;&gt;= 1.5.2 &lt; 2&quot;</code>.</
   <entry>
     <title type="html"><![CDATA[Portable Node.js Code]]></title>
     <link href="https://blog.domenic.me/portable-nodejs-code/"/>
-    <updated>2012-10-02T09:00:00+09:00</updated>
+    <updated>2012-10-02T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/portable-nodejs-code</id>
     <content type="html"><![CDATA[<p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
 <a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>

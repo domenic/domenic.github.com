@@ -4,7 +4,7 @@
   <title><![CDATA[Hidden Variables]]></title>
   <link href="https://blog.domenic.me/atom.xml" rel="self"/>
   <link href="https://blog.domenic.me/"/>
-  <updated>2015-03-16T19:56:47+09:00</updated>
+  <updated>2015-03-16T11:00:55+00:00</updated>
   <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Reading from Sockets]]></title>
     <link href="https://blog.domenic.me/reading-from-sockets/"/>
-    <updated>2015-03-16T09:00:00+09:00</updated>
+    <updated>2015-03-16T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/reading-from-sockets</id>
     <content type="html"><![CDATA[<p><em>This post is part of a series on the byte sources underlying the readable streams in the Streams Standard. See <a href="https://blog.domenic.me/byte-sources-introduction/">the introductory post</a> for more background and links to the rest of the series.</em></p>
 
@@ -81,7 +81,7 @@
   <entry>
     <title type="html"><![CDATA[Reading from Files]]></title>
     <link href="https://blog.domenic.me/reading-from-files/"/>
-    <updated>2015-03-05T09:00:00+09:00</updated>
+    <updated>2015-03-05T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/reading-from-files</id>
     <content type="html"><![CDATA[<p><em>This post is part of a series on the byte sources underlying the readable streams in the Streams Standard. See <a href="https://blog.domenic.me/byte-sources-introduction/">the introductory post</a> for more background and links to the rest of the series.</em></p>
 
@@ -143,7 +143,7 @@
   <entry>
     <title type="html"><![CDATA[Byte Sources: Introduction]]></title>
     <link href="https://blog.domenic.me/byte-sources-introduction/"/>
-    <updated>2015-03-04T09:00:00+09:00</updated>
+    <updated>2015-03-04T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/byte-sources-introduction</id>
     <content type="html"><![CDATA[<p><em>This post is the beginning of a series of posts regarding some of the more interesting issues I&rsquo;ve encountered while working on the Streams Standard.</em></p>
 
@@ -173,7 +173,7 @@
   <entry>
     <title type="html"><![CDATA[The Revealing Constructor Pattern]]></title>
     <link href="https://blog.domenic.me/the-revealing-constructor-pattern/"/>
-    <updated>2014-02-14T09:00:00+09:00</updated>
+    <updated>2014-02-14T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/the-revealing-constructor-pattern</id>
     <content type="html"><![CDATA[<p>I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including <a href="https://people.mozilla.org/%7Ejorendorff/es6-draft.html#sec-promise-objects">promises</a> and <a href="https://github.com/whatwg/streams">streams</a>. I&rsquo;m calling it the <strong>revealing constructor pattern</strong>.</p>
 
@@ -290,7 +290,7 @@
   <entry>
     <title type="html"><![CDATA[Continual Progress in the W3C TAG]]></title>
     <link href="https://blog.domenic.me/continual-progress-in-the-w3c-tag/"/>
-    <updated>2013-12-02T09:00:00+09:00</updated>
+    <updated>2013-12-02T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/continual-progress-in-the-w3c-tag</id>
     <content type="html"><![CDATA[<p>The W3C Technical Architecture Group has made immeasurable progress this year since
 <a href="http://infrequently.org/2012/12/reforming-the-w3c-tag/">the original wave of reformist thought</a> swept through it last
@@ -381,7 +381,7 @@ feedback to help shape this vision, and working on specifications and interfacin
   <entry>
     <title type="html"><![CDATA[The Extensible Web]]></title>
     <link href="https://blog.domenic.me/the-extensible-web/"/>
-    <updated>2013-10-07T09:00:00+09:00</updated>
+    <updated>2013-10-07T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/the-extensible-web</id>
     <content type="html"><![CDATA[<p><em>This post adapts <a href="http://2013.jsconf.eu/speakers/#/speakers/domenic-denicola-the-extensible-web-javascript-all-the-way-down">my talk from JSConf EU 2013</a>.</em></p>
 
@@ -651,7 +651,7 @@ and I look forward not only to living in that future, but to helping shape it, t
   <entry>
     <title type="html"><![CDATA[ES6 Iterators, Generators, and Iterables]]></title>
     <link href="https://blog.domenic.me/es6-iterators-generators-and-iterables/"/>
-    <updated>2013-09-06T09:00:00+09:00</updated>
+    <updated>2013-09-06T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/es6-iterators-generators-and-iterables</id>
     <content type="html"><![CDATA[<p>I wrote up a quick guide to the terminology around ES6&rsquo;s iteration-related concepts, plus some notes and other
 resources.</p>
@@ -773,7 +773,7 @@ priority list.</p>
   <entry>
     <title type="html"><![CDATA[Explaining Away the Web's Magic]]></title>
     <link href="https://blog.domenic.me/explaining-away-the-webs-magic/"/>
-    <updated>2013-06-10T09:00:00+09:00</updated>
+    <updated>2013-06-10T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/explaining-away-the-webs-magic</id>
     <content type="html"><![CDATA[<p>Today we revealed <a href="http://extensiblewebmanifesto.org/">The Extensible Web Manifesto</a>, calling for a new approach to
 web standards that prioritizes new local-level capabilities in order to explain and extend higher-end platform features.
@@ -910,7 +910,7 @@ effort, ensuring that new APIs are introduced to explain away the C++ magic in t
   <entry>
     <title type="html"><![CDATA[Strict Mode = Static Scoping]]></title>
     <link href="https://blog.domenic.me/strict-mode-static-scoping/"/>
-    <updated>2013-03-19T09:00:00+09:00</updated>
+    <updated>2013-03-19T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/strict-mode-static-scoping</id>
     <content type="html"><![CDATA[<p>It is indeed
 <a href="http://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/">time to start using JavaScript&rsquo;s strict mode</a>.
@@ -1018,7 +1018,7 @@ scoping, and a saner language in general. Use strict.</p>
   <entry>
     <title type="html"><![CDATA[Peer Dependencies]]></title>
     <link href="https://blog.domenic.me/peer-dependencies/"/>
-    <updated>2013-02-08T09:00:00+09:00</updated>
+    <updated>2013-02-08T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/peer-dependencies</id>
     <content type="html"><![CDATA[<p>npm is awesome as a package manager. In particular, it handles sub-dependencies very well: if my package depends on
 <code>request</code> version 2 and <code>some-other-library</code>, but <code>some-other-library</code> depends on <code>request</code> version 1, the resulting
@@ -1147,7 +1147,7 @@ features introduced in 1.5.2, use <code>&quot;&gt;= 1.5.2 &lt; 2&quot;</code>.</
   <entry>
     <title type="html"><![CDATA[You're Missing the Point of Promises]]></title>
     <link href="https://blog.domenic.me/youre-missing-the-point-of-promises/"/>
-    <updated>2012-10-15T07:05:55+09:00</updated>
+    <updated>2012-10-14T22:05:55+00:00</updated>
     <id>https://blog.domenic.me/youre-missing-the-point-of-promises</id>
     <content type="html"><![CDATA[<p><em>This post originally appeared <a href="https://gist.github.com/domenic/3889970">as a gist</a>. Since then, the development of
 Promises/A+ has made its emphasis on the Promises/A spec seem somewhat outdated.</em></p>
@@ -1394,7 +1394,7 @@ assimilation utilities (usually under the name <code>when</code>) to convert to 
   <entry>
     <title type="html"><![CDATA[Portable Node.js Code]]></title>
     <link href="https://blog.domenic.me/portable-nodejs-code/"/>
-    <updated>2012-10-02T09:00:00+09:00</updated>
+    <updated>2012-10-02T00:00:00+00:00</updated>
     <id>https://blog.domenic.me/portable-nodejs-code</id>
     <content type="html"><![CDATA[<p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
 <a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>
