@@ -4,7 +4,7 @@
   <title><![CDATA[Category: promises | Hidden Variables]]></title>
   <link href="https://blog.domenic.me/categories/promises/atom.xml" rel="self"/>
   <link href="https://blog.domenic.me/"/>
-  <updated>2015-03-04T22:53:32-05:00</updated>
+  <updated>2015-03-16T19:56:47+09:00</updated>
   <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[The Revealing Constructor Pattern]]></title>
     <link href="https://blog.domenic.me/the-revealing-constructor-pattern/"/>
-    <updated>2014-02-13T19:00:00-05:00</updated>
+    <updated>2014-02-14T09:00:00+09:00</updated>
     <id>https://blog.domenic.me/the-revealing-constructor-pattern</id>
     <content type="html"><![CDATA[<p>I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including <a href="https://people.mozilla.org/%7Ejorendorff/es6-draft.html#sec-promise-objects">promises</a> and <a href="https://github.com/whatwg/streams">streams</a>. I&rsquo;m calling it the <strong>revealing constructor pattern</strong>.</p>
 
@@ -121,7 +121,7 @@
   <entry>
     <title type="html"><![CDATA[You're Missing the Point of Promises]]></title>
     <link href="https://blog.domenic.me/youre-missing-the-point-of-promises/"/>
-    <updated>2012-10-14T18:05:55-04:00</updated>
+    <updated>2012-10-15T07:05:55+09:00</updated>
     <id>https://blog.domenic.me/youre-missing-the-point-of-promises</id>
     <content type="html"><![CDATA[<p><em>This post originally appeared <a href="https://gist.github.com/domenic/3889970">as a gist</a>. Since then, the development of
 Promises/A+ has made its emphasis on the Promises/A spec seem somewhat outdated.</em></p>

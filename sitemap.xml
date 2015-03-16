@@ -3,82 +3,88 @@
   
   
   <url>
+    <loc>https://blog.domenic.me/reading-from-sockets/</loc>
+    <lastmod>2015-03-16T09:00:00+09:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.domenic.me/reading-from-files/</loc>
-    <lastmod>2015-03-04T19:00:00-05:00</lastmod>
+    <lastmod>2015-03-05T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/byte-sources-introduction/</loc>
-    <lastmod>2015-03-03T19:00:00-05:00</lastmod>
+    <lastmod>2015-03-04T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/the-revealing-constructor-pattern/</loc>
-    <lastmod>2014-02-13T19:00:00-05:00</lastmod>
+    <lastmod>2014-02-14T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/continual-progress-in-the-w3c-tag/</loc>
-    <lastmod>2013-12-01T19:00:00-05:00</lastmod>
+    <lastmod>2013-12-02T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/the-extensible-web/</loc>
-    <lastmod>2013-10-06T20:00:00-04:00</lastmod>
+    <lastmod>2013-10-07T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/es6-iterators-generators-and-iterables/</loc>
-    <lastmod>2013-09-05T20:00:00-04:00</lastmod>
+    <lastmod>2013-09-06T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/explaining-away-the-webs-magic/</loc>
-    <lastmod>2013-06-09T20:00:00-04:00</lastmod>
+    <lastmod>2013-06-10T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/strict-mode-static-scoping/</loc>
-    <lastmod>2013-03-18T20:00:00-04:00</lastmod>
+    <lastmod>2013-03-19T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/peer-dependencies/</loc>
-    <lastmod>2013-02-07T19:00:00-05:00</lastmod>
+    <lastmod>2013-02-08T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/youre-missing-the-point-of-promises/</loc>
-    <lastmod>2012-10-14T18:05:55-04:00</lastmod>
+    <lastmod>2012-10-15T07:05:55+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/portable-nodejs-code/</loc>
-    <lastmod>2012-10-01T20:00:00-04:00</lastmod>
+    <lastmod>2012-10-02T09:00:00+09:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   
   <url>
     <loc>https://blog.domenic.me/archives/</loc>
-    <lastmod>2015-03-04T22:53:32-05:00</lastmod>
+    <lastmod>2015-03-16T19:56:47+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://blog.domenic.me/</loc>
-    <lastmod>2015-03-04T22:53:32-05:00</lastmod>
+    <lastmod>2015-03-16T19:56:47+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

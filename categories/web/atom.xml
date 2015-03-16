@@ -4,7 +4,7 @@
   <title><![CDATA[Category: web | Hidden Variables]]></title>
   <link href="https://blog.domenic.me/categories/web/atom.xml" rel="self"/>
   <link href="https://blog.domenic.me/"/>
-  <updated>2015-03-04T22:53:32-05:00</updated>
+  <updated>2015-03-16T19:56:47+09:00</updated>
   <id>https://blog.domenic.me/</id>
   <author>
     <name><![CDATA[Domenic Denicola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Continual Progress in the W3C TAG]]></title>
     <link href="https://blog.domenic.me/continual-progress-in-the-w3c-tag/"/>
-    <updated>2013-12-01T19:00:00-05:00</updated>
+    <updated>2013-12-02T09:00:00+09:00</updated>
     <id>https://blog.domenic.me/continual-progress-in-the-w3c-tag</id>
     <content type="html"><![CDATA[<p>The W3C Technical Architecture Group has made immeasurable progress this year since
 <a href="http://infrequently.org/2012/12/reforming-the-w3c-tag/">the original wave of reformist thought</a> swept through it last
@@ -105,7 +105,7 @@ feedback to help shape this vision, and working on specifications and interfacin
   <entry>
     <title type="html"><![CDATA[The Extensible Web]]></title>
     <link href="https://blog.domenic.me/the-extensible-web/"/>
-    <updated>2013-10-06T20:00:00-04:00</updated>
+    <updated>2013-10-07T09:00:00+09:00</updated>
     <id>https://blog.domenic.me/the-extensible-web</id>
     <content type="html"><![CDATA[<p><em>This post adapts <a href="http://2013.jsconf.eu/speakers/#/speakers/domenic-denicola-the-extensible-web-javascript-all-the-way-down">my talk from JSConf EU 2013</a>.</em></p>
 
@@ -375,7 +375,7 @@ and I look forward not only to living in that future, but to helping shape it, t
   <entry>
     <title type="html"><![CDATA[Explaining Away the Web's Magic]]></title>
     <link href="https://blog.domenic.me/explaining-away-the-webs-magic/"/>
-    <updated>2013-06-09T20:00:00-04:00</updated>
+    <updated>2013-06-10T09:00:00+09:00</updated>
     <id>https://blog.domenic.me/explaining-away-the-webs-magic</id>
     <content type="html"><![CDATA[<p>Today we revealed <a href="http://extensiblewebmanifesto.org/">The Extensible Web Manifesto</a>, calling for a new approach to
 web standards that prioritizes new local-level capabilities in order to explain and extend higher-end platform features.
