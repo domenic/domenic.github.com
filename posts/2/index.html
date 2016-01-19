@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Hidden Variables</title>
+
+
+<meta name="author" content="Domenic Denicola">
+<meta name="description" content="Domenic's blog about coding and stuff">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="canonical" href="https://blog.domenic.me/posts/2/">
+<link rel="alternate" href="/atom.xml" title="Hidden Variables" type="application/atom+xml">
+<link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/stylesheets/screen.css">
+<script src="/javascripts/ender.js"></script>
+<script src="/javascripts/octopress.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic">
+
+<meta property="twitter:account_id" content="30968081" />
+
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-37626687-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  document.body.appendChild(ga);
+})();
+</script>
+
+
+
+<body   >
+
+<header><hgroup>
+  <h1><a href="/">Hidden Variables</a></h1>
+  <h2>Domenic's blog about coding and stuff</h2>
+</hgroup>
+
+</header>
+<nav><a class="subscription" href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.domenic.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives/">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+<div id="content">
+  <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/youre-missing-the-point-of-promises/">You&#8217;re Missing the Point of Promises</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T22:05:55+00:00" pubdate data-updated="true">Oct 14<sup>th</sup>, 2012</time>
+        
+         | <a href="/youre-missing-the-point-of-promises/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post originally appeared <a href="https://gist.github.com/domenic/3889970">as a gist</a>. Since then, the development of
+Promises/A+ has made its emphasis on the Promises/A spec seem somewhat outdated.</em></p>
+
+<p><em>Contrary to some mistaken statements on the internet, the problems with jQuery&rsquo;s promises explained here are not fixed
+in recent versions; as of 2.1 beta 1 they have all the same problems outlined here, and according to one jQuery core
+team member, <a href="http://esdiscuss.org/topic/a-challenge-problem-for-promise-designers-was-re-futures#content-43">they will forever remain broken</a>, in the name of backward compatibility.</em></p>
+
+<p><strong>Promises</strong> are a software abstraction that makes working with asynchronous operations much more pleasant. In the most
+basic definition, your code will move from continuation-passing style:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">getTweetsFor</span><span class="p">(</span><span class="s2">&quot;domenic&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// the rest of your code goes here.</span>
+<span class="p">});</span>
+</code></pre></figure>
+
+<p>to one where your functions return a value, called a <em>promise</em>, which represents the eventual results of that operation.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">promiseForTweets</span> <span class="o">=</span> <span class="nx">getTweetsFor</span><span class="p">(</span><span class="s2">&quot;domenic&quot;</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>This is powerful since you can now treat these promises as first-class objects, passing them around, aggregating them,
+and so on, instead of inserting dummy callbacks that tie together other callbacks in order to do the same.</p>
+
+<p>I&rsquo;ve talked about how cool I think promises are <a href="http://www.slideshare.net/domenicdenicola/callbacks-promises-and-coroutines-oh-my-the-evolution-of-asynchronicity-in-javascript">at length</a>. This essay isn&rsquo;t about that. Instead, it&rsquo;s
+about a disturbing trend I am seeing in recent JavaScript libraries that have added promise support: <em>they completely
+miss the point of promises</em>.</p>
+
+<h2 id="thenables-and-commonjs-promises/a">Thenables and CommonJS Promises/A</h2>
+
+<p>When someone says &ldquo;promise&rdquo; in a JavaScript context, usually they mean—or at least <em>think</em> they
+mean—<a href="http://wiki.commonjs.org/wiki/Promises/A">CommonJS Promises/A</a>. This is one of the smallest &ldquo;specs&rdquo; I&rsquo;ve seen. The meat of it is entirely about specifying
+the behavior of a single function, <code>then</code>:</p>
+
+<blockquote>
+<p>A promise is defined as an object that has a function as the value for the property <code>then</code>:</p>
+
+<p><code>then(fulfilledHandler, errorHandler, progressHandler)</code></p>
+
+<p>Adds a <code>fulfilledHandler</code>, <code>errorHandler</code>, and <code>progressHandler</code> to be called for completion of a promise. The
+<code>fulfilledHandler</code> is called when the promise is fulfilled. The <code>errorHandler</code> is called when a promise fails. The
+<code>progressHandler</code> is called for progress events. All arguments are optional and non-function values are ignored. The
+<code>progressHandler</code> is not only an optional argument, but progress events are purely optional. Promise implementors are
+not required to ever call a <code>progressHandler</code> (the <code>progressHandler</code> may be ignored), this parameter exists so that
+implementors may call it if they have progress events to report.</p>
+
+<p>This function should return a new promise that is fulfilled when the given <code>fulfilledHandler</code> or <code>errorHandler</code>
+callback is finished. This allows promise operations to be chained together. The value returned from the callback
+handler is the fulfillment value for the returned promise. If the callback throws an error, the returned promise will
+be moved to failed state.</p>
+</blockquote>
+
+<p>People mostly understand the first paragraph. It boils down to <em>callback aggregation</em>. You use <code>then</code> to attach
+callbacks to a promise, whether for success or for errors (or even progress). When the promise transitions state—which
+is out of scope of this very small spec!—your callbacks will be called. This is pretty useful, I guess.</p>
+
+<p>What people don&rsquo;t seem to notice is the second paragraph. Which is a shame, since it&rsquo;s the most important one.</p>
+
+<h2 id="what-is-the-point-of-promises?">What Is the Point of Promises?</h2>
+
+<p>The thing is, promises are not <em>about</em> callback aggregation. That&rsquo;s a simple utility. Promises are about something
+much deeper, namely providing a direct correspondence between synchronous functions and asynchronous functions.</p>
+
+<p>What does this mean? Well, there are two very important aspects of synchronous functions:</p>
+
+<ul>
+<li>They <em>return values</em></li>
+<li>They <em>throw exceptions</em></li>
+</ul>
+
+<p>Both of these are essentially about composition. That is, you can feed the return value of one function straight into
+another, and keep doing this indefinitely. <em>More importantly</em>, if at any point that process fails, one function in the
+composition chain can throw an exception, which then bypasses all further compositional layers until it comes into the
+hands of someone who can handle it with a <code>catch</code>.</p>
+
+<p>Now, in an asynchronous world, you can no longer return values: they simply aren&rsquo;t ready in time. Similarly, you can&rsquo;t
+throw exceptions, because nobody&rsquo;s there to catch them. So we descend into the so-called &ldquo;callback hell,&rdquo; where
+composition of return values involves nested callbacks, and composition of errors involves passing them up the chain
+manually, and oh by the way you&rsquo;d better <em>never</em> throw an exception or else you&rsquo;ll need to introduce something crazy
+like <a href="http://nodejs.org/api/domain.html">domains</a>.</p>
+
+<p><em>The point of promises is to give us back functional composition and error bubbling in the async world.</em> They do this
+by saying that your functions should return a promise, which can do one of two things:</p>
+
+<ul>
+<li>Become <em>fulfilled by a value</em></li>
+<li>Become <em>rejected with an exception</em></li>
+</ul>
+
+<p>And, <em>if</em> you have a correctly implemented <code>then</code> function that follows Promises/A, then fulfillment and rejection will
+compose just like their synchronous counterparts, with fulfillments flowing up a compositional chain, but being
+interrupted at any time by a rejection that is only handled by someone who declares they are ready to handle it.</p>
+
+<p>In other words, the following asynchronous code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">getTweetsFor</span><span class="p">(</span><span class="s2">&quot;domenic&quot;</span><span class="p">)</span> <span class="c1">// promise-returning function</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">tweets</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">shortUrls</span> <span class="o">=</span> <span class="nx">parseTweetsForUrls</span><span class="p">(</span><span class="nx">tweets</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">mostRecentShortUrl</span> <span class="o">=</span> <span class="nx">shortUrls</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nx">expandUrlUsingTwitterApi</span><span class="p">(</span><span class="nx">mostRecentShortUrl</span><span class="p">);</span> <span class="c1">// promise-returning function</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">httpGet</span><span class="p">)</span> <span class="c1">// promise-returning function</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">responseBody</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Most recent link text:&quot;</span><span class="p">,</span> <span class="nx">responseBody</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error with the twitterverse:&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">);</span>
+</code></pre></figure>
+
+<p>parallels<sup><a href="https://github.com/kriskowal/q/wiki/On-Exceptions">*</a></sup> the synchronous code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="k">try</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">tweets</span> <span class="o">=</span> <span class="nx">getTweetsFor</span><span class="p">(</span><span class="s2">&quot;domenic&quot;</span><span class="p">);</span> <span class="c1">// blocking</span>
+  <span class="kd">var</span> <span class="nx">shortUrls</span> <span class="o">=</span> <span class="nx">parseTweetsForUrls</span><span class="p">(</span><span class="nx">tweets</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">mostRecentShortUrl</span> <span class="o">=</span> <span class="nx">shortUrls</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="nx">responseBody</span> <span class="o">=</span> <span class="nx">httpGet</span><span class="p">(</span><span class="nx">expandUrlUsingTwitterApi</span><span class="p">(</span><span class="nx">mostRecentShortUrl</span><span class="p">));</span> <span class="c1">// blocking x 2</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Most recent link text:&quot;</span><span class="p">,</span> <span class="nx">responseBody</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error with the twitterverse: &quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>Note in particular how errors flowed from any step in the process to our <code>catch</code> handler, without explicit by-hand
+bubbling code. And with the upcoming ECMAScript 6 revision of JavaScript, plus some <a href="http://taskjs.org/">party tricks</a>, the code becomes
+not only parallel but almost identical.</p>
+
+<h2 id="that-second-paragraph">That Second Paragraph</h2>
+
+<p>All of this is essentially enabled by that second paragraph:</p>
+
+<blockquote>
+<p>This function should return a new promise that is fulfilled when the given <code>fulfilledHandler</code> or <code>errorHandler</code>
+callback is finished. This allows promise operations to be chained together. The value returned from the callback
+handler is the fulfillment value for the returned promise. If the callback throws an error, the returned promise will
+be moved to failed state.</p>
+</blockquote>
+
+<p>In other words, <code>then</code> is <em>not</em> a mechanism for attaching callbacks to an aggregate collection. It&rsquo;s a mechanism for
+<em>applying a transformation</em> to a promise, and yielding a <em>new</em> promise from that transformation.</p>
+
+<p>This explains the crucial first phrase: &ldquo;this function should return a new promise.&rdquo; Libraries like jQuery (before 1.8)
+don&rsquo;t do this: they simply mutate the state of the existing promise. That means if you give a promise out to multiple
+consumers, they can interfere with its state. To realize how ridiculous that is, consider the synchronous parallel: if
+you gave out a function&rsquo;s return value to two people, and one of them could somehow change it into a thrown exception!
+Indeed, Promises/A points this out explicitly:</p>
+
+<blockquote>
+<p>Once a promise is fulfilled or failed, the promise&rsquo;s value MUST not be changed, just as a values in JavaScript,
+primitives and object identities, can not change (although objects themselves may always be mutable even if their
+identity isn&rsquo;t).</p>
+</blockquote>
+
+<p>Now consider the last two sentences. They inform how this new promise is created. In short:</p>
+
+<ul>
+<li>If either handler returns a value, the new promise is fulfilled with that value.</li>
+<li>If either handler throws an exception, the new promise is rejected with that exception.</li>
+</ul>
+
+<p>This breaks down into four scenarios, depending on the state of the promise. Here we give their synchronous parallels so
+you can see why it&rsquo;s crucially important to have semantics for all four:</p>
+
+<ol>
+<li>Fulfilled, fulfillment handler returns a value: simple functional transformation</li>
+<li>Fulfilled, fulfillment handler throws an exception: getting data, and throwing an exception in response to it</li>
+<li>Rejected, rejection handler returns a value: a <code>catch</code> clause got the error and handled it</li>
+<li>Rejected, rejection handler throws an exception: a <code>catch</code> clause got the error and re-threw it (or a new one)</li>
+</ol>
+
+<p>Without these transformations being applied, you lose all the power of the synchronous/asynchronous parallel, and your
+so-called &ldquo;promises&rdquo; become simple callback aggregators. This is the problem with jQuery&rsquo;s current &ldquo;promises&rdquo;: they only
+support scenario 1 above, omitting entirely support for scenarios 2–4. This was also the problem with Node.js 0.1&rsquo;s
+<code>EventEmitter</code>-based &ldquo;promises&rdquo; (which weren&rsquo;t even <code>then</code>able).</p>
+
+<p>Furthermore, note that by catching exceptions and transforming them into rejections, we take care of both intentional
+and unintentional exceptions, just like in sync code. That is, if you write <code>aFunctionThatDoesNotExist()</code> in either
+handler, your promise becomes rejected and that error will bubble up the chain to the nearest rejection handler just as
+if you had written <code>throw new Error(&quot;bad data&quot;)</code>. Look ma, no domains!</p>
+
+<h2 id="so-what?">So What?</h2>
+
+<p>Maybe you&rsquo;re breathlessly taken by my inexorable logic and explanatory powers. More likely, you&rsquo;re asking yourself why
+this guy is raging so hard over some poorly-behaved libraries.</p>
+
+<p>Here&rsquo;s the problem:</p>
+
+<blockquote>
+<p>A promise is defined as an object that has a function as the value for the property <code>then</code></p>
+</blockquote>
+
+<p>As authors of Promises/A-consuming libraries, we would like to assume this statement to be true: that something that
+is &ldquo;thenable&rdquo; actually behaves as a Promises/A promise, with all the power that entails.</p>
+
+<p>If you can make this assumption, you can write <a href="https://github.com/domenic/chai-as-promised/">very extensive libraries</a> that are entirely agnostic
+to the implementation of the promises they accept! Whether they be from <a href="https://github.com/kriskowal/q">Q</a>, <a href="https://github.com/cujojs/when">when.js</a>, or even <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211867.aspx">WinJS</a>, you can
+use the simple composition rules of the Promises/A spec to build on promise behavior. For example, here&rsquo;s a generalized
+<a href="https://gist.github.com/2936696">retry function</a> that works with any Promises/A implementation.</p>
+
+<p>Unfortunately, libraries like jQuery break this. This necessitates <a href="https://github.com/domenic/chai-as-promised/blob/4bc1d6b217acde85c8af56dc3cd09f05bb752549/lib/chai-as-promised.js#L28-30">ugly hacks</a> to detect the presence of objects
+masquerading as promises, and who call themselves in their API documentation promises, but aren&rsquo;t really Promises/A
+promises. If the consumers of your API start trying to pass you jQuery promises, you have two choices: fail in
+mysterious and hard-to-decipher ways when your compositional techniques fail, or fail up-front and block them from using
+your library entirely. This sucks.</p>
+
+<h2 id="the-way-forward">The Way Forward</h2>
+
+<p>So this is why I want to avoid an unfortunate <a href="https://github.com/emberjs/ember.js/commit/f7ac080db3a2a15f5814dc26fc86712cf7d252c8">callback aggregator solution</a> ending up in Ember. That&rsquo;s why I
+wrote this essay. And that&rsquo;s why, in the hours following writing the original version of this essay, I worked up
+<a href="https://github.com/domenic/promise-tests">a general Promises/A compliance suite</a> that we can all use to get on the same page in the future.</p>
+
+<p>Since the release of that test suite, great progress has been made in promise interoperability and understanding. One
+library, <a href="https://github.com/tildeio/rsvp.js">rsvp.js</a>, was released with the explicit goal of providing these features of Promises/A. Others
+<a href="https://twitter.com/wookiehangover/status/258641272913412096">followed suit</a>. But the most exciting result was the formation of the <a href="https://github.com/promises-aplus">Promises/A+ organization</a>,
+a loose coalition of implementors who have produced the <a href="http://promises-aplus.github.com/promises-spec/">Promises/A+ specification</a> extending and
+clarifying the prose of the original Promises/A spec into something unambiguous and <a href="https://github.com/promises-aplus/promises-tests">well-tested</a>.</p>
+
+<p>There&rsquo;s still work to be done, of course. Notably, at current time of writing, the latest jQuery version is 1.9.1, and
+its promises implementation is completely broken with regard to the error handling semantics. Hopefully, with the above
+explanation to set the stage and the Promises/A+ spec and test suite in place, this problem can be corrected in jQuery
+2.0.</p>
+
+<p>In the meantime, here are the libraries that conform to Promises/A+, and that I can thus unreservedly recommend:</p>
+
+<ul>
+<li><a href="https://github.com/kriskowal/q">Q</a> by Kris Kowal and myself: a full-featured promise library with a large, powerful API surface, adapters for
+Node.js, progress support, and preliminary support for long stack traces.</li>
+<li><a href="https://github.com/tildeio/rsvp.js">RSVP.js</a> by Yehuda Katz: a very small and lightweight, but still fully compliant, promise library.</li>
+<li><a href="https://github.com/cujojs/when">when.js</a> by Brian Cavalier: an intermediate library with utilities for managing collections of eventual tasks,
+as well as support for both progress and cancellation.</li>
+</ul>
+
+<p>If you are stuck with a crippled &ldquo;promise&rdquo; from a source like jQuery, I recommend using one of the above libraries&#39;
+assimilation utilities (usually under the name <code>when</code>) to convert to a real promise as soon as possible. For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;https://github.com/kriskowal/q&quot;</span><span class="p">));</span>
+<span class="c1">// aaaah, much better</span>
+</code></pre></figure>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/portable-nodejs-code/">Portable Node.js Code</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-02T00:00:00+00:00" pubdate data-updated="true">Oct 2<sup>nd</sup>, 2012</time>
+        
+         | <a href="/portable-nodejs-code/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
+<a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>
+
+<p>Node.js core does its best to treat every platform equally. Even if most Node developers use OS X day to day, some use
+Windows, and most everyone deploys to Linux or Solaris. So it&rsquo;s important to keep your code portable between platforms,
+whether you&rsquo;re writing a library or an application.</p>
+
+<p>Predictably, most cross-platform issues come from Windows. Things just work differently there! But if you&rsquo;re careful,
+and follow some simple best practices, your code can run just as well on Windows systems.</p>
+
+<h2 id="paths-and-urls">Paths and URLs</h2>
+
+<p>On Windows, paths are constructed with backslashes instead of forward slashes. So if you do your directory manipulation
+by splitting on <code>&quot;/&quot;</code> and playing with the resulting array, <a href="https://github.com/logicalparadox/codex/commit/7f91b451e7cdc9d794f30bd026029aea797bb1e0">your code will fail dramatically on Windows</a>.</p>
+
+<p>Instead, you should be using the <a href="http://nodejs.org/docs/latest/api/path.html">path module</a>. So instead of resolving paths with string contatenation, e.g.
+<code>x + &quot;/&quot; + y</code>, you should instead do <code>path.resolve(x, y)</code>. Similarly, instead of relativizing paths with string
+replacement, e.g. <code>x.replace(/^parent\/dirs\//, &quot;&quot;)</code>, you <a href="https://github.com/ryanmcgrath/wrench-js/commit/01190602dac64924fca2dae11912ffb560e636a0">should</a> do <code>path.relative(&quot;/parent/dirs&quot;, y)</code>.</p>
+
+<p>Another area of concern is that, when writing portable code, you cannot count on URLs and module IDs having the same
+separators as paths. If you use something like <code>path.join</code> <a href="https://github.com/domenic/knox/compare/eabef00df9bf79085229f4ed39b2679eb579ea20...9b1a4e9f644ababd5d9ced227de44709e1fccf4b">on a URL</a>, Windows users will get URLs containing
+backslashes! <a href="https://github.com/isaacs/npm-www/pull/88">Similarly</a> for <code>path.normalize</code>, or in general any path methods. All this applies if you&rsquo;re
+<a href="https://github.com/substack/node-browserify/pull/158">working with module IDs</a>, too: they are forward-slash delimited, so you shouldn&rsquo;t use path functions with
+them either.</p>
+
+<h2 id="non-portable-apis">Non-portable APIs</h2>
+
+<p>Windows is completely missing the <code>process.(get|set)(gid|uid)</code> methods, so calling them will instantly crash your
+program on Windows. Always <a href="https://github.com/flatiron/winston/commit/a32d92ba1be3c21859d8c1c9e8e0e701846fcaf4">guard such calls</a> with a conditional.</p>
+
+<p>The <a href="http://nodejs.org/docs/latest/api/fs.html#fs_fs_watchfile_filename_options_listener"><code>fs.watchFile</code></a> API is not sufficiently cross-platform, and is recommended against in the docs because
+of it. You <a href="https://github.com/logicalparadox/codex/commit/be2fe18f5561f7bbd3bd0099bb47f7e58c23638d">should</a> use <a href="http://nodejs.org/docs/latest/api/fs.html#fs_fs_watch_filename_options_listener"><code>fs.watch</code></a> instead.</p>
+
+<p>The <a href="http://nodejs.org/api/child_process.html">child_process module</a> requires care cross-platform. In particular, <code>spawn</code> and <code>execFile</code> do not execute in a
+shell, which means that on Windows only <code>.exe</code> files will run. This is rather problematic, as many cross-platform
+binaries are included on Windows as <code>.cmd</code> or <code>.bat</code> files, <a href="https://github.com/isaacs/npm/issues/2333">among them Git</a>, <a href="https://github.com/isaacs/npm-www/blob/fd3a96e861989338676937736599598f7c0fde8f/dev/go.js#L22-27">CouchDB</a>, and
+many others. So if you&rsquo;re using these APIs, things will likely work great on OS X, Linux, etc. But when you tell your
+users “just install the Git build for Windows, and make sure it&rsquo;s in your path!” that ends up not being sufficient.
+There is <a href="https://github.com/joyent/node/issues/2318">talk</a> of fixing this behavior in libuv, but that&rsquo;s still tentative. In the meantime, if you don&rsquo;t
+need to stream your output, <code>exec</code> works well. Otherwise you&rsquo;ll need <a href="https://github.com/isaacs/npm-www/blob/fd3a96e861989338676937736599598f7c0fde8f/dev/go.js#L22-27">branching logic</a> to take care
+of Windows.</p>
+
+<p>A final edge-case comes when using named sockets, e.g. with <code>net.connect</code>. On Unix, simple filenames suffice, but on
+Windows, they must conform to a <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365783%28v=vs.85%29.aspx">bizarre syntax</a>. There&rsquo;s not really a better solution for this than
+<a href="https://gist.github.com/2790533#gistcomment-331356">branching per-platform</a>.</p>
+
+<h2 id="being-windows-developer-friendly">Being Windows-Developer Friendly</h2>
+
+<p>One of the most egregious problems with many projects is their unnecessary use of Unix Makefiles. Windows does not have
+a <code>make</code> command, so the tasks stored in these files are entirely inaccessible to Windows users who might try to
+contribute to your project. This is especially annoying if you put your test command in there!</p>
+
+<p>Fortunately, we have a solution: npm comes with a <a href="https://npmjs.org/doc/scripts.html">scripts feature</a> where you can include commands to be
+run for testing (<code>test</code>), installation (<code>install</code>), building (<code>prepublish</code>), and starting your app (<code>start</code>), among many
+others. You can also create custom scripts, which are then run with <code>npm run &lt;script-name&gt;</code>; I often use this for
+<a href="https://github.com/domenic/sinon-chai/blob/baf878ee7ba98bae507ac8bc91c94ea1fe287964/package.json#L28">lint steps</a>. Also of note, you can reference any commands your app depends on by their short names here: for
+example, <code>&quot;mocha&quot;</code> instead of <code>&quot;./node_modules/.bin/mocha&quot;</code>. So, please use these! If you must have a Makefile for
+whatever reason, just have it <a href="https://github.com/LearnBoost/knox/blob/c1b680c80b7a4493970e3e9a92305387ef96c1eb/Makefile#L2-3">delegate to an npm script</a>.</p>
+
+<p>Another crucially important step is not using Unix shell scripts as part of your development process. Windows doesn&rsquo;t
+have bash, or <code>ls</code>, or <code>mv</code>, or any of those other commands you might use. Instead, write your shell scripts
+<a href="http://www.2ality.com/2011/12/nodejs-shell-scripting.html">in JavaScript</a>, using a tool like <a href="http://gruntjs.com/">Grunt</a> if you&rsquo;d like.</p>
+
+<h2 id="bonus:-something-that-breaks-on-linux-and-solaris!">Bonus: Something that Breaks on Linux and Solaris!</h2>
+
+<p>Both Windows and, by default, OS X, use case-insensitive file systems. That means if you install a package named foo,
+any of <code>require(&quot;foo&quot;)</code> or <code>require(&quot;FOO&quot;)</code> or <code>require(&quot;fOo&quot;)</code> will work—on Windows and OS X. But then when you go to
+deploy your code, out of your development environment and into your Linux or Solaris production system, the latter two
+will <em>not</em> work! So it&rsquo;s a little thing, but make sure you always get your module and package name casing right.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As you can see, writing cross-platform code is sometimes painful. Usually, it&rsquo;s just a matter of best practices, like
+using the path module or remembering that URLs are different from filesystem paths. But sometimes there are APIs that
+just don&rsquo;t work cross-platform, or have annoying quirks that necessitate branching code.</p>
+
+<p>Nevertheless, it&rsquo;s worth it. Node.js is the most exciting software development platform in recent memory, and one of its
+greatest strengths is its portable nature. Try your best to uphold that!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/archives">Blog Archives</a>
+    
+    <a class="next" href="1">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/reading-from-sockets/">Reading from Sockets</a>
+      </li>
+    
+      <li class="post">
+        <a href="/reading-from-files/">Reading from Files</a>
+      </li>
+    
+      <li class="post">
+        <a href="/byte-sources-introduction/">Byte Sources: Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a>
+      </li>
+    
+      <li class="post">
+        <a href="/continual-progress-in-the-w3c-tag/">Continual Progress in the W3C TAG</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/domenic">@domenic</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'domenic',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+</div>
+</div>
+<footer><p>
+  Copyright &copy; 2015 - Domenic Denicola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+
+
+<script>
+  var disqus_shortname = 'hiddenvariables';
+  
+    
+    var disqus_script = 'count.js';
+  
+(function () {
+  var dsq = document.createElement('script');
+  dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+  document.body.appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<script>
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.body.appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+

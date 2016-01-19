@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Strict Mode = Static Scoping</title>
+
+
+<meta name="author" content="Domenic Denicola">
+<meta name="description" content="It is indeed
+time to start using JavaScript&rsquo;s strict mode.
+There are many reasons, but one of the most compelling is that it brings sanity to &hellip;">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="canonical" href="https://blog.domenic.me/strict-mode-static-scoping/">
+<link rel="alternate" href="/atom.xml" title="Hidden Variables" type="application/atom+xml">
+<link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/stylesheets/screen.css">
+<script src="/javascripts/ender.js"></script>
+<script src="/javascripts/octopress.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic">
+
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@domenic">
+<meta property="og:title" content="Strict Mode = Static Scoping">
+<meta property="og:description" content="It is indeed
+time to start using JavaScript&rsquo;s strict mode.
+There are many reasons, but one of the most compelling is that it brings sanity to JavaScript&rsquo;s scoping rules, by
+guaranteeing static scoping. Simply put, code is statically &hellip;">
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-37626687-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  document.body.appendChild(ga);
+})();
+</script>
+
+
+
+<body   >
+
+<header><hgroup>
+  <h1><a href="/">Hidden Variables</a></h1>
+  <h2>Domenic's blog about coding and stuff</h2>
+</hgroup>
+
+</header>
+<nav><a class="subscription" href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.domenic.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives/">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+<div id="content">
+  <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Strict Mode = Static Scoping</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-19T00:00:00+00:00" pubdate data-updated="true">Mar 19<sup>th</sup>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>It is indeed
+<a href="http://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/">time to start using JavaScript&rsquo;s strict mode</a>.
+There are many reasons, but one of the most compelling is that it brings sanity to JavaScript&rsquo;s scoping rules, by
+guaranteeing static scoping.</p>
+
+<p>Simply put, code is <em>statically scoped</em> if you can statically analyze it and determine what all the identifiers refer
+to. In other words, you can statically determine where every variable was declared. As we&rsquo;ll see, JavaScript&rsquo;s sloppy
+mode does not have this property, giving you yet one more reason to shun it in favor of <code>&quot;use strict&quot;</code>.</p>
+
+<h2 id="sloppy-mode-=-dynamic-scoping">Sloppy Mode = Dynamic Scoping</h2>
+
+<p>Most of the time, JavaScript scoping is fairly simple. You look up the scope chain, as declared in the source code; if
+you can&rsquo;t find something, it must be on the global object. But in sloppy mode, there are several situations that can
+foil this algorithm.</p>
+
+<h3 id="use-of-with">Use of <code>with</code></h3>
+
+<p>Using the <code>with</code> statement completely destroys the sanity of your scope chain:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">__filename</span> <span class="o">=</span> <span class="s2">&quot;/my/cool/file.js&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">anotherContext</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">__filename</span><span class="o">:</span> <span class="s2">&quot;/another/file.js&quot;</span><span class="p">,</span> <span class="nx">__dirname</span><span class="o">:</span> <span class="s2">&quot;/another&quot;</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="o">?</span> <span class="nx">anotherContext</span> <span class="o">:</span> <span class="p">{};</span>
+<span class="kd">with</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">__filename</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>In this example, we can&rsquo;t statically determine if <code>console.log(__filename)</code> is referring to the free <code>__filename</code>
+variable, set to <code>&quot;/my/cool/file.js&quot;</code>, or if it&rsquo;s referring to the property of <code>anotherContext</code>, set to
+<code>&quot;/another/file.js&quot;</code>.</p>
+
+<p>Strict mode fixes this by <a href="http://es5.github.com/#x12.10.1">banning <code>with</code> entirely</a>. Thus, the above code would be a
+syntax error if it were placed in a strict context.</p>
+
+<h3 id="use-of-eval">Use of <code>eval</code></h3>
+
+<p>Using <code>eval</code> in sloppy mode will introduce new variable bindings into your scope chain:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">function</span> <span class="nx">require</span><span class="p">(</span><span class="nx">moduleId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// loading code elided.</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">requireStuff</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;function require(things) { console.log(&#39;We require more &#39; + things); }&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;minerals&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>In this example, we have a similar problem as before: <code>eval</code> might have dynamically introduced a new variable binding.
+Thus, <code>require</code> can refer either to the new function introduced by <code>eval</code> into <code>requireStuff</code>&rsquo;s scope, or to the
+function declared in the outer scope. We just can&rsquo;t know, until runtime!</p>
+
+<p>Strict mode fixes this by <a href="http://es5.github.com/#x10.4.2.1">disallowing <code>eval</code> from introducing new bindings</a>. Thus,
+if the above code were strict, <code>require(&quot;minerals&quot;)</code> would always refer to the outer module-loading <code>require</code> function.</p>
+
+<h2 id="why-does-this-matter?">Why Does This Matter?</h2>
+
+<p>In addition to the obvious implications of this for optimization and inlining in JITers, this matters because static
+analysis is becoming increasingly important in modern, complex JavaScript.</p>
+
+<p>For example, let&rsquo;s say you were writing
+<a href="https://github.com/substack/node-browserify">a tool for using Node.js-style modules in the browser</a>. To do so, you&rsquo;d
+probably need to <a href="https://github.com/substack/module-deps">detect <code>require</code> calls</a>; in particular, if you see <code>require</code>,
+you&rsquo;ll want to know what scope that <code>require</code> comes from: global or local? Similarly, you might want to
+<a href="https://github.com/substack/insert-module-globals">detect</a> references to <code>__filename</code>, <code>__dirname</code>, <code>Buffer</code>, etc. and
+make them available if they&rsquo;re detected.</p>
+
+<p>But in sloppy mode, it is literally <em>unknowable</em> what a given variable refers to. At any time, an enclosing <code>with</code> or a
+nearby <code>eval</code> could come along, and really ruin your day. In such a setting, static analysis is doomed; as we&rsquo;ve seen
+in the above examples, the meaning of identifiers like <code>require</code> or <code>__filename</code> can&rsquo;t be determined until runtime.</p>
+
+<h2 id="so?-just-don&#39;t-use-those-things">So? Just Don&rsquo;t Use Those Things</h2>
+
+<p>A common refrain from people who <a href="https://twitter.com/izs/status/310833154401398784">can&rsquo;t handle typing `&ldquo;use strict&rdquo;</a>
+is that they&rsquo;ll simply not use these features. And this indeed suffices: if you subset the language, perhaps using tools
+like JSHint to enforce your subsetting rules, you can create a more sane programming environment.</p>
+
+<p>Similar arguments are applied commonly in other languages, like prohibiting the use of exceptions or templates in C++.
+Even telling people to not pass expressions to their <code>require</code> calls in Node.js modules falls under this category (with
+the rationale that this breaks the popular browserify tool).</p>
+
+<p>I don&rsquo;t buy these arguments. A language should give its users built-in tools to use it correctly. In the case of
+JavaScript, there is one very clear tool that has been given: a simple, backward-compatible <code>&quot;use strict&quot;</code> pragma at the
+top of your source files. If you think that&rsquo;s difficult, try being a C++ programmer and writing exception-safe code: the
+techniques you need to use are a lot more involved than a single pragma.</p>
+
+<h2 id="use-strict-mode">Use Strict Mode</h2>
+
+<p>In <a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;t=18m50s">the words of Mark Miller</a>, ECMAScript 5 strict mode has
+transitioned JavaScript into the &ldquo;actually good&rdquo; category of programming languages. Let&rsquo;s use it. Opt in to static
+scoping, and a saner language in general. Use strict.</p>
+
+<p><em>This post was inspired by
+<a href="http://www.mail-archive.com/es-discuss@mozilla.org/msg18408.html">a long-ago es-discuss thread</a>, which references
+<a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;t=42m53s">a talk by Mark Miller</a>. Further clarifications were had in
+<a href="http://www.mail-archive.com/es-discuss@mozilla.org/msg22147.html">another, recent es-discuss thread</a>.</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Domenic Denicola</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-19T00:00:00+00:00" pubdate data-updated="true">Mar 19<sup>th</sup>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://blog.domenic.me/strict-mode-static-scoping/" data-via="domenic" data-counturl="https://blog.domenic.me/strict-mode-static-scoping/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/peer-dependencies/" title="Previous Post: Peer Dependencies">&laquo; Peer Dependencies</a>
+      
+      
+        <a class="basic-alignment right" href="/explaining-away-the-webs-magic/" title="Next Post: Explaining Away the Web's Magic">Explaining Away the Web's Magic &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/reading-from-sockets/">Reading from Sockets</a>
+      </li>
+    
+      <li class="post">
+        <a href="/reading-from-files/">Reading from Files</a>
+      </li>
+    
+      <li class="post">
+        <a href="/byte-sources-introduction/">Byte Sources: Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a>
+      </li>
+    
+      <li class="post">
+        <a href="/continual-progress-in-the-w3c-tag/">Continual Progress in the W3C TAG</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/domenic">@domenic</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'domenic',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+</div>
+</div>
+<footer><p>
+  Copyright &copy; 2015 - Domenic Denicola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+
+
+<script>
+  var disqus_shortname = 'hiddenvariables';
+  
+    
+    // var disqus_developer = 1;
+    var disqus_identifier = 'https://blog.domenic.me/strict-mode-static-scoping/';
+    var disqus_url = 'https://blog.domenic.me/strict-mode-static-scoping/';
+    var disqus_script = 'embed.js';
+  
+(function () {
+  var dsq = document.createElement('script');
+  dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+  document.body.appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<script>
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.body.appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+

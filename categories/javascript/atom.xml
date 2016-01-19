@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: javascript | Hidden Variables]]></title>
+  <link href="https://blog.domenic.me/categories/javascript/atom.xml" rel="self"/>
+  <link href="https://blog.domenic.me/"/>
+  <updated>2015-03-16T11:05:38+00:00</updated>
+  <id>https://blog.domenic.me/</id>
+  <author>
+    <name><![CDATA[Domenic Denicola]]></name>
+    <email><![CDATA[d@domenic.me]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Revealing Constructor Pattern]]></title>
+    <link href="https://blog.domenic.me/the-revealing-constructor-pattern/"/>
+    <updated>2014-02-14T00:00:00+00:00</updated>
+    <id>https://blog.domenic.me/the-revealing-constructor-pattern</id>
+    <content type="html"><![CDATA[<p>I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including <a href="https://people.mozilla.org/%7Ejorendorff/es6-draft.html#sec-promise-objects">promises</a> and <a href="https://github.com/whatwg/streams">streams</a>. I&rsquo;m calling it the <strong>revealing constructor pattern</strong>.</p>
+
+<h2 id="the-promises-example">The Promises Example</h2>
+
+<p>Let&rsquo;s take the case of promises first, since that may be familiar. You can construct a new promise like so:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Use `resolve` to resolve `p`.</span>
+    <span class="c1">// Use `reject` to reject `p`.</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>We see here that the <code>Promise</code> constructor takes a single function as its sole parameter (called the &ldquo;executor function&rdquo;). It then <em>immediately</em> calls that function with two arguments, <code>resolve</code> and <code>reject</code>. These arguments have the capability to manipulate the internal state of the newly-constructed <code>Promise</code> instance <code>p</code>.</p>
+
+<p>I call this the revealing constructor pattern because the <code>Promise</code> constructor is <em>revealing</em> its internal capabilities, but only to the code that constructs the promise in question. The ability to resolve or reject the promise is only revealed to the constructing code, and is crucially <em>not</em> revealed to anyone <em>using</em> the promise. So if we hand off <code>p</code> to another consumer, say</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+</code></pre></div>
+<p>then we can be sure that this consumer cannot mess with any of the internals that were revealed to us by the constructor. This is as opposed to, for example, putting <code>resolve</code> and <code>reject</code> methods on <code>p</code>, which anyone could call. (And no, adding underscores to the beginning of your method names won&rsquo;t save you.)</p>
+
+<h2 id="historical-origins">Historical Origins</h2>
+
+<p>The first place anyone can remember seeing this pattern is <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211866.aspx">in the WinJS promise implementation</a>. Before that, promise libraries used an awkward concept called a &ldquo;deferred.&rdquo; You would do something like this:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">;</span>
+
+<span class="c1">// Use `deferred.resolve` to resolve `p`.</span>
+<span class="c1">// Use `deferred.reject` to reject `p`.</span>
+
+<span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+</code></pre></div>
+<p>This was strange in a few ways, but most prominently, it was strange because you were constructing an object without using a constructor. This is generally an antipattern in JavaScript: we want to be able to clearly conceptualize the relationship between instances, constructor functions, and prototypes.</p>
+
+<p>In contrast, with the revealing constructor pattern, we get our nice constructor invariants back. Things like:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">p</span> <span class="k">instanceof</span> <span class="nx">Promise</span><span class="p">;</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">===</span> <span class="nx">Promise</span><span class="p">;</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">===</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</code></pre></div>
+<p>These are all signs that you&rsquo;re dealing with a well-designed &ldquo;class&rdquo; in JavaScript, that will behave as you expect.</p>
+
+<h2 id="the-streams-example">The Streams Example</h2>
+
+<p>When putting together <a href="htwetps://github.com/whatwg/streams">the in-progress streams spec</a>, we of course drew a lot of inspiration from <a href="http://nodejs.org/api/stream.html">Node streams</a>. But Node streams do things kind of strangely, with regard to vending their capabilities.</p>
+
+<p>To produce a Node stream representing a specific resource—which is somewhat analogous to producing a promise representing a specific asynchronous operation—you don&rsquo;t use the stream constructor. You don&rsquo;t even use something like the deferred pattern. Instead, you <em>subclass</em> the appropriate stream class. And then you overwrite certain underscore-prefixed methods!</p>
+
+<p>So for a simplified example, here is how you would create a file reader stream using the Node APIs. I&rsquo;ll use ES6 class syntax for brevity, but that is just sugar over the usual ES5 incantations.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">FileReaderStream</span> <span class="kr">extends</span> <span class="nx">Readable</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filename</span> <span class="o">=</span> <span class="nx">filename</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">_read</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Use `this.filename` to eventually call `this.push(chunk)`</span>
+    <span class="c1">// with some data from the file, or `this.push(null)` to close</span>
+    <span class="c1">// the stream, or `this.emit(&quot;error&quot;, e)` with an error.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">myNodeStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReaderStream</span><span class="p">(</span><span class="s2">&quot;/path/to/file.txt&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>There are two interesting actors here:</p>
+
+<ul>
+<li><code>_read</code>, a method not meant to be called by users directly, but instead called by the internals of the stream when it&rsquo;s time to read data from the underlying source.</li>
+<li><code>push</code> and <code>emit(&quot;error&quot;, e)</code>, which have the capability to manipulate the stream&rsquo;s internal buffer and state machine. They too are not meant to be called by users directly, but instead only by implementers, inside their <code>_read</code> method (or perhaps inside the constructor).</li>
+</ul>
+
+<p>Interestingly, these are almost exactly analogous to the promise situation. <code>_read</code> is like the executor argment passed to the promise constructor, in that it consists of user code that does the actual work. And <code>push</code>/<code>emit</code> are capabilities, like <code>resolve</code>/<code>reject</code>, which can be used by the work-doing function to manipulate internal state.</p>
+
+<p>In building the streams spec, we realized the Node pattern wasn&rsquo;t the way we wanted to go. Requiring subclassing for every stream instance is not ergonomic. Using underscore-prefixed methods as the extension point isn&rsquo;t realistic either. And letting any user access the capabilities involved is not tenable, in part because it means implementations can&rsquo;t build invariants around who has access to the internal buffer.</p>
+
+<p>In contrast, the revealing constructor pattern works out really well. To create a file reader stream with whatwg/streams, you do something like</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">ReadableStream</span><span class="p">({</span>
+    <span class="nx">pull</span><span class="p">(</span><span class="nx">enqueue</span><span class="p">,</span> <span class="nx">close</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Use `filename` to eventually call `enqueue(chunk)`</span>
+      <span class="c1">// with some data from the file, or `close()` to</span>
+      <span class="c1">// close the stream, or `error(e)` with an error.</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">myWhatwgStream</span> <span class="o">=</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="s2">&quot;/path/to/file.txt&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>Notice the difference in the external API exposed. If you pass <code>myNodeStream</code> to another function, that function can mess with the stream&rsquo;s internal state as much as it wants, calling <code>push</code>, emitting <code>&quot;error&quot;</code> events, or even (despite the underscore) calling <code>_read</code>. Whereas if you pass <code>myWhatwgStream</code> around, consumers will not be able to do any of those things: the integrity of its internal state will be preserved.</p>
+
+<p>(Plus, no subclassing!)</p>
+
+<h2 id="when-would-i-use-this?">When Would I Use This?</h2>
+
+<p>I admit that that the revealing constructor pattern seems a bit unorthodox. The number of actors involved—viz. the constructor itself, the work-doing function to which capabilities are given, and the capability arguments—can be hard to get your head around, at least the first few times you see them.</p>
+
+<p>That said, it is a pretty elegant solution to a tricky problem. You might not need this level of encapsulation in your home-grown code. And even more widespread libraries may be able to skate by, as Node does, with documentation strategies and an attitude of &ldquo;don&rsquo;t do anything dumb with the capabilities we leave lying around, or it&rsquo;ll break.&rdquo; But when writing platform-level libraries and abstractions, which need to maintain their integrity in the face of any environment, the revealing constructor pattern really proves its worth.</p>
+
+<p>And besides, patterns become part of our vernacular. Many patterns that are commonplace today seemed just as strange when they are introduced as the revealing constructor pattern might to you now. After working with promises and streams for a while, you might encounter a situation where a revealing constructor is a natural fit for your library&rsquo;s needs. Who knows!</p>
+
+<h2 id="postscript">Postscript</h2>
+
+<p>If those examples weren&rsquo;t enough, here&rsquo;s one that you should be able to connect with: <a href="https://gist.github.com/domenic/9003334">an event emitter using the revealing constructor pattern</a>. This is an evolution of some of my <a href="https://github.com/domenic/pubit">earlier work</a> on event emitters with separate capabilities.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ES6 Iterators, Generators, and Iterables]]></title>
+    <link href="https://blog.domenic.me/es6-iterators-generators-and-iterables/"/>
+    <updated>2013-09-06T00:00:00+00:00</updated>
+    <id>https://blog.domenic.me/es6-iterators-generators-and-iterables</id>
+    <content type="html"><![CDATA[<p>I wrote up a quick guide to the terminology around ES6&rsquo;s iteration-related concepts, plus some notes and other
+resources.</p>
+
+<h2 id="definitions">Definitions</h2>
+
+<p>An <strong>iterator</strong> is an object with a <code>next</code> method that returns <code>{ done, value }</code> tuples.</p>
+
+<p>An <strong>iterable</strong> is an object which has an internal method, written in the current ES6 draft specs as
+<code>obj[@@iterator]()</code>, that returns an iterator.</p>
+
+<p>A <strong>generator</strong> is a specific type of iterator whose <code>next</code> results are determined by the behavior of its corresponding
+generator function. Generators also have a <code>throw</code> method, and their <code>next</code> method takes a parameter.</p>
+
+<p>A <strong>generator function</strong> is a special type of function that acts as a constructor for generators. Generator function
+bodies can use the contextual keyword <code>yield</code>, and you can send values or exceptions into the body, at the points where
+<code>yield</code> appears, via the constructed generator&rsquo;s <code>next</code> and <code>throw</code> methods. Generator functions are written with
+<code>function*</code> syntax.</p>
+
+<p>A <strong>generator comprehension</strong> is a shorthand expression for creating generators, e.g.
+<code>(for (x of a) for (y of b) x * y)</code>.</p>
+
+<h2 id="notes">Notes</h2>
+
+<h3 id="for-of"><code>for</code>-<code>of</code></h3>
+
+<p>The new <code>for</code>-<code>of</code> loop works on iterables, i.e. you do <code>for (let x of iterable) { /* ... */ }</code>. So for example, it
+works on arrays by looking up their <code>Array.prototype[@@iterator]()</code> internal method, which is specified to return an
+iterator that does what you&rsquo;d expect. Similarly <code>Map.prototype</code>, <code>Set.prototype</code>, and others all have <code>@@iterator</code>
+methods that help them work with <code>for</code>-<code>of</code> and other constructs in the language that consume iterators.</p>
+
+<p>Note that <code>for</code>-<code>in</code> has nothing to do with iterables, or indeed any of the concepts discussed here. It still works as
+it did before, looping through enumerable object properties, and it will be pretty useless when given an iterable of any
+sort.</p>
+
+<h3 id="iterable-iterators">Iterable Iterators</h3>
+
+<p>An <em>iterator</em> can also be <em>iterable</em> if it has an <code>@@iterator()</code> internal method. Most iterators in the ES6 draft spec
+are also iterable, with the internal method just returning <code>this</code>. In particular, all generators created via generator
+functions or generator comprehensions have this behavior. So you can do:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">lazySequence</span> <span class="o">=</span> <span class="p">(</span><span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="nx">a</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="nx">y</span> <span class="nx">of</span> <span class="nx">b</span><span class="p">)</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">z</span> <span class="nx">of</span> <span class="nx">lazySequence</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">z</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="making-iterable-objects">Making Iterable Objects</h3>
+
+<p>To make a custom iterable object, you use the <code>Symbol.iterator</code> symbol, which is the inside-JavaScript way of referring
+to the specification&rsquo;s <code>@@iterator</code>. It should return an iterator, thus making your object iterable. The easiest way to
+write the iterator-returning method is to use generator syntax. Putting this all together, it looks like</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">iterable</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="o">*</span><span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]()</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="nx">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="generator-comprehension-desugaring">Generator Comprehension Desugaring</h3>
+
+<p>You can think of generator comprehensions as &ldquo;sugar&rdquo; for writing out and immediately invoking a generator function, with
+<code>yield</code>s inserted implicitly at certain points. For example, the comprehension <code>(for (x of a) for (y of b) x * y)</code>
+desugars to</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">(</span><span class="kd">function</span><span class="o">*</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">y</span> <span class="nx">of</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">yield</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}())</span>
+</code></pre></div>
+<h3 id="a-weirdness">A Weirdness</h3>
+
+<p>It&rsquo;s not entirely clear why generator comprehensions create generators instead of simple iterable-iterators. In
+particular, as you can see from the above desugaring, calling <code>throw</code> or giving a parameter to <code>next</code> is pretty useless:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">g</span> <span class="o">=</span> <span class="p">(</span><span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">);</span>
+
+<span class="nx">g</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>                   <span class="c1">// returns { done: false, value: 1 }</span>
+<span class="nx">g</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>                  <span class="c1">// returns { done: false, value: 2 }</span>
+<span class="nx">g</span><span class="p">.</span><span class="k">throw</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;boo!&quot;</span><span class="p">));</span> <span class="c1">// immediately throws the error</span>
+</code></pre></div>
+<p>It seems the arguments in favor of generators instead of iterable-iterators are largely that it makes implementers&#39; jobs
+easier, at least according to
+<a href="http://esdiscuss.org/topic/why-do-generator-expressions-return-generators">this es-discuss thread</a> I started.</p>
+
+Implementation Status</h2>
+
+<p>Due to the tireless work of <a href="http://wingolog.org/">Andy Wingo</a>, V8 (Chrome) has support for generator functions, behind
+the <code>--harmony</code> flag (or &ldquo;Experimental JavaScript Features&rdquo; in chrome://flags). It also has some form of <code>for</code>-<code>of</code>,
+which only works with generators and with the custom iterables returned by <code>Array.prototype.values</code> and
+<code>Array.prototype.keys</code>, but does not work with anything else (e.g. arrays themselves). I assume this is because the
+iteration protocol has not been implemented yet. V8 does not have generator comprehensions.</p>
+
+<p>SpiderMonkey (Firefox) has an old version of everything here, with outdated syntax and semantics. Over the last week or
+so, Andy has submitted patches to update their generator implementation. He&rsquo;s now working on <code>for</code>-<code>of</code> and the
+iteration protocol in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=907077">bug #907077</a>; no word on generator
+comprehensions. Note that SpiderMonkey, unlike V8, does not hide these features behind a default-off flag.</p>
+
+<p>Chakra (Internet Explorer) is as always a complete mystery, with no transparency into their development cycle or even
+priority list.</p>
+
+<p>And I still haven&rsquo;t forgiven JavaScriptCore (Safari) for its long period of forgetting to implement
+<code>Function.prototype.bind</code>, so I haven&rsquo;t even tried looking into their status.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Strict Mode = Static Scoping]]></title>
+    <link href="https://blog.domenic.me/strict-mode-static-scoping/"/>
+    <updated>2013-03-19T00:00:00+00:00</updated>
+    <id>https://blog.domenic.me/strict-mode-static-scoping</id>
+    <content type="html"><![CDATA[<p>It is indeed
+<a href="http://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/">time to start using JavaScript&rsquo;s strict mode</a>.
+There are many reasons, but one of the most compelling is that it brings sanity to JavaScript&rsquo;s scoping rules, by
+guaranteeing static scoping.</p>
+
+<p>Simply put, code is <em>statically scoped</em> if you can statically analyze it and determine what all the identifiers refer
+to. In other words, you can statically determine where every variable was declared. As we&rsquo;ll see, JavaScript&rsquo;s sloppy
+mode does not have this property, giving you yet one more reason to shun it in favor of <code>&quot;use strict&quot;</code>.</p>
+
+<h2 id="sloppy-mode-=-dynamic-scoping">Sloppy Mode = Dynamic Scoping</h2>
+
+<p>Most of the time, JavaScript scoping is fairly simple. You look up the scope chain, as declared in the source code; if
+you can&rsquo;t find something, it must be on the global object. But in sloppy mode, there are several situations that can
+foil this algorithm.</p>
+
+<h3 id="use-of-with">Use of <code>with</code></h3>
+
+<p>Using the <code>with</code> statement completely destroys the sanity of your scope chain:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">__filename</span> <span class="o">=</span> <span class="s2">&quot;/my/cool/file.js&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">anotherContext</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">__filename</span><span class="o">:</span> <span class="s2">&quot;/another/file.js&quot;</span><span class="p">,</span> <span class="nx">__dirname</span><span class="o">:</span> <span class="s2">&quot;/another&quot;</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="o">?</span> <span class="nx">anotherContext</span> <span class="o">:</span> <span class="p">{};</span>
+<span class="kd">with</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">__filename</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In this example, we can&rsquo;t statically determine if <code>console.log(__filename)</code> is referring to the free <code>__filename</code>
+variable, set to <code>&quot;/my/cool/file.js&quot;</code>, or if it&rsquo;s referring to the property of <code>anotherContext</code>, set to
+<code>&quot;/another/file.js&quot;</code>.</p>
+
+<p>Strict mode fixes this by <a href="http://es5.github.com/#x12.10.1">banning <code>with</code> entirely</a>. Thus, the above code would be a
+syntax error if it were placed in a strict context.</p>
+
+<h3 id="use-of-eval">Use of <code>eval</code></h3>
+
+<p>Using <code>eval</code> in sloppy mode will introduce new variable bindings into your scope chain:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">require</span><span class="p">(</span><span class="nx">moduleId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// loading code elided.</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">requireStuff</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;function require(things) { console.log(&#39;We require more &#39; + things); }&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;minerals&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In this example, we have a similar problem as before: <code>eval</code> might have dynamically introduced a new variable binding.
+Thus, <code>require</code> can refer either to the new function introduced by <code>eval</code> into <code>requireStuff</code>&rsquo;s scope, or to the
+function declared in the outer scope. We just can&rsquo;t know, until runtime!</p>
+
+<p>Strict mode fixes this by <a href="http://es5.github.com/#x10.4.2.1">disallowing <code>eval</code> from introducing new bindings</a>. Thus,
+if the above code were strict, <code>require(&quot;minerals&quot;)</code> would always refer to the outer module-loading <code>require</code> function.</p>
+
+<h2 id="why-does-this-matter?">Why Does This Matter?</h2>
+
+<p>In addition to the obvious implications of this for optimization and inlining in JITers, this matters because static
+analysis is becoming increasingly important in modern, complex JavaScript.</p>
+
+<p>For example, let&rsquo;s say you were writing
+<a href="https://github.com/substack/node-browserify">a tool for using Node.js-style modules in the browser</a>. To do so, you&rsquo;d
+probably need to <a href="https://github.com/substack/module-deps">detect <code>require</code> calls</a>; in particular, if you see <code>require</code>,
+you&rsquo;ll want to know what scope that <code>require</code> comes from: global or local? Similarly, you might want to
+<a href="https://github.com/substack/insert-module-globals">detect</a> references to <code>__filename</code>, <code>__dirname</code>, <code>Buffer</code>, etc. and
+make them available if they&rsquo;re detected.</p>
+
+<p>But in sloppy mode, it is literally <em>unknowable</em> what a given variable refers to. At any time, an enclosing <code>with</code> or a
+nearby <code>eval</code> could come along, and really ruin your day. In such a setting, static analysis is doomed; as we&rsquo;ve seen
+in the above examples, the meaning of identifiers like <code>require</code> or <code>__filename</code> can&rsquo;t be determined until runtime.</p>
+
+<h2 id="so?-just-don&#39;t-use-those-things">So? Just Don&rsquo;t Use Those Things</h2>
+
+<p>A common refrain from people who <a href="https://twitter.com/izs/status/310833154401398784">can&rsquo;t handle typing `&ldquo;use strict&rdquo;</a>
+is that they&rsquo;ll simply not use these features. And this indeed suffices: if you subset the language, perhaps using tools
+like JSHint to enforce your subsetting rules, you can create a more sane programming environment.</p>
+
+<p>Similar arguments are applied commonly in other languages, like prohibiting the use of exceptions or templates in C++.
+Even telling people to not pass expressions to their <code>require</code> calls in Node.js modules falls under this category (with
+the rationale that this breaks the popular browserify tool).</p>
+
+<p>I don&rsquo;t buy these arguments. A language should give its users built-in tools to use it correctly. In the case of
+JavaScript, there is one very clear tool that has been given: a simple, backward-compatible <code>&quot;use strict&quot;</code> pragma at the
+top of your source files. If you think that&rsquo;s difficult, try being a C++ programmer and writing exception-safe code: the
+techniques you need to use are a lot more involved than a single pragma.</p>
+
+<h2 id="use-strict-mode">Use Strict Mode</h2>
+
+<p>In <a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;t=18m50s">the words of Mark Miller</a>, ECMAScript 5 strict mode has
+transitioned JavaScript into the &ldquo;actually good&rdquo; category of programming languages. Let&rsquo;s use it. Opt in to static
+scoping, and a saner language in general. Use strict.</p>
+
+<p><em>This post was inspired by
+<a href="http://www.mail-archive.com/es-discuss@mozilla.org/msg18408.html">a long-ago es-discuss thread</a>, which references
+<a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;t=42m53s">a talk by Mark Miller</a>. Further clarifications were had in
+<a href="http://www.mail-archive.com/es-discuss@mozilla.org/msg22147.html">another, recent es-discuss thread</a>.</em></p>
+]]></content>
+  </entry>
+  
+</feed>

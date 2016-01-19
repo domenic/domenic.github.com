@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: node.js | Hidden Variables]]></title>
+  <link href="https://blog.domenic.me/categories/node-dot-js/atom.xml" rel="self"/>
+  <link href="https://blog.domenic.me/"/>
+  <updated>2015-03-16T11:05:38+00:00</updated>
+  <id>https://blog.domenic.me/</id>
+  <author>
+    <name><![CDATA[Domenic Denicola]]></name>
+    <email><![CDATA[d@domenic.me]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Peer Dependencies]]></title>
+    <link href="https://blog.domenic.me/peer-dependencies/"/>
+    <updated>2013-02-08T00:00:00+00:00</updated>
+    <id>https://blog.domenic.me/peer-dependencies</id>
+    <content type="html"><![CDATA[<p>npm is awesome as a package manager. In particular, it handles sub-dependencies very well: if my package depends on
+<code>request</code> version 2 and <code>some-other-library</code>, but <code>some-other-library</code> depends on <code>request</code> version 1, the resulting
+dependency graph looks like:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">├── request@2.12.0
+└─┬ some-other-library@1.2.3
+  └── request@1.9.9
+</code></pre></div>
+<p>This is, generally, great: now <code>some-other-library</code> has its own copy of <code>request</code> v1 that it can use, while not
+interfering with my package&rsquo;s v2 copy. Everyone&rsquo;s code works!</p>
+
+<h2 id="the-problem:-plugins">The Problem: Plugins</h2>
+
+<p>There&rsquo;s one use case where this falls down, however: <em>plugins</em>. A plugin package is meant to be used with another &ldquo;host&rdquo;
+package, even though it does not always directly <em>use</em> the host package. There are many examples of this pattern in the
+Node.js package ecosystem already:</p>
+
+<ul>
+<li>Grunt <a href="http://gruntjs.com/#plugins-all">plugins</a></li>
+<li>Chai <a href="http://chaijs.com/plugins">plugins</a></li>
+<li>Levelup <a href="https://npmjs.org/package/level-hooks">plugins</a></li>
+<li>Express <a href="http://expressjs.com/api.html#middleware">middleware</a></li>
+<li>Winston <a href="https://github.com/flatiron/winston/blob/master/docs/transports.md">transports</a></li>
+</ul>
+
+<p>Even if you&rsquo;re not familiar with any of those use cases, surely you recall &ldquo;jQuery plugins&rdquo; from back when you were a
+client-side developer: little <code>&lt;script&gt;</code>s you would drop into your page that would attach things to <code>jQuery.prototype</code>
+for your later convenience.</p>
+
+<p>In essence, plugins are designed to be used with host packages. But more importantly, they&rsquo;re designed to be used with
+<em>particular versions</em> of host packages. For example, versions 1.x and 2.x of my <code>chai-as-promised</code> plugin work with
+<code>chai</code> version 0.5, whereas versions 3.x work with <code>chai</code> 1.x. Or, in the faster-paced and less-semver–friendly world of
+Grunt plugins, version 0.3.1 of <code>grunt-contrib-stylus</code> works with <code>grunt</code> 0.4.0rc4, but breaks when used with <code>grunt</code>
+0.4.0rc5 due to removed APIs.</p>
+
+<p>As a package manager, a large part of npm&rsquo;s job when installing your dependencies is managing their versions. But its
+usual model, with a <code>&quot;dependencies&quot;</code> hash in <code>package.json</code>, clearly falls down for plugins. Most plugins never actually
+depend on their host package, i.e. grunt plugins never do <code>require(&quot;grunt&quot;)</code>, so even if plugins did put down their host
+package as a dependency, the downloaded copy would never be used. So we&rsquo;d be back to square one, with your application
+possibly plugging in the plugin to a host package that it&rsquo;s incompatible with.</p>
+
+<p>Even for plugins that do have such direct dependencies, probably due to the host package supplying utility APIs,
+specifying the dependency in the plugin&rsquo;s <code>package.json</code> would result in a dependency tree with multiple copies of the
+host package—not what you want. For example, let&rsquo;s pretend that <code>winston-mail</code> 0.2.3 specified <code>&quot;winston&quot;: &quot;0.5.x&quot;</code> in
+its <code>&quot;dependencies&quot;</code> hash, since that&rsquo;s the latest version it was tested against. As an app developer, you want the
+latest and greatest stuff, so you look up the latest versions of <code>winston</code> and of <code>winston-mail</code>, putting them in your
+<code>package.json</code> as</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;winston&quot;</span><span class="p">:</span> <span class="s2">&quot;0.6.2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;winston-mail&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.3&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>But now, running <code>npm install</code> results in the unexpected dependency graph of</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">├── winston@0.6.2
+└─┬ winston-mail@0.2.3
+  └── winston@0.5.11
+</code></pre></div>
+<p>I&rsquo;ll leave the subtle failures that come from the plugin using a different Winston API than the main application to
+your imagination.</p>
+
+<h2 id="the-solution:-peer-dependencies">The Solution: Peer Dependencies</h2>
+
+<p>What we need is a way of expressing these &ldquo;dependencies&rdquo; between plugins and their host package. Some way of saying, &ldquo;I
+only work when plugged in to version 1.2.x of my host package, so if you install me, be sure that it&rsquo;s alongside a
+compatible host.&rdquo; We call this relationship a <em>peer dependency</em>.</p>
+
+<p>The peer dependency idea has been kicked around for <a href="https://github.com/isaacs/npm/issues/930">literally</a>
+<a href="https://github.com/isaacs/npm/issues/1400">years</a>. After
+<a href="https://github.com/isaacs/npm/issues/1400#issuecomment-5932027">volunteering</a> to get this done &ldquo;over the weekend&rdquo; nine
+months ago, I finally found a free weekend, and now peer dependencies are in npm!</p>
+
+<p>Specifically, they were introduced in a rudimentary form in npm 1.2.0, and refined over the next few releases into
+something I&rsquo;m actually happy with. Today Isaac packaged up npm 1.2.10 into
+<a href="http://blog.nodejs.org/2013/02/06/node-v0-8-19-stable/">Node.js 0.8.19</a>, so if you&rsquo;ve installed the latest version of
+Node, you should be ready to use peer dependencies!</p>
+
+<p>As proof, I present you the results of trying to install <a href="https://npmjs.org/package/jitsu"><code>jitsu</code></a> 0.11.6 with npm
+1.2.10:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">npm ERR! peerinvalid The package flatiron does not satisfy its siblings&#39; peerDependencies requirements!
+npm ERR! peerinvalid Peer flatiron-cli-config@0.1.3 wants flatiron@~0.1.9
+npm ERR! peerinvalid Peer flatiron-cli-users@0.1.4 wants flatiron@~0.3.0
+</code></pre></div>
+<p>As you can see, <code>jitsu</code> depends on two Flatiron-related packages, which themselves peer-depend on conflicting versions
+of Flatiron. Good thing npm was around to help us figure out this conflict, so it could be fixed in version 0.11.7!</p>
+
+<h2 id="using-peer-dependencies">Using Peer Dependencies</h2>
+
+<p>Peer dependencies are pretty simple to use. When writing a plugin, figure out what version of the host package you
+peer-depend on, and add it to your <code>package.json</code>:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;chai-as-promised&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;peerDependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;chai&quot;</span><span class="p">:</span> <span class="s2">&quot;1.x&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Now, when installing <code>chai-as-promised</code>, the <code>chai</code> package will come along with it. And if later you try to install
+another Chai plugin that only works with 0.x versions of Chai, you&rsquo;ll get an error. Nice!</p>
+
+<p>One piece of advice: peer dependency requirements, unlike those for regular dependencies, <em>should be lenient</em>. You
+should not lock your peer dependencies down to specific patch versions. It would be really annoying if one Chai plugin
+peer-depended on Chai 1.4.1, while another depended on Chai 1.5.0, simply because the authors were lazy and didn&rsquo;t spend
+the time figuring out the actual minimum version of Chai they are compatible with.</p>
+
+<p>The best way to determine what your peer dependency requirements should be is to actually follow
+<a href="http://semver.org/">semver</a>. Assume that only changes in the host package&rsquo;s major version will break your plugin. Thus,
+if you&rsquo;ve worked with every 1.x version of the host package, use <code>&quot;~1.0&quot;</code> or <code>&quot;1.x&quot;</code> to express this. If you depend on
+features introduced in 1.5.2, use <code>&quot;&gt;= 1.5.2 &lt; 2&quot;</code>.</p>
+
+<p>Now go forth, and peer depend!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Portable Node.js Code]]></title>
+    <link href="https://blog.domenic.me/portable-nodejs-code/"/>
+    <updated>2012-10-02T00:00:00+00:00</updated>
+    <id>https://blog.domenic.me/portable-nodejs-code</id>
+    <content type="html"><![CDATA[<p><em>This post originally appeared <a href="https://gist.github.com/domenic/2790533">as a gist</a>, and then
+<a href="http://nodeblog.azurewebsites.net/how-to-write-portable-nodejs-code">on the Node on Azure blog</a>.</em></p>
+
+<p>Node.js core does its best to treat every platform equally. Even if most Node developers use OS X day to day, some use
+Windows, and most everyone deploys to Linux or Solaris. So it&rsquo;s important to keep your code portable between platforms,
+whether you&rsquo;re writing a library or an application.</p>
+
+<p>Predictably, most cross-platform issues come from Windows. Things just work differently there! But if you&rsquo;re careful,
+and follow some simple best practices, your code can run just as well on Windows systems.</p>
+
+<h2 id="paths-and-urls">Paths and URLs</h2>
+
+<p>On Windows, paths are constructed with backslashes instead of forward slashes. So if you do your directory manipulation
+by splitting on <code>&quot;/&quot;</code> and playing with the resulting array, <a href="https://github.com/logicalparadox/codex/commit/7f91b451e7cdc9d794f30bd026029aea797bb1e0">your code will fail dramatically on Windows</a>.</p>
+
+<p>Instead, you should be using the <a href="http://nodejs.org/docs/latest/api/path.html">path module</a>. So instead of resolving paths with string contatenation, e.g.
+<code>x + &quot;/&quot; + y</code>, you should instead do <code>path.resolve(x, y)</code>. Similarly, instead of relativizing paths with string
+replacement, e.g. <code>x.replace(/^parent\/dirs\//, &quot;&quot;)</code>, you <a href="https://github.com/ryanmcgrath/wrench-js/commit/01190602dac64924fca2dae11912ffb560e636a0">should</a> do <code>path.relative(&quot;/parent/dirs&quot;, y)</code>.</p>
+
+<p>Another area of concern is that, when writing portable code, you cannot count on URLs and module IDs having the same
+separators as paths. If you use something like <code>path.join</code> <a href="https://github.com/domenic/knox/compare/eabef00df9bf79085229f4ed39b2679eb579ea20...9b1a4e9f644ababd5d9ced227de44709e1fccf4b">on a URL</a>, Windows users will get URLs containing
+backslashes! <a href="https://github.com/isaacs/npm-www/pull/88">Similarly</a> for <code>path.normalize</code>, or in general any path methods. All this applies if you&rsquo;re
+<a href="https://github.com/substack/node-browserify/pull/158">working with module IDs</a>, too: they are forward-slash delimited, so you shouldn&rsquo;t use path functions with
+them either.</p>
+
+<h2 id="non-portable-apis">Non-portable APIs</h2>
+
+<p>Windows is completely missing the <code>process.(get|set)(gid|uid)</code> methods, so calling them will instantly crash your
+program on Windows. Always <a href="https://github.com/flatiron/winston/commit/a32d92ba1be3c21859d8c1c9e8e0e701846fcaf4">guard such calls</a> with a conditional.</p>
+
+<p>The <a href="http://nodejs.org/docs/latest/api/fs.html#fs_fs_watchfile_filename_options_listener"><code>fs.watchFile</code></a> API is not sufficiently cross-platform, and is recommended against in the docs because
+of it. You <a href="https://github.com/logicalparadox/codex/commit/be2fe18f5561f7bbd3bd0099bb47f7e58c23638d">should</a> use <a href="http://nodejs.org/docs/latest/api/fs.html#fs_fs_watch_filename_options_listener"><code>fs.watch</code></a> instead.</p>
+
+<p>The <a href="http://nodejs.org/api/child_process.html">child_process module</a> requires care cross-platform. In particular, <code>spawn</code> and <code>execFile</code> do not execute in a
+shell, which means that on Windows only <code>.exe</code> files will run. This is rather problematic, as many cross-platform
+binaries are included on Windows as <code>.cmd</code> or <code>.bat</code> files, <a href="https://github.com/isaacs/npm/issues/2333">among them Git</a>, <a href="https://github.com/isaacs/npm-www/blob/fd3a96e861989338676937736599598f7c0fde8f/dev/go.js#L22-27">CouchDB</a>, and
+many others. So if you&rsquo;re using these APIs, things will likely work great on OS X, Linux, etc. But when you tell your
+users “just install the Git build for Windows, and make sure it&rsquo;s in your path!” that ends up not being sufficient.
+There is <a href="https://github.com/joyent/node/issues/2318">talk</a> of fixing this behavior in libuv, but that&rsquo;s still tentative. In the meantime, if you don&rsquo;t
+need to stream your output, <code>exec</code> works well. Otherwise you&rsquo;ll need <a href="https://github.com/isaacs/npm-www/blob/fd3a96e861989338676937736599598f7c0fde8f/dev/go.js#L22-27">branching logic</a> to take care
+of Windows.</p>
+
+<p>A final edge-case comes when using named sockets, e.g. with <code>net.connect</code>. On Unix, simple filenames suffice, but on
+Windows, they must conform to a <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365783%28v=vs.85%29.aspx">bizarre syntax</a>. There&rsquo;s not really a better solution for this than
+<a href="https://gist.github.com/2790533#gistcomment-331356">branching per-platform</a>.</p>
+
+<h2 id="being-windows-developer-friendly">Being Windows-Developer Friendly</h2>
+
+<p>One of the most egregious problems with many projects is their unnecessary use of Unix Makefiles. Windows does not have
+a <code>make</code> command, so the tasks stored in these files are entirely inaccessible to Windows users who might try to
+contribute to your project. This is especially annoying if you put your test command in there!</p>
+
+<p>Fortunately, we have a solution: npm comes with a <a href="https://npmjs.org/doc/scripts.html">scripts feature</a> where you can include commands to be
+run for testing (<code>test</code>), installation (<code>install</code>), building (<code>prepublish</code>), and starting your app (<code>start</code>), among many
+others. You can also create custom scripts, which are then run with <code>npm run &lt;script-name&gt;</code>; I often use this for
+<a href="https://github.com/domenic/sinon-chai/blob/baf878ee7ba98bae507ac8bc91c94ea1fe287964/package.json#L28">lint steps</a>. Also of note, you can reference any commands your app depends on by their short names here: for
+example, <code>&quot;mocha&quot;</code> instead of <code>&quot;./node_modules/.bin/mocha&quot;</code>. So, please use these! If you must have a Makefile for
+whatever reason, just have it <a href="https://github.com/LearnBoost/knox/blob/c1b680c80b7a4493970e3e9a92305387ef96c1eb/Makefile#L2-3">delegate to an npm script</a>.</p>
+
+<p>Another crucially important step is not using Unix shell scripts as part of your development process. Windows doesn&rsquo;t
+have bash, or <code>ls</code>, or <code>mv</code>, or any of those other commands you might use. Instead, write your shell scripts
+<a href="http://www.2ality.com/2011/12/nodejs-shell-scripting.html">in JavaScript</a>, using a tool like <a href="http://gruntjs.com/">Grunt</a> if you&rsquo;d like.</p>
+
+<h2 id="bonus:-something-that-breaks-on-linux-and-solaris!">Bonus: Something that Breaks on Linux and Solaris!</h2>
+
+<p>Both Windows and, by default, OS X, use case-insensitive file systems. That means if you install a package named foo,
+any of <code>require(&quot;foo&quot;)</code> or <code>require(&quot;FOO&quot;)</code> or <code>require(&quot;fOo&quot;)</code> will work—on Windows and OS X. But then when you go to
+deploy your code, out of your development environment and into your Linux or Solaris production system, the latter two
+will <em>not</em> work! So it&rsquo;s a little thing, but make sure you always get your module and package name casing right.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As you can see, writing cross-platform code is sometimes painful. Usually, it&rsquo;s just a matter of best practices, like
+using the path module or remembering that URLs are different from filesystem paths. But sometimes there are APIs that
+just don&rsquo;t work cross-platform, or have annoying quirks that necessitate branching code.</p>
+
+<p>Nevertheless, it&rsquo;s worth it. Node.js is the most exciting software development platform in recent memory, and one of its
+greatest strengths is its portable nature. Try your best to uphold that!</p>
+]]></content>
+  </entry>
+  
+</feed>

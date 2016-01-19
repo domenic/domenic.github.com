@@ -1,313 +1,1596 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Hidden Variables</title>
+
+
+<meta name="author" content="Domenic Denicola">
+<meta name="description" content="Domenic's blog about coding and stuff">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Hidden Variables</title>
-<meta name="description" content="Domenic's blog about coding and stuff">
-
-<link rel="stylesheet" href="/css/main.css">
 <link rel="canonical" href="https://blog.domenic.me/">
-<link rel="alternate" type="application/rss+xml" title="Hidden Variables" href="https://blog.domenic.me/atom.xml">
-
-
-<header class="site-header">
-  <div class="wrapper">
-    <h1 class="site-title"><a href="/">Hidden Variables</a></h1>
-    <p class="tagline">Domenic's blog about coding and stuff</p>
-
-    <nav class="site-nav">
-      <a href="/archives">Archives</a>
-      <a href="/atom.xml">RSS</a>
-    </nav>
-  </div>
-</header>
-
-
-<div class="page-content">
-  <div class="wrapper">
-    <ul class="post-list">
-  
-    <li>
-      <span class="post-meta">
-        Jan 18, 2016
-
-        
- | <a href="/mathematical-consciousness#disqus_thread" data-disqus-identifier="https://blog.domenic.me/mathematical-consciousness/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/not software">Not Software</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/mathematical-consciousness">Mathematical Consciousness</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Mar 16, 2015
-
-        
- | <a href="/reading-from-sockets#disqus_thread" data-disqus-identifier="https://blog.domenic.me/reading-from-sockets/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/streams">Streams</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/reading-from-sockets">Reading from Sockets</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Mar 5, 2015
-
-        
- | <a href="/reading-from-files#disqus_thread" data-disqus-identifier="https://blog.domenic.me/reading-from-files/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/streams">Streams</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/reading-from-files">Reading from Files</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Mar 4, 2015
-
-        
- | <a href="/byte-sources-introduction#disqus_thread" data-disqus-identifier="https://blog.domenic.me/byte-sources-introduction/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/streams">Streams</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/byte-sources-introduction">Byte Sources: Introduction</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Feb 14, 2014
-
-        
- | <a href="/the-revealing-constructor-pattern#disqus_thread" data-disqus-identifier="https://blog.domenic.me/the-revealing-constructor-pattern/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/javascript">JavaScript</a>, 
-
-  <a class="category-link" href="/categories/promises">Promises</a>, 
-
-  <a class="category-link" href="/categories/streams">Streams</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/the-revealing-constructor-pattern">The Revealing Constructor Pattern</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Dec 2, 2013
-
-        
- | <a href="/continual-progress-in-the-w3c-tag#disqus_thread" data-disqus-identifier="https://blog.domenic.me/continual-progress-in-the-w3c-tag/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/web">Web</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/continual-progress-in-the-w3c-tag">Continual Progress in the W3C TAG</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Oct 7, 2013
-
-        
- | <a href="/the-extensible-web#disqus_thread" data-disqus-identifier="https://blog.domenic.me/the-extensible-web/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/web">Web</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/the-extensible-web">The Extensible Web</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Sep 6, 2013
-
-        
- | <a href="/es6-iterators-generators-and-iterables#disqus_thread" data-disqus-identifier="https://blog.domenic.me/es6-iterators-generators-and-iterables/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/javascript">JavaScript</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/es6-iterators-generators-and-iterables">ES6 Iterators, Generators, and Iterables</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Jun 10, 2013
-
-        
- | <a href="/explaining-away-the-webs-magic#disqus_thread" data-disqus-identifier="https://blog.domenic.me/explaining-away-the-webs-magic/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/web">Web</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/explaining-away-the-webs-magic">Explaining Away the Web's Magic</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Mar 19, 2013
-
-        
- | <a href="/strict-mode-static-scoping#disqus_thread" data-disqus-identifier="https://blog.domenic.me/strict-mode-static-scoping/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/javascript">JavaScript</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/strict-mode-static-scoping">Strict Mode = Static Scoping</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Feb 8, 2013
-
-        
- | <a href="/peer-dependencies#disqus_thread" data-disqus-identifier="https://blog.domenic.me/peer-dependencies/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/node.js">Node.js</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/peer-dependencies">Peer Dependencies</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Oct 14, 2012
-
-        
- | <a href="/youre-missing-the-point-of-promises#disqus_thread" data-disqus-identifier="https://blog.domenic.me/youre-missing-the-point-of-promises/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/promises">Promises</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/youre-missing-the-point-of-promises">You're Missing the Point of Promises</a></h2>
-    </li>
-  
-    <li>
-      <span class="post-meta">
-        Oct 2, 2012
-
-        
- | <a href="/portable-nodejs-code#disqus_thread" data-disqus-identifier="https://blog.domenic.me/portable-nodejs-code/">Comments</a>
-
-
-        | posted in 
-  <a class="category-link" href="/categories/node.js">Node.js</a>
-
-
-      </span>
-
-      <h2><a class="post-link" href="/portable-nodejs-code">Portable Node.js Code</a></h2>
-    </li>
-  
-</ul>
-
-  </div>
-</div>
-
-<footer class="site-footer">
-  <div class="wrapper">
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <p>Hidden Variables</p>
-        <p>Source at <a href="https://github.com/domenic/blog.domenic.me/">domenic/blog.domenic.me</a></p>
-      </div>
-
-      <div class="footer-col footer-col-2">
-        <ul class="social-media-list">
-          
-          <li>
-            <a href="https://github.com/domenic"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
-</span><span class="username">domenic</span></a>
-
-          </li>
-          
-
-          
-          <li>
-            <a href="https://twitter.com/domenic"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
-</span><span class="username">domenic</span></a>
-
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="footer-col footer-col-3">
-        <p>Copyright © 2016 Domenic Denicola</p>
-        <p><a href="mailto:d@domenic.me">d@domenic.me</a></p>
-      </div>
-    </div>
-
-  </div>
-</footer>
-
-
-
-  
-  <script id="dsq-count-scr" src="https://hiddenvariables.disqus.com/count.js" async></script>
+<link rel="alternate" href="/atom.xml" title="Hidden Variables" type="application/atom+xml">
+<link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/stylesheets/screen.css">
+<script src="/javascripts/ender.js"></script>
+<script src="/javascripts/octopress.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic">
+
+<meta property="twitter:account_id" content="30968081" />
 
 
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-37626687-1']);
+_gaq.push(['_trackPageview']);
 
-  ga('create', 'UA-37626687-1', 'auto');
-  ga('send', 'pageview');
+(function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  document.body.appendChild(ga);
+})();
 </script>
+
+
+
+<body   >
+
+<header><hgroup>
+  <h1><a href="/">Hidden Variables</a></h1>
+  <h2>Domenic's blog about coding and stuff</h2>
+</hgroup>
+
+</header>
+<nav><a class="subscription" href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.domenic.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives/">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+<div id="content">
+  <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/reading-from-sockets/">Reading from Sockets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-16T00:00:00+00:00" pubdate data-updated="true">Mar 16<sup>th</sup>, 2015</time>
+        
+         | <a href="/reading-from-sockets/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post is part of a series on the byte sources underlying the readable streams in the Streams Standard. See <a href="/byte-sources-introduction/">the introductory post</a> for more background and links to the rest of the series.</em></p>
+
+<p>At the simplest level, sockets can be treated much the same as files. You can get a file descriptor for the socket, and while there are a number APIs involved in setting it up to actually connect to a remote server, once you&rsquo;ve done that you can read from it using the same read(2) interface as <a href="/reading-from-files/">we discussed for files</a>.</p>
+
+<p>But! For sockets, there&rsquo;s an advanced technique available. Instead of using the straightforward-but-blocking read(2) call, we can fine-tune our syscall usage to give us our first taste of <strong>non-blocking I/O</strong>.  That is, there&rsquo;s a way to arrange it so that—without spinning up any threads—we can continue doing work while the OS gets our data ready for us.</p>
+
+<h2 id="non-blocking-socket-i/o">Non-Blocking Socket I/O</h2>
+
+<p>A quick aside. In higher-level languages, non-blocking <em>I/O</em> is often conflated with non-blocking <em>APIs</em>. These are actually distinct concepts, and for clarity we&rsquo;ll refer to the latter as &ldquo;asynchronous&rdquo; instead. So: I/O can be blocking or non-blocking; APIs can be synchronous or asynchronous. An asynchronous API in a higher-level language might be backed by non-blocking I/O syscalls, or it might be backed by blocking I/O syscalls in a threadpool (as we showed in the file case).</p>
+
+<p>What&rsquo;s really interesting is what the APIs for non-blocking I/O look like in C. They&rsquo;re nothing like what you might expect from working in a higher-level language, where concepts like &ldquo;events&rdquo; or &ldquo;callbacks&rdquo; are present to do the heavy lifting. Instead, it works something like this:</p>
+
+<ul>
+<li>When creating the socket, you set it to non-blocking mode.</li>
+<li>You go do some other work, and every once in a while, you come back and try to read some data from the socket.
+
+<ul>
+<li>If the OS has data ready for you, you get it instantly!</li>
+<li>Otherwise, if there&rsquo;s no data ready, the OS returns a special error code, saying to try again later.</li>
+<li>(Of course, there&rsquo;s always the possibility that something went wrong, and you&rsquo;ll get a non-special error code.)</li>
+</ul></li>
+</ul>
+
+<p>The devil is in the details of how you &ldquo;go do some other work&rdquo; and &ldquo;every once in a while&rdquo; come back to check on your socket. Or, more likely, sockets plural: what kind of self-respecting program will only be dealing with a single socket?</p>
+
+<p>The usual solution consists of two parts. First, redesign your program to be centered around an event loop, which continually cycles through the various things it might have to do—computation, reacting to user input, checking on and trying to read from any non-blocking sockets, processing the resulting data once it gets read, etc. Second, take advantage of some advanced APIs like <a href="http://linux.die.net/man/2/select">select(2)</a> or <a href="http://linux.die.net/man/4/epoll">epoll(4)</a>, to allow you to check on multiple sockets at once without needing to supply a buffer to each of them. In practice, the heavy lifting for both of these is usually provided by a library like <a href="http://libevent.org/">libevent</a> (the original) or <a href="https://github.com/libuv/libuv">libuv</a> (the new hotness).</p>
+
+<h2 id="javascript-translation">JavaScript Translation</h2>
+
+<p>In the previous episode, we were able to do a fairly direct translation of read(2)-in-a-threadpool into a promise-returning <code>file.readInto</code> API. For sockets, we&rsquo;re going to need to skip a few more steps: the jump from select(2) to evented programming is just too great to map out directly.</p>
+
+<p>Let&rsquo;s assume we&rsquo;ve somehow integrated our host program&rsquo;s event loop (e.g., the one provided by libuv) with the JavaScript event loop. We can then have some host environment code that, each time through the loop, uses select(2) or similar to check if the socket has any data available. If it does, it needs to communicate that to JavaScript somehow. An easy way to do this would be with an event:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;readable&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+</code></pre></figure>
+
+<p>Once we know that the socket has some data available, what should the JavaScript API for reading it look like? Its general shape will be pretty similar to our <code>file.readInto</code> from before. But this time, we know the result is going to be synchronous. That means we don&rsquo;t need to worry about observable data races, and so we can skip all the transfer stuff we had to do last time to avoid them. The end result ends up being:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;readable&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">bytesRead</span> <span class="o">=</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">);</span>
+  <span class="c1">// `buffer`&#39;s bytes in the range (offset, offset + bytesRead)</span>
+  <span class="c1">// have been filled in</span>
+<span class="p">});</span>
+</code></pre></figure>
+
+<p>Not too bad!</p>
+
+<h2 id="sockets-vs.-files">Sockets vs. Files</h2>
+
+<p>With this JavaScript translation in hand, we can more easily probe the differences between non-blocking socket I/O, and file I/O. It turns out there are quite a few.</p>
+
+<p>The first point to note is that we&rsquo;re being proactively told: <em>there is data ready for you</em>. But where does that data live while it&rsquo;s waiting for you to come pick it up? The answer is that the OS kernel maintains its own buffer of data for that socket, where the data accumulates until you read it. If you decline to read it, then the buffer will just keep filling up, until eventually it reaches a built-in limit. Once that happens, you&rsquo;ll start losing data!</p>
+
+<p>This is a big difference between sockets and the higher-level stream APIs you might be used to. Streams generally go to great pains to ensure you never lose any data. But this means that any streams wrapping a socket must be careful to always pull data out of the kernel buffer before it gets too full, and then keep it around in their own user-space buffer until it&rsquo;s requested.</p>
+
+<p>The second interesting difference is that we have much less control over how much data we&rsquo;re going to read. When the socket tells us that there&rsquo;s data available, it doesn&rsquo;t tell us how much. That means that in the above code, we can easily end up in a situation where <code>bytesRead &lt; count</code>: indeed, it will happen whenever the kernel buffer had fewer bytes available than we requested. This is in contrast with blocking file I/O, where the only time <code>bytesRead &lt; count</code> occurs is when we&rsquo;ve reached the end of the file.</p>
+
+<p>Finally, I want to draw attention to the different way in which buffers are provided in the two scenarios. With files, since we are doing blocking I/O in a threadpool, we need to provide the buffer up front. Whereas with sockets, we can wait until the last minute to do so. This had a pretty drastic impact on the API surface when we tried to express the reuslt in JavaScript. In particular, while you could imagine a way to wrap up our JavaScript socket API into something like our JavaScript file API, you can&rsquo;t really do the other way around.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/reading-from-files/">Reading from Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-05T00:00:00+00:00" pubdate data-updated="true">Mar 5<sup>th</sup>, 2015</time>
+        
+         | <a href="/reading-from-files/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post is part of a series on the byte sources underlying the readable streams in the Streams Standard. See <a href="/byte-sources-introduction/">the introductory post</a> for more background and links to the rest of the series.</em></p>
+
+<p>Once you have opened a file descriptor, you&rsquo;ll use the <a href="http://linux.die.net/man/2/read">read(2)</a> function to read bytes from it. In C the signature is</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='c'><span class="kt">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>Translated into JavaScript this might look something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">bytesRead</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>which will attempt to read <code>count</code> bytes into the <code>ArrayBuffer</code> <code>buffer</code>, starting at position <code>offset</code> into the <code>ArrayBuffer</code>. The returned number of bytes, <code>bytesRead</code>, might be less than the desired <code>count</code>, usually because you&rsquo;ve reached the end of the file.</p>
+
+<p>The most interesting thing to note about read(2) is that it is blocking. So our above naive translation into JavaScript would actually lock up your browser or server for the amount of time the I/O happens. This is obviously a no-go if you&rsquo;re trying to write a server that serves more than one user in parallel, or trying to create a responsive 60 fps web page.</p>
+
+<p>But of course we know how to fix this. We&rsquo;ll just turn it into a promise-returning function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">bytesRead</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+</code></pre></figure>
+
+<p>Not so fast. How exactly do we plan on translating a blocking POSIX API into a non-blocking JavaScript API? The obvious answer is to use another thread. That is, off in a background thread, we pass the memory represented by <code>buffer</code> into read(2), and when read(2) finishes, we go back to the main thread and fulfill the promise we previously vended with read(2)&rsquo;s return value.</p>
+
+<p>This solution has a major issue, however: <strong>data races</strong>. That is, it makes it possible to observe the memory in <code>buffer</code> changing out from under us, with code like the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">bytesRead</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</code></pre></figure>
+
+<p>Because the memory in <code>buffer</code> is being filled in by read(2) in the background thread, it&rsquo;s possible for this program to output <code>false</code>! Oh no!</p>
+
+<p>In the io.js world, this is considered OK, and with some effort you can create situations like this using their native <code>Buffer</code> type. However, in the world of web browsers, and in general in any world where standards bodies need to get multiple vendors to agree, this is not going to fly. JavaScript&rsquo;s execution model is strongly based around a run-to-completion single-threaded paradigm, and if we poke holes in that by letting other threads modify our variables out from under us between two execution steps, all hell can break lose. No specs, libraries, or optimizing compilers are written to accomodate such a world.</p>
+
+<p>One proposed solution would be to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer/transfer"><em>transfer</em></a> the backing memory of the <code>ArrayBuffer</code> into a new <code>ArrayBuffer</code> that is only accessible once the read(2) call has finished. In code, that might look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">file</span><span class="p">.</span><span class="nx">readInto</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">offset</span><span class="p">,</span> <span class="nx">count</span><span class="p">).</span><span class="nx">then</span><span class="p">(({</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">bytesRead</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// `result` is backed by the same memory `buffer` used to be</span>
+  <span class="c1">// backed by, but they are not equal:</span>
+  <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span> <span class="o">!==</span> <span class="nx">buffer</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// `buffer`&#39;s backing memory has now been transferred, so trying to use</span>
+<span class="c1">// `buffer` directly (or any views onto `buffer`) will throw:</span>
+<span class="nx">assert</span><span class="p">.</span><span class="kr">throws</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">buffer</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="kr">throws</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">));</span>
+</code></pre></figure>
+
+<p>Note how once <code>buffer</code> has been transferred, the <code>buffer</code> instance itself is now useless: it is &ldquo;detached&rdquo; in spec terms.</p>
+
+<p>We could also imagine other ways of avoiding the data races. For example, if we had an API that allowed the background thread to first detach, then &ldquo;reattach,&rdquo; the backing memory to <code>buffer</code>, we wouldn&rsquo;t need the separate <code>buffer</code> and <code>result</code> variables pointing to the same backing memory. Ideally such an API would allow us to detach and reattach <em>sections</em> of the <code>ArrayBuffer</code>, so that I could (for example) read multiple files in parallel into different sections of one large buffer. <a href="https://esdiscuss.org/topic/improving-detachment-for-array-buffers">I proposed this on es-discuss</a>, but nobody seemed to be interested.</p>
+
+<p>Alternately, we could decide that for a low-level JavaScript API representing a file descriptor, data races are OK after all. In that case, <a href="https://blog.mozilla.org/javascript/2015/02/26/the-path-to-parallel-javascript/">Mozilla&rsquo;s <code>SharedArrayBuffer</code> proposal</a> would be a good fit—we&rsquo;ll just write to the shared array buffer in the background thread, while still allowing reading in the main thread. As mentioned before, it might be hard to get such a primitive past multiple vendors and into the relevant standards. But the desire to transpile threaded C and C++ code into asm.js is proving to be a powerful motivator, which might push it into acceptance.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/byte-sources-introduction/">Byte Sources: Introduction</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-04T00:00:00+00:00" pubdate data-updated="true">Mar 4<sup>th</sup>, 2015</time>
+        
+         | <a href="/byte-sources-introduction/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post is the beginning of a series of posts regarding some of the more interesting issues I&rsquo;ve encountered while working on the Streams Standard.</em></p>
+
+<p>In the <a href="http://streams.spec.whatwg.org/">Streams Standard</a> we have the concept of readable streams, which are an abstraction on top of the lower-level <strong>underlying sources</strong>. In an abstract sense an underlying source is &ldquo;where the chunks of data come from.&rdquo; The most basic underlying sources are things like files or HTTP connections. (More complicated ones could be e.g. an underlying source that randomly generates data in-memory for test purposes, or one that synthesizes data from multiple concrete locations.) These basic underlying sources are concerned with direct production of bytes.</p>
+
+<p>The major goal of the Streams Standard is to provide an efficient abstraction specifically for I/O. Thus, to design a suitable readable stream abstraction, we can&rsquo;t just think about general concepts of <a href="https://github.com/kriskowal/gtor/">reactivity</a> or <a href="https://github.com/zenparsing/async-iteration/">async iterables</a> or <a href="https://github.com/jhusain/asyncgenerator#introducing-observable">observables</a>. We need to dig deeper into how, exactly, the underlying sources will work. Otherwise we might find ourselves <a href="https://github.com/whatwg/streams/issues/253">scrambling</a> to reform the API at the last minute when confronted with real-world implementation challenges. (Oops.)</p>
+
+<p>The current revision of the standard describes underlying sources as belonging to two broad categories: push sources, where data is constantly flowing in, and pull sources, where you specifically request it. The prototypal examples of these categories are TCP sockets and file descriptors. Once a TCP connection is open, the remote server will begin pushing data to you. Whereas, with a file, until you ask the OS to do a read, no I/O happens.</p>
+
+<p>This division is conceptually helpful, but it&rsquo;s instructive to go deeper and look at the actual system APIs in play here. Given that concepts like &ldquo;events&rdquo; are way too high-level for an OS API, they end up being shaped quite differently than how you might imagine. We&rsquo;ll assume a POSIX environment for most of this series, but I&rsquo;d like to talk about some Windows specifics toward the end. Along the way we&rsquo;ll continually be trying to bridge the gap between these C APIs and how they might manifest in JavaScript, both to give the less-C-inclined readers a chance, and to illustrate the issues we&rsquo;ve been wrestling with in the Streams Standard.</p>
+
+<p>So far these are the episodes I have planned:</p>
+
+<ol>
+<li>Byte sources: introduction (this post)</li>
+<li><a href="/reading-from-files/">Reading from files</a></li>
+<li><a href="/reading-from-sockets/">Reading from sockets</a></li>
+<li>Byte source APIs on Windows</li>
+<li>Byte source APIs in libuv and io.js</li>
+<li>Readable streams</li>
+</ol>
+
+<p>I will update this post with links to them as they become available.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-14T00:00:00+00:00" pubdate data-updated="true">Feb 14<sup>th</sup>, 2014</time>
+        
+         | <a href="/the-revealing-constructor-pattern/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including <a href="https://people.mozilla.org/%7Ejorendorff/es6-draft.html#sec-promise-objects">promises</a> and <a href="https://github.com/whatwg/streams">streams</a>. I&rsquo;m calling it the <strong>revealing constructor pattern</strong>.</p>
+
+<h2 id="the-promises-example">The Promises Example</h2>
+
+<p>Let&rsquo;s take the case of promises first, since that may be familiar. You can construct a new promise like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Use `resolve` to resolve `p`.</span>
+    <span class="c1">// Use `reject` to reject `p`.</span>
+<span class="p">});</span>
+</code></pre></figure>
+
+<p>We see here that the <code>Promise</code> constructor takes a single function as its sole parameter (called the &ldquo;executor function&rdquo;). It then <em>immediately</em> calls that function with two arguments, <code>resolve</code> and <code>reject</code>. These arguments have the capability to manipulate the internal state of the newly-constructed <code>Promise</code> instance <code>p</code>.</p>
+
+<p>I call this the revealing constructor pattern because the <code>Promise</code> constructor is <em>revealing</em> its internal capabilities, but only to the code that constructs the promise in question. The ability to resolve or reject the promise is only revealed to the constructing code, and is crucially <em>not</em> revealed to anyone <em>using</em> the promise. So if we hand off <code>p</code> to another consumer, say</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>then we can be sure that this consumer cannot mess with any of the internals that were revealed to us by the constructor. This is as opposed to, for example, putting <code>resolve</code> and <code>reject</code> methods on <code>p</code>, which anyone could call. (And no, adding underscores to the beginning of your method names won&rsquo;t save you.)</p>
+
+<h2 id="historical-origins">Historical Origins</h2>
+
+<p>The first place anyone can remember seeing this pattern is <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211866.aspx">in the WinJS promise implementation</a>. Before that, promise libraries used an awkward concept called a &ldquo;deferred.&rdquo; You would do something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">;</span>
+
+<span class="c1">// Use `deferred.resolve` to resolve `p`.</span>
+<span class="c1">// Use `deferred.reject` to reject `p`.</span>
+
+<span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>This was strange in a few ways, but most prominently, it was strange because you were constructing an object without using a constructor. This is generally an antipattern in JavaScript: we want to be able to clearly conceptualize the relationship between instances, constructor functions, and prototypes.</p>
+
+<p>In contrast, with the revealing constructor pattern, we get our nice constructor invariants back. Things like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">p</span> <span class="k">instanceof</span> <span class="nx">Promise</span><span class="p">;</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">===</span> <span class="nx">Promise</span><span class="p">;</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">===</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</code></pre></figure>
+
+<p>These are all signs that you&rsquo;re dealing with a well-designed &ldquo;class&rdquo; in JavaScript, that will behave as you expect.</p>
+
+<h2 id="the-streams-example">The Streams Example</h2>
+
+<p>When putting together <a href="htwetps://github.com/whatwg/streams">the in-progress streams spec</a>, we of course drew a lot of inspiration from <a href="http://nodejs.org/api/stream.html">Node streams</a>. But Node streams do things kind of strangely, with regard to vending their capabilities.</p>
+
+<p>To produce a Node stream representing a specific resource—which is somewhat analogous to producing a promise representing a specific asynchronous operation—you don&rsquo;t use the stream constructor. You don&rsquo;t even use something like the deferred pattern. Instead, you <em>subclass</em> the appropriate stream class. And then you overwrite certain underscore-prefixed methods!</p>
+
+<p>So for a simplified example, here is how you would create a file reader stream using the Node APIs. I&rsquo;ll use ES6 class syntax for brevity, but that is just sugar over the usual ES5 incantations.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">class</span> <span class="nx">FileReaderStream</span> <span class="kr">extends</span> <span class="nx">Readable</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filename</span> <span class="o">=</span> <span class="nx">filename</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">_read</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Use `this.filename` to eventually call `this.push(chunk)`</span>
+    <span class="c1">// with some data from the file, or `this.push(null)` to close</span>
+    <span class="c1">// the stream, or `this.emit(&quot;error&quot;, e)` with an error.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">myNodeStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReaderStream</span><span class="p">(</span><span class="s2">&quot;/path/to/file.txt&quot;</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>There are two interesting actors here:</p>
+
+<ul>
+<li><code>_read</code>, a method not meant to be called by users directly, but instead called by the internals of the stream when it&rsquo;s time to read data from the underlying source.</li>
+<li><code>push</code> and <code>emit(&quot;error&quot;, e)</code>, which have the capability to manipulate the stream&rsquo;s internal buffer and state machine. They too are not meant to be called by users directly, but instead only by implementers, inside their <code>_read</code> method (or perhaps inside the constructor).</li>
+</ul>
+
+<p>Interestingly, these are almost exactly analogous to the promise situation. <code>_read</code> is like the executor argment passed to the promise constructor, in that it consists of user code that does the actual work. And <code>push</code>/<code>emit</code> are capabilities, like <code>resolve</code>/<code>reject</code>, which can be used by the work-doing function to manipulate internal state.</p>
+
+<p>In building the streams spec, we realized the Node pattern wasn&rsquo;t the way we wanted to go. Requiring subclassing for every stream instance is not ergonomic. Using underscore-prefixed methods as the extension point isn&rsquo;t realistic either. And letting any user access the capabilities involved is not tenable, in part because it means implementations can&rsquo;t build invariants around who has access to the internal buffer.</p>
+
+<p>In contrast, the revealing constructor pattern works out really well. To create a file reader stream with whatwg/streams, you do something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">function</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">ReadableStream</span><span class="p">({</span>
+    <span class="nx">pull</span><span class="p">(</span><span class="nx">enqueue</span><span class="p">,</span> <span class="nx">close</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Use `filename` to eventually call `enqueue(chunk)`</span>
+      <span class="c1">// with some data from the file, or `close()` to</span>
+      <span class="c1">// close the stream, or `error(e)` with an error.</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">myWhatwgStream</span> <span class="o">=</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="s2">&quot;/path/to/file.txt&quot;</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>Notice the difference in the external API exposed. If you pass <code>myNodeStream</code> to another function, that function can mess with the stream&rsquo;s internal state as much as it wants, calling <code>push</code>, emitting <code>&quot;error&quot;</code> events, or even (despite the underscore) calling <code>_read</code>. Whereas if you pass <code>myWhatwgStream</code> around, consumers will not be able to do any of those things: the integrity of its internal state will be preserved.</p>
+
+<p>(Plus, no subclassing!)</p>
+
+<h2 id="when-would-i-use-this?">When Would I Use This?</h2>
+
+<p>I admit that that the revealing constructor pattern seems a bit unorthodox. The number of actors involved—viz. the constructor itself, the work-doing function to which capabilities are given, and the capability arguments—can be hard to get your head around, at least the first few times you see them.</p>
+
+<p>That said, it is a pretty elegant solution to a tricky problem. You might not need this level of encapsulation in your home-grown code. And even more widespread libraries may be able to skate by, as Node does, with documentation strategies and an attitude of &ldquo;don&rsquo;t do anything dumb with the capabilities we leave lying around, or it&rsquo;ll break.&rdquo; But when writing platform-level libraries and abstractions, which need to maintain their integrity in the face of any environment, the revealing constructor pattern really proves its worth.</p>
+
+<p>And besides, patterns become part of our vernacular. Many patterns that are commonplace today seemed just as strange when they are introduced as the revealing constructor pattern might to you now. After working with promises and streams for a while, you might encounter a situation where a revealing constructor is a natural fit for your library&rsquo;s needs. Who knows!</p>
+
+<h2 id="postscript">Postscript</h2>
+
+<p>If those examples weren&rsquo;t enough, here&rsquo;s one that you should be able to connect with: <a href="https://gist.github.com/domenic/9003334">an event emitter using the revealing constructor pattern</a>. This is an evolution of some of my <a href="https://github.com/domenic/pubit">earlier work</a> on event emitters with separate capabilities.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/continual-progress-in-the-w3c-tag/">Continual Progress in the W3C TAG</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-02T00:00:00+00:00" pubdate data-updated="true">Dec 2<sup>nd</sup>, 2013</time>
+        
+         | <a href="/continual-progress-in-the-w3c-tag/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The W3C Technical Architecture Group has made immeasurable progress this year since
+<a href="http://infrequently.org/2012/12/reforming-the-w3c-tag/">the original wave of reformist thought</a> swept through it last
+election season. The extensible web agenda, which I&rsquo;ve
+<a href="http://domenic.me/2013/10/07/the-extensible-web/">spoken about previously</a>, has been adopted into their vision for the
+web&rsquo;s foundations and informed recent spec work across the W3C. The TAG even moved its deliverables
+<a href="https://github.com/w3ctag/">onto GitHub</a>, allowing better collaboration with and transparency to developers.</p>
+
+<p>But there&rsquo;s always more to do. The web is slowly but surely coming into its own as a serious modern development
+platform—one which can compete with native apps across the board. New APIs, new primitives, and new tools are very much
+necessary to make our open platform as attractive to developers and users as it could be. To lure them away from the
+walled gardens of closed app stores and vendor-proprietary development platforms, we must provide something better.</p>
+
+<p>The TAG is in a unique position to oversee these efforts, with its charter to steward the evolution of web architecture
+and coordinate with other relevant groups like Ecma TC39 and the IETF. As such, I&rsquo;m excited to be
+<a href="http://lists.w3.org/Archives/Public/www-tag/2013Dec/0004.html">running for TAG membership</a> in this
+<a href="http://www.w3.org/blog/TAG/2013/11/06/tag-election-2013/">newest election cycle</a>.</p>
+
+<p>Over the last year of my increasing involvement in web standards, I&rsquo;ve found two things to be paramount: <em>developer
+involvement</em>, and <em>a focus on solid low-level primitives</em>. Independent of any formal role in the process, I have and
+will continue to champion these causes. My nomination by the jQuery Foundation to serve on the TAG only allows me to
+advocate them in a more formal role.</p>
+
+<p>As a web developer myself, I experience the joys and disappointments of our platform every day. Some of you might think
+it&rsquo;s all disappointments—and I can certainly sympathize, given our
+<a href="https://twitter.com/domenic/status/403668805542354944">day-to-day frustrations</a>. But one of the more eye-opening
+experiences of the last few months has been working alongside an experienced Java developer, new to the web platform,
+and seeing his almost childlike glee at how <em>easy</em> it is to produce complex, interactive, and robust UIs. More
+generally, when I think on what I actually do for a living at Lab49—produce complex financial trading and analysis
+systems, built on the open web platform—it&rsquo;s hard not to be amazed. We&rsquo;ve come a long way from the time when only
+desktop apps were considered for serious work. Now all our clients want cross-browser and cross-device web applications,
+that they can access from any computer at any time, with shareable URLs and responsive experiences and all the other
+things that come with the web.</p>
+
+<p>To enable developers to build such increasingly powerful experiences, we need to listen to them. That&rsquo;s why I spend a
+lot of time speaking at and traveling to developer conferences, or being involved on Twitter, on IRC, and on GitHub,
+with the community. I recently gave a talk specifically on
+<a href="https://www.youtube.com/watch?v=hneN6aW-d9w&amp;hd=1">how to get involved in web standards</a>, and have been working
+constantly to get developer feedback on missing features or in-progress specs since then.</p>
+
+<p>Developers are a tricky bunch, as many have been trained to ignore standards bodies and simply hack together their own
+solutions. They&rsquo;re used to being ignored themselves. But times are changing. The
+<a href="http://extensiblewebmanifesto.org/">extensible web manifesto</a> guides us to supply the web with the low-level features
+developers need, and then to listen to them and roll what they build back into the platform. The TAG&rsquo;s role is helping
+to guide this overall process, and I hope to bring along my experience listening to and learning from the developer
+community.</p>
+
+<p>You may have noticed I kept saying &ldquo;developers&rdquo; above, and never &ldquo;web developers.&rdquo; That&rsquo;s because I strongly believe we
+need to look outside our own community for inspiration. There are lessons to be learned everywhere across the software
+development landscape, from other UI frameworks and standard libraries, to other languages whose features we need in our
+platform&rsquo;s <em>lingua franca</em> of JavaScript. Perhaps most importantly, I maintain strong ties with and involvement in the
+Node.js community. They provide an excellent source of inspiration and advice, as a platform that takes JavaScript far
+beyond where many of us would have envisioned it only a few years ago.</p>
+
+<p>Which brings us to the issue of low-level primitives. Node&rsquo;s great success comes in a large part from its focus on
+providing such primitives: things like standard patterns for binary data, for asynchrony, or for streaming. On top of
+these they&rsquo;ve built <a href="http://nodejs.org/api/">a standard library</a> that should be the envy of any platform in both its
+small size and in its power.</p>
+
+<p>Of course, the web platform must by necessity evolve via consensus, and so more slowly than Node. But this gives us the
+benefit of watching them run out ahead of us, make mistakes, and then come back with field reports on how it went. As
+such we are getting typed arrays instead of buffers; promises instead of error-first callbacks; and
+<a href="https://github.com/whatwg/streams/">intelligently-designed streams</a> instead of backward-compatible evolved ones. And
+it&rsquo;s no coincidence that I&rsquo;ve been involved in both the promises and streams efforts, as I&rsquo;m very passionate about
+ensuring that these foundational pieces of the platform are solid enough to build on and have learned from experiences
+implementing them elsewhere.</p>
+
+<p>But we&rsquo;re still in our infancy when it comes to building on these primitives. We need to tie them together with the rest
+of the web platform. In short, we need to get to the day when the</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;http://example.com/video.mp4&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">videoProcessingWebWorker</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">))</span>
+</code></pre></figure>
+
+<p><a href="https://github.com/whatwg/streams/blob/master/Requirements.md#you-must-be-able-to-transform-streams-via-the-pipe-chain">example</a>
+is not just a dream, but is reality.</p>
+
+<p>In my view, it&rsquo;s the TAG&rsquo;s job to get us there. The cross-group coordination issues necessary to make visions like this
+a reality are a large part of the TAG&rsquo;s charter. We can provide a high-level vision, fueled by our interaction with the
+developer community, for extending the web forward. And all the while, I&rsquo;ll be down in the trenches, both gathering
+feedback to help shape this vision, and working on specifications and interfacing with implementers to make it happen.</p>
+
+<p>If this sounds like progress to you, I&rsquo;d appreciate your organization&rsquo;s vote.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/the-extensible-web/">The Extensible Web</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T00:00:00+00:00" pubdate data-updated="true">Oct 7<sup>th</sup>, 2013</time>
+        
+         | <a href="/the-extensible-web/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This post adapts <a href="http://2013.jsconf.eu/speakers/#/speakers/domenic-denicola-the-extensible-web-javascript-all-the-way-down">my talk from JSConf EU 2013</a>.</em></p>
+
+<p>The web platform has, historically, been somewhat of a kludge. It&rsquo;s grown, organically, into something with no real
+sense of cohesion. Most of its APIs have been poorly designed, by C++ developers, via
+<a href="http://www.omg.org/gettingstarted/omg_idl.htm">a binding layer meant originally for CORBA</a>.</p>
+
+<p>Worse, there have been major gaps in what we can do compared to native apps. And for those things that we can do, we end
+up accomplishing them by drowning ourselves in custom JavaScript functionality.</p>
+
+<p>The problem is in the process. Generally, new things have been introduced into our web platform via a months or years of
+mailing-list standardization, writing something in prose and IDL, driven by scenario-solving—without much concern for
+actual utility, much less usability. Implementers expose some fundamental capability in terms of a high-level API or
+declarative form that burrows down directly to the C++ layer, giving you limited customizability. After all this time,
+it eventually ends up in your hands, and you end up telling the standards bodies that <a href="https://dvcs.w3.org/hg/IndexedDB/raw-file/default/Overview.html">it&rsquo;s a huge mess</a>, or
+that <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/offline.html">it solves half of your problems half of the time</a>.</p>
+
+<p>Despite all this, we&rsquo;ve somehow done OK. Actually, a bit more than OK, given that the web is the most successful
+platform ever. How did we manage this?</p>
+
+<p>Well, we wrap up APIs with horrible usability into ones that are quite pleasant, like jQuery. We &ldquo;prolyfill,&rdquo; creating
+libraries like Sizzle to implement CSS selector matching, or libraries like Angular to implement custom elements, in the
+hope that eventually native support will appear. We transpile from languages like CoffeeScript or SASS to add new
+features to our authoring languages. And one case, promises, we even
+<a href="http://www.slideshare.net/domenicdenicola/boom-promisesa-was-born">built an interoperable standard from the ground up</a>.</p>
+
+<p>We need our platform to be better, and so we <em>make</em> it better, by ourselves.</p>
+
+<h2 id="the-extensible-web-manifesto">The Extensible Web Manifesto</h2>
+
+<p>The <a href="http://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> is standards bodies saying they&rsquo;re ready to do
+their part. Until now, we, the developers, have been shouldering all the work, writing massive JavaScript libraries or
+transpilers to reinvent basic functionality.</p>
+
+<p>There&rsquo;s a better way, where we work together toward the future.</p>
+
+<p>What these standards bodies have realized is that the web platform is our language, but like all languages, it must
+evolve.</p>
+
+<p>This evolution of our shared language takes place in two acts:</p>
+
+<ol>
+<li>extending our basic vocabulary;</li>
+<li>starting to <a href="http://briankardell.wordpress.com/2013/05/17/dropping-the-f-bomb/">incorporate &ldquo;slang&rdquo;</a>.</li>
+</ol>
+
+<h2 id="extending-our-vocabulary">Extending our Vocabulary</h2>
+
+<p>Extending our vocabulary means two things:</p>
+
+<ul>
+<li><p><em>Explaining the features of the platform that are already there.</em> Wouldn&rsquo;t it be weird if we had compound words like
+&ldquo;scifi,&rdquo; but didn&rsquo;t have the words &ldquo;science&rdquo; or &ldquo;fiction&rdquo;? If some standards body, perhaps the
+<a href="https://en.wikipedia.org/wiki/Acad%C3%A9mie_fran%C3%A7aise">French Making Up Words Consortium</a>, just handed us the
+word &ldquo;sandpaper,&rdquo; but we had no way in our language to talk about &ldquo;sand&rdquo; or &ldquo;paper&rdquo; individually? The web is like
+that today, and we&rsquo;ll go over a few examples.</p></li>
+<li><p><em>Giving you new low-level features that you can use</em>. If you wanted to invent the word &ldquo;scifi,&rdquo; somebody had better
+have come up with the words for &ldquo;science&rdquo; and &ldquo;fiction&rdquo;! Similarly, there&rsquo;s lots of things we just don&rsquo;t have &ldquo;words&rdquo;
+for on the web, yet. That&rsquo;s where native apps are hurting us.</p></li>
+</ul>
+
+<p>So with this in mind, let&rsquo;s look at some examples.</p>
+
+<h3 id="custom-elements">Custom Elements</h3>
+
+<p>The most fundamental unexplained gap in the platform is simply: how do those damn elements even work?</p>
+
+<p>Somehow, you feed a string containing some angle brackets into the browser, and they get turned into these JS objects
+with terrific APIs, which we call &ldquo;the DOM.&rdquo; How did that happen?</p>
+
+<p><a href="https://dvcs.w3.org/hg/webcomponents/raw-file/default/spec/custom/index.html">Custom elements</a> explain this process,
+saying that you register a mapping of tag names to element prototypes with the browser, and that&rsquo;s what the HTML parser
+is actually using under the hood. This is great! This is the democratization of HTML!</p>
+
+<p>And better yet, this means no more crazy widget libraries with their own crazy semantics. No more jQuery UI with its
+<code>.option</code> thing (sometimes a setter, sometimes a getter, sometimes a method call); no more Dojo digits; no more
+Bootstrap craziness; no more WinJS with its funky <code>winControl</code> property. Just tags, that turn into elements, which
+behave like you&rsquo;d expect: they have properties, getters, setters, methods, and all that.</p>
+
+<h3 id="the-shadow-dom">The Shadow DOM</h3>
+
+<p>But what about the existing tags? Half of the reason these widget libraries exist is so that you can create your own
+stupid <code>&lt;select&gt;</code> element, because the existing one isn&rsquo;t styleable or customizable.</p>
+
+<p>In general, think of all the &ldquo;magic&rdquo; tags that exist today, like <code>&lt;select&gt;</code>, or <code>&lt;input type=&quot;date&quot;&gt;</code>, or <code>&lt;details&gt;</code>,
+or <code>&lt;video&gt;</code>, or even good old <code>&lt;li&gt;</code>, whose bullet seems to come out of nowhere. In all cases, there&rsquo;s some extra
+&ldquo;stuff&rdquo; the browser is creating, and allowing users to interact with, and sometimes even allowing you to style via
+ridiculous vendor-prefixed pseudo-elements like <code>::-moz-placeholder</code>. But where does this extra stuff live?</p>
+
+<p>The answer is: in the <a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html">shadow DOM</a>. And what&rsquo;s
+great about the shadow DOM, is that once we actually have a realistic basis for these hidden parts of the DOM, in
+reality instead of in C++ magic-land, you&rsquo;ll be able to actually start hooking into them instead of rebuilding an entire
+element just to customize its behavior and styling. That day is
+<a href="https://groups.google.com/a/chromium.org/d/msg/blink-dev/ZAdZJWahyF8/lOInKCTbmrUJ">almost here</a>.</p>
+
+<h3 id="web-audio">Web Audio</h3>
+
+<p>The <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">web audio API</a> is a good example of both
+facets of the &ldquo;new vocabulary&rdquo; theme. You can do fundamentally new things with web audio, like positional audio or audio
+synthesis or so many other cool possibilities.</p>
+
+<p>But remember the <code>&lt;audio&gt;</code> tag, from way back in 2009? It&rsquo;s kind of the quintessential instance of &ldquo;here&rsquo;s some C++
+magic thrown over the wall to you web developers; have fun!&rdquo; Well, from an extensible web perspective, the <code>&lt;audio&gt;</code> tag
+should be explained in terms of web audio.</p>
+
+<h3 id="etcetera">Etcetera</h3>
+
+<p>There are of course many other APIs which exist solely to expose a new low-level hardware or platform feature to the web
+platform. One of the older examples on the hardware side is the
+<a href="http://www.w3.org/TR/geolocation-API/">geolocation API</a>. On the software side, good examples include the
+<a href="http://notifications.spec.whatwg.org/">notifications API</a> and <a href="http://fullscreen.spec.whatwg.org/">fullscreen API</a>. But
+more and more are popping up as we attempt to close all the gaps preventing full parity with native apps; one particular
+driver of this is the work on Firefox OS and the related <a href="http://www.w3.org/2009/dap/">device APIs</a>.</p>
+
+<h3 id="es6-and-es7">ES6 and ES7</h3>
+
+<p>Finally, I want to call out ECMAScript 6 (which is nearing finalization) and ECMAScript 7 (for which efforts are just
+starting to ramp up). Extending the web&rsquo;s programming language is adding new vocabulary at its most literal level, and
+the TC39 committee driving the evolution of ECMAScript does not disappoint in their efforts here.</p>
+
+<p>In ES6 we&rsquo;ll be getting subclassable built-in objects, so that you can finally extend <code>Array</code> or <code>Date</code> or the new <code>Map</code>
+and <code>Set</code> types, in a way that actually works. We&rsquo;ll also be getting proxies, which allow an object almost-complete
+control over the meta-object protocol underlying all interactions with it. And for ES7, the proposal for
+<code>Object.observe</code> is starting to firm up. Plus there is talk of adding weak references to the language, now that some of
+their trickier aspects have been worked out.</p>
+
+<h2 id="incorporating-slang">Incorporating Slang</h2>
+
+<p>The second half of the extensible web philosophy is that we need to tighten the feedback loop between developers and
+standards bodies.</p>
+
+<p>Think about it: you get all these neat new low-level tools, and you build great things out of them. But you end up
+downloading megabytes of JavaScript, or transpiling your code, just to get the base platform in place. This is why
+almost every web page uses jQuery: because the platform itself hasn&rsquo;t stepped up to the plate and incorporated jQuery&rsquo;s
+innovations back in.</p>
+
+<p>In short, we need to incorporate this kind of invented &ldquo;slang&rdquo; back into our shared language. Let&rsquo;s take a look at some
+of the examples of this so far.</p>
+
+<h3 id="&lt;template&gt;"><code>&lt;template&gt;</code></h3>
+
+<p>The <a href="http://www.html5rocks.com/en/tutorials/webcomponents/template/"><code>&lt;template&gt;</code> element</a> is a generalization of the
+common <code>&lt;script type=&quot;text/x-template&quot;&gt;</code> trick. By rolling it into the browser, additional benefits can be realized,
+allowing the template tree to be treated as an inert version of a real DOM tree, and for the element parsing and
+serialization rules to specifically call out templating use cases.</p>
+
+<h3 id="&lt;dialog&gt;"><code>&lt;dialog&gt;</code></h3>
+
+<p>The <a href="http://developers.whatwg.org/commands.html#the-dialog-element"><code>&lt;dialog&gt;</code> element</a> obviates all of the annoying
+dialog or &ldquo;lightbox&rdquo; libraries we keep having to ship, each with their own strange semantics. Instead, it&rsquo;s a simple
+tag, with some imperative APIs, some declarative features, and a nice <code>::backdrop</code> pseudo-element. Sweet!</p>
+
+<h3 id="css-improvements">CSS Improvements</h3>
+
+<p>CSS is slowly but surely starting to roll in innovations from SASS and elsewhere.
+<a href="http://dev.w3.org/csswg/css-hierarchies/">CSS hierarchies</a>, still under development, brings SASS&rsquo;s nested selectors to
+the browser. <a href="http://dev.w3.org/csswg/css-variables/">CSS variables</a> uses a clever trick to get something with the same
+benefits as the variables in SASS and others, but fitting in well with CSS&rsquo;s existing semantics. And
+<a href="http://dev.w3.org/csswg/css-cascade/">CSS cascade</a> introduces the <code>unset</code> keyword which reduces all those complicated
+CSS reset stylesheets rules to virtually nothing.</p>
+
+<h3 id="pointer-events">Pointer Events</h3>
+
+<p><a href="https://dvcs.w3.org/hg/pointerevents/raw-file/tip/pointerEvents.html">Pointer events</a> finally unify mouse and touch
+events into a single abstraction. In one stroke, this obviates many libraries built to work around this strange
+dichotomy introduced by mobile Safari, and around other strangeness relating to trying to use mouse events on a touch
+device. They will be a welcome addition to the web platform.</p>
+
+<h3 id="promises">Promises</h3>
+
+<p>When a pattern is adopted by jQuery, Dojo, Angular, Ember, WinJS, and YUI, as well as many other popular dedicated
+libraries, it&rsquo;s time to put it into the platform. <a href="https://github.com/domenic/promises-unwrapping">Promises</a> are on
+track for ES6, and are being added to browsers now.</p>
+
+<h2 id="what&#39;s-next?">What&rsquo;s Next?</h2>
+
+<p>The extensible web is an ongoing project, and several efforts are being headed up to expose even more capabilities to
+developers, or roll even more common patterns into the platform. Here&rsquo;s a brief taste of those I&rsquo;m watching closely.</p>
+
+<h3 id="streams">Streams</h3>
+
+<p><code>FileReader</code>, <code>XMLHttpRequest</code>, <code>getUserMedia</code>, <code>postMessage</code>, object URLs, <code>MediaStream</code>s… As
+<a href="http://imgur.com/a/9vFGa#11">poignantly emphasized</a> in a brilliant presentation by Max Ogden, we&rsquo;re clearly missing a
+unifying abstraction here, and that abstraction is streams.</p>
+
+<p>Node.js has led the way with their battle-tested implementations, but they&rsquo;ve also learned some lessons we should be
+sure to heed in order to design a good browser stream API. In the end, the goal is to be able to take various sources of
+binary data (HTTP requests, camera data, payloads stored in IndexedDB, the output of a web audio graph, …) and pipe them
+into various sinks (<code>&lt;img&gt;</code>, <code>&lt;video&gt;</code>, and <code>&lt;audio&gt;</code> tags; other windows, frames, or workers; filesystem or remote HTTP
+endpoints; or completely custom consumption code). It&rsquo;s going to be really cool, but we have some work to do before we
+get something as well-designed as promises were.</p>
+
+<h3 id="fetch">Fetch</h3>
+
+<p>The basic act of doing an HTTP request has so much complexity on the web platform: cross-domain protection; redirect
+following; deserialization from bytes; cookie jars; caches… We want to provide the basic building block, and then the
+ability to layer and compose each of these features on top of it.</p>
+
+<h3 id="zip/zlib">ZIP/ZLib</h3>
+
+<p>There&rsquo;s active investigation going on into how to expose compression primitives to the web. This is clearly something
+where native bindings will be more performant, and although there are
+<a href="https://github.com/imaya/zlib.js">impressive polyfills</a>, native APIs, preferably with asynchronous off-main-thread
+compression, will enable new scenarios. This work is in its early stages, so if you want to get involved, reach out.</p>
+
+<h3 id="class-elements-extends-array"><code>class Elements extends Array</code></h3>
+
+<p>My personal favorite new feature is the upcoming
+<a href="http://dom.spec.whatwg.org/#collections:-elements"><code>Elements</code> collection</a>. It&rsquo;s a proper array subclass, using the
+aforementioned ES6 subclassable builtin support, to give you something where you can <em>finally</em> use <code>forEach</code>, <code>reduce</code>,
+<code>filter</code>, and all your favorite methods.</p>
+
+<p>As part of this effort we added two methods, <code>query</code> and <code>queryAll</code>, to both <code>Element.prototype</code> and to
+<code>Elements.prototype</code>. They act as better versions of <code>querySelector</code> and <code>querySelectorAll</code>, in that they treat relative
+selectors like <code>&quot;&gt; div&quot;</code> the way you would expect instead of throwing an error. The versions on <code>Elements.prototype</code> act
+as composite operations over all elements in the collection, just like in jQuery.</p>
+
+<p>This is the beginning of a new, friendlier DOM, and I&rsquo;m pretty excited about it.</p>
+
+<h3 id="what-else?">What Else?</h3>
+
+<p>What do we need? What is preventing you from building the web apps of your dreams? You tell us! The extensible web is
+waiting for your participation!</p>
+
+<h2 id="getting-involved">Getting Involved</h2>
+
+<p>The best thing you can do to get involved in the extensible web is <em>prolyfill</em>. There&rsquo;s only so much standardization
+bandwidth to go around, so if you can create a de-facto standard like jQuery, or an open specification with wide
+implementer suppport like Promises/A+, the world is waiting.</p>
+
+<p>For example, if you wanted to figure out what a zlib API for the browser should look like, the best thing you can do is:</p>
+
+<ul>
+<li>Learn what the constraints and use cases are. (And not just your use cases, but everyone&rsquo;s!)</li>
+<li>Design an API and library to prolyfill this gap.</li>
+<li>Evangelize its use among developers, so that everyone recognizes it as the clear solution that browsers should just
+ship and be done with it.</li>
+</ul>
+
+<p>More generally, if you want to be involved in helping the web succeed by guiding us toward better standards, then let&rsquo;s
+talk. It&rsquo;s an area I&rsquo;ve been diving into over the last year, stemming from my Promises/A+ work but expanding into many
+other things. Finding the right approach and content is delicate, as these people are jaded by newbies coming out of the
+woodwork to demand feature X. But if you approach in good faith and avoid a prideful demeanor, they&rsquo;re often happy to
+listen. I&rsquo;ve had a few success stories in this area already, and by this time next year I want to have a lot more.</p>
+
+<p>In fact, I gave a talk on this subject at LXJS, titled
+<a href="https://www.youtube.com/watch?v=hneN6aW-d9w&amp;hd=1">&ldquo;How to Win Friends and Influence Standards Bodies&rdquo;</a>. I&rsquo;ll probably
+be adapting it into blog post form soon.</p>
+
+<p>Another thing I wanted to note, before closing out, is that this extensible web philosophy has teeth. The W3C Technical
+Architecture Group had four seats go up for reelection recently. Four &ldquo;reformers&rdquo; were elected at once: Yehuda Katz,
+Alex Russell, Marcos Caceres, and Anne van Kesteren. The extensible web philosophy underlies their governance, as the
+ultimate technical body which provides guidance and approval for all W3C specs. We&rsquo;ve already seen fruit here with their
+<a href="https://github.com/w3ctag/spec-reviews/blob/master/2013/07/WebAudio.md">review of the web audio spec</a>,
+<a href="https://github.com/w3ctag/spec-reviews">among others</a>. They&rsquo;ve been helping specs build on a solid grounding in
+JavaScript fundamentals, and generally be less magic and more JavaScript. All their work is being done
+<a href="https://github.com/w3ctag">on GitHub</a>, as are more and more specifications. This is happening!</p>
+
+<p>To close, I&rsquo;d like to give a short message of hope. It&rsquo;s easy to think about all these cool things that are coming, and
+then get depressed about having to support IE8 or Android 2.3 at your job. But that&rsquo;s the price we pay for an open,
+interoperable web. We can&rsquo;t just march to the tune of a single vendor, upgrading in lockstep. Instead we work through
+this collaborative, cooperative process, to build our shared language. In the end, <em>the future is longer than the past</em>,
+and I look forward not only to living in that future, but to helping shape it, together with you all.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/es6-iterators-generators-and-iterables/">ES6 Iterators, Generators, and Iterables</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T00:00:00+00:00" pubdate data-updated="true">Sep 6<sup>th</sup>, 2013</time>
+        
+         | <a href="/es6-iterators-generators-and-iterables/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I wrote up a quick guide to the terminology around ES6&rsquo;s iteration-related concepts, plus some notes and other
+resources.</p>
+
+<h2 id="definitions">Definitions</h2>
+
+<p>An <strong>iterator</strong> is an object with a <code>next</code> method that returns <code>{ done, value }</code> tuples.</p>
+
+<p>An <strong>iterable</strong> is an object which has an internal method, written in the current ES6 draft specs as
+<code>obj[@@iterator]()</code>, that returns an iterator.</p>
+
+<p>A <strong>generator</strong> is a specific type of iterator whose <code>next</code> results are determined by the behavior of its corresponding
+generator function. Generators also have a <code>throw</code> method, and their <code>next</code> method takes a parameter.</p>
+
+<p>A <strong>generator function</strong> is a special type of function that acts as a constructor for generators. Generator function
+bodies can use the contextual keyword <code>yield</code>, and you can send values or exceptions into the body, at the points where
+<code>yield</code> appears, via the constructed generator&rsquo;s <code>next</code> and <code>throw</code> methods. Generator functions are written with
+<code>function*</code> syntax.</p>
+
+<p>A <strong>generator comprehension</strong> is a shorthand expression for creating generators, e.g.
+<code>(for (x of a) for (y of b) x * y)</code>.</p>
+
+<h2 id="notes">Notes</h2>
+
+<h3 id="for-of"><code>for</code>-<code>of</code></h3>
+
+<p>The new <code>for</code>-<code>of</code> loop works on iterables, i.e. you do <code>for (let x of iterable) { /* ... */ }</code>. So for example, it
+works on arrays by looking up their <code>Array.prototype[@@iterator]()</code> internal method, which is specified to return an
+iterator that does what you&rsquo;d expect. Similarly <code>Map.prototype</code>, <code>Set.prototype</code>, and others all have <code>@@iterator</code>
+methods that help them work with <code>for</code>-<code>of</code> and other constructs in the language that consume iterators.</p>
+
+<p>Note that <code>for</code>-<code>in</code> has nothing to do with iterables, or indeed any of the concepts discussed here. It still works as
+it did before, looping through enumerable object properties, and it will be pretty useless when given an iterable of any
+sort.</p>
+
+<h3 id="iterable-iterators">Iterable Iterators</h3>
+
+<p>An <em>iterator</em> can also be <em>iterable</em> if it has an <code>@@iterator()</code> internal method. Most iterators in the ES6 draft spec
+are also iterable, with the internal method just returning <code>this</code>. In particular, all generators created via generator
+functions or generator comprehensions have this behavior. So you can do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">lazySequence</span> <span class="o">=</span> <span class="p">(</span><span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="nx">a</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="nx">y</span> <span class="nx">of</span> <span class="nx">b</span><span class="p">)</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">z</span> <span class="nx">of</span> <span class="nx">lazySequence</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">z</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<h3 id="making-iterable-objects">Making Iterable Objects</h3>
+
+<p>To make a custom iterable object, you use the <code>Symbol.iterator</code> symbol, which is the inside-JavaScript way of referring
+to the specification&rsquo;s <code>@@iterator</code>. It should return an iterator, thus making your object iterable. The easiest way to
+write the iterator-returning method is to use generator syntax. Putting this all together, it looks like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">iterable</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="o">*</span><span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]()</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="nx">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<h3 id="generator-comprehension-desugaring">Generator Comprehension Desugaring</h3>
+
+<p>You can think of generator comprehensions as &ldquo;sugar&rdquo; for writing out and immediately invoking a generator function, with
+<code>yield</code>s inserted implicitly at certain points. For example, the comprehension <code>(for (x of a) for (y of b) x * y)</code>
+desugars to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="p">(</span><span class="kd">function</span><span class="o">*</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">y</span> <span class="nx">of</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">yield</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}())</span>
+</code></pre></figure>
+
+<h3 id="a-weirdness">A Weirdness</h3>
+
+<p>It&rsquo;s not entirely clear why generator comprehensions create generators instead of simple iterable-iterators. In
+particular, as you can see from the above desugaring, calling <code>throw</code> or giving a parameter to <code>next</code> is pretty useless:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">const</span> <span class="nx">g</span> <span class="o">=</span> <span class="p">(</span><span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">);</span>
+
+<span class="nx">g</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>                   <span class="c1">// returns { done: false, value: 1 }</span>
+<span class="nx">g</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>                  <span class="c1">// returns { done: false, value: 2 }</span>
+<span class="nx">g</span><span class="p">.</span><span class="k">throw</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;boo!&quot;</span><span class="p">));</span> <span class="c1">// immediately throws the error</span>
+</code></pre></figure>
+
+<p>It seems the arguments in favor of generators instead of iterable-iterators are largely that it makes implementers&#39; jobs
+easier, at least according to
+<a href="http://esdiscuss.org/topic/why-do-generator-expressions-return-generators">this es-discuss thread</a> I started.</p>
+
+<h2 id="implementation-status">Implementation Status</h2>
+
+<p>Due to the tireless work of <a href="http://wingolog.org/">Andy Wingo</a>, V8 (Chrome) has support for generator functions, behind
+the <code>--harmony</code> flag (or &ldquo;Experimental JavaScript Features&rdquo; in chrome://flags). It also has some form of <code>for</code>-<code>of</code>,
+which only works with generators and with the custom iterables returned by <code>Array.prototype.values</code> and
+<code>Array.prototype.keys</code>, but does not work with anything else (e.g. arrays themselves). I assume this is because the
+iteration protocol has not been implemented yet. V8 does not have generator comprehensions.</p>
+
+<p>SpiderMonkey (Firefox) has an old version of everything here, with outdated syntax and semantics. Over the last week or
+so, Andy has submitted patches to update their generator implementation. He&rsquo;s now working on <code>for</code>-<code>of</code> and the
+iteration protocol in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=907077">bug #907077</a>; no word on generator
+comprehensions. Note that SpiderMonkey, unlike V8, does not hide these features behind a default-off flag.</p>
+
+<p>Chakra (Internet Explorer) is as always a complete mystery, with no transparency into their development cycle or even
+priority list.</p>
+
+<p>And I still haven&rsquo;t forgiven JavaScriptCore (Safari) for its long period of forgetting to implement
+<code>Function.prototype.bind</code>, so I haven&rsquo;t even tried looking into their status.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/explaining-away-the-webs-magic/">Explaining Away the Web&#8217;s Magic</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-10T00:00:00+00:00" pubdate data-updated="true">Jun 10<sup>th</sup>, 2013</time>
+        
+         | <a href="/explaining-away-the-webs-magic/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today we revealed <a href="http://extensiblewebmanifesto.org/">The Extensible Web Manifesto</a>, calling for a new approach to
+web standards that prioritizes new local-level capabilities in order to explain and extend higher-end platform features.
+I want to take a minute to talk about what this means in practice, and why it&rsquo;s different from how we operate today.</p>
+
+<h2 id="show-me-the-magic!">Show Me the Magic!</h2>
+
+<p>The core of the extensible web manifesto says two things:</p>
+
+<ul>
+<li>We should <em>expose new low-level capabilities</em> to JavaScript</li>
+<li>We should <em>explain existing high-level features</em> in terms of JavaScript</li>
+</ul>
+
+<p>The first of these is fairly obvious, but important. It&rsquo;s this goal that has brought us things that were previously
+restricted to native apps or Flash, e.g. webcam and geolocation access, or WebGL. Even something as simple as the page
+visibility API is a nice, low-level capability that helps us build our apps in ways we couldn&rsquo;t do before.</p>
+
+<p>What all of these low-level APIs have in common is that they&rsquo;re exposing &ldquo;C++ magic&rdquo; to us, the web developers. They&rsquo;re
+bridging the gap between native hardware and OS capabilities, into the realm of web applications. This is good. This is
+where the magic belongs: where our technology fails us.</p>
+
+<p>The second point is where things get subtle. Because it turns out there&rsquo;s a lot more C++ magic going on in your browser
+than just access to hardware, or to OpenGL bindings. Arguably the biggest amount of magic in the web platform is the
+magic we take for granted: the magic that translates declarative HTML and CSS into what we see on the screen and
+manipulate with JavaScript.</p>
+
+<p>This is the more revolutionary part of the extensible web manifesto. It&rsquo;s drawing a line in the sand and saying: <strong>the
+C++ magic stops here</strong>. We need to stop building high-level features of the platform out of magic when it&rsquo;s not
+necessary to do so, and we need to explain the existing features in terms of JavaScript technology—not C++ magic—at
+least until we bottom out at the low-level hardware capabilities discussed above. By taking this stand, we enable users
+to extend the web platform without rebuilding it from scratch.</p>
+
+<h2 id="#extendthwebforward-in-practice">#extendthwebforward In Practice</h2>
+
+<p><strong>Custom tags</strong> are a great example of this principle in action. If you stick to a pre-defined list defined by the W3C,
+then you can use your declarative HTML all over the place. Each tag gets turned into its own JavaScript counterpart via
+the parser, whether it be the humble transformation of <code>&lt;p&gt;</code> into <code>HTMLParagraphElement</code> or the complex wirings between
+<code>&lt;img&gt;</code> and <code>HTMLImageElement</code>.</p>
+
+<p>Everything the W3C doesn&rsquo;t know about, however, gets turned into the featureless blob that is <code>HTMLUnknownElement</code>. Hrm.</p>
+
+<p>There&rsquo;s clearly a lot of magic going on here, most of it encapsulated in that &ldquo;parser&rdquo; thing. What if the parser was
+extensible, and could be explained in terms of a JavaScript API? What if we pushed the magic further back? A good first
+step might be allowing
+<a href="http://www.polymer-project.org/platform/custom-elements.html">the registration of custom elements</a>. That way, we could
+explain the inner workings of this magic parser in terms of how it looks up an element name in a registry, and then
+derives instances from that registry. This has a wonderful emergent property as well: now that HTML elements are
+explained by a C++ parser turning HTML into JavaScript, our JavaScript objects can use the usual mechanisms of the
+language, like prototypal inheritance and constructors, to build on existing HTML elements.</p>
+
+<p>The <strong>shadow DOM</strong> is another of my favorite examples. While <code>&lt;p&gt;</code> might be a relatively non-magical element, clearly
+there&rsquo;s a lot of crazy stuff going on with <code>&lt;select&gt;</code>! And don&rsquo;t get me started on <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code>. It&rsquo;s as if
+there&rsquo;s a whole, um, shadow DOM, hidden underneath the one we see, accessible only by C++. The goal of the shadow DOM
+spec, going back to its <a href="http://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/">earliest conception</a>, has been to
+bring that magic out of C++ and explain it in terms of
+<a href="http://www.html5rocks.com/en/tutorials/webcomponents/shadowdom/">JavaScript primitives</a>.</p>
+
+<p>But it&rsquo;s not just these large examples, attempting to explain HTML. What about something as simple as … <strong>parsing
+URLs</strong>? Clearly, the platform has this capability:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="s2">&quot;http://infrequently.org/2012/04/bedrock/#comments&quot;</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">pathname</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">hash</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>But somehow, this capability got tied up inside the high-level abstraction of the <code>&lt;a&gt;</code> element, and isn&rsquo;t accessible
+to us directly as JavaScript programmers. We&rsquo;re left reimplementing it, often
+<a href="https://github.com/joyent/node/issues/5452">incorrectly</a>, on our own. It&rsquo;s this kind of travesty that work like
+<a href="http://url.spec.whatwg.org/#constructors">the URL spec</a> in particular, and the extensible web movement in general, is
+trying to prevent.</p>
+
+<p>Let&rsquo;s keep going. What does this do?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">els</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;:enabled&quot;</span><span class="p">);</span>
+</code></pre></figure>
+
+<p>Well, hmm, something about <a href="http://www.w3.org/TR/css3-selectors/#enableddisabled">&ldquo;an enabled state&rdquo;</a>. I wonder what
+that means. Probably something to do with
+<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#enabling-and-disabling-form-controls:-the-disabled-attribute">the <code>disabled</code> attribute</a>. How did the browser know that? More magic! We passed in a string that&rsquo;s in a magic
+list called &ldquo;CSS3 selectors spec,&rdquo; and it has some magic handler that turns that into &ldquo;elements where
+<code>el.disabled === false</code>.&rdquo; This is a pretty high-level abstraction; could we explain it with technology instead of magic?
+What about some kind of <strong>CSS selector registration</strong>?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nb">document</span><span class="p">.</span><span class="nx">registerSelector</span><span class="p">(</span><span class="s2">&quot;:enabled&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">!</span><span class="nx">el</span><span class="p">.</span><span class="nx">disabled</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></figure>
+
+<p>It&rsquo;s of course more complicated than that. To make this performant and sensible, we&rsquo;re going to need some way to ensure,
+or at least assume, that the function passed is pure (i.e. side-effect free and gives the same answers to the same
+inputs). But we <a href="http://wiki.ecmascript.org/doku.php?id=strawman:data_parallelism">need something like that anyway</a>.
+It&rsquo;ll happen.</p>
+
+<p>There&rsquo;s so many more examples. Once you start seeing the web browser in this way, trying to pick apart and explain its
+C++ magic in terms of JavaScript technology, you&rsquo;ll have a hard time un-seeing how much work needs to be done. Here&rsquo;s
+just a brief scratchpad idea list:</p>
+
+<ul>
+<li><a href="https://gist.github.com/wycats/cf73dd4c974352fcb767">Low-level HTTP fetching and data streams</a></li>
+<li>More general and composable binary data streams, <a href="http://imgur.com/a/9vFGa#11">à la Node.js</a></li>
+<li><a href="http://www.polymer-project.org/platform/web-animations.html">Unified animations primitives</a></li>
+<li><a href="https://github.com/slightlyoff/NavigationController/blob/master/explainer.md">A way of responding to requests when your app is offline</a></li>
+<li>Exposed GZIP capabilities</li>
+<li>Custom scrollbars</li>
+<li>Custom tooltips</li>
+<li><a href="http://davidwalsh.name/html5-context-menu">Custom context menus</a></li>
+<li><a href="http://lists.w3.org/Archives/Public/www-dom/2013AprJun/0188.html">Deferred, but synchronous, exception handling</a></li>
+<li><a href="http://updates.html5rocks.com/2012/11/Respond-to-change-with-Object-observe">Observing and responding to changes to JS objects</a></li>
+</ul>
+
+<h2 id="what&#39;s-next">What&rsquo;s Next</h2>
+
+<p>The extensible web manifesto was a statement of intent, and of prioritization.</p>
+
+<p>Some of the reaction to it has been along the lines of &ldquo;Well … duh!?&rdquo; To which I reply: exactly! This <em>should</em> be obvious. But if you look at how the standards process has worked
+<a href="https://medium.com/the-future-of-the-web/2fcd1c1bb32">historically</a>, that&rsquo;s not what happened. Implementers handed down
+new high-level solutions from their ivory towers, <a href="http://news.cnet.com/8301-17939_109-10281477-2.html">without knowing</a>
+if they actually solved the problems we as developers actually had. Or they knew we needed some primitive, but gave us
+<a href="http://updates.html5rocks.com/2013/03/What-s-the-CSS-scope-pseudo-class-for">a slightly messed-up version of it</a>, due
+to lack of attention to common use cases. It&rsquo;s been somewhat tragic, actually.</p>
+
+<p>The publication of the extensible web manifesto is taking a stand for a process that should help avoid these missteps,
+by doing what we should have been doing all along. In short, <em>prioritize efforts to expose low-level tools</em>; then,
+watch what the developer community converges on and fold that back into the web platform <em>now that we know it solves
+common high-level use cases</em>. And this ideology has teeth: the W3C&rsquo;s newly-reformed
+<a href="http://www.w3.org/2001/tag/2013/03/18-agenda">Technical Architecture Group</a> has taken on the case of overseeing this
+effort, ensuring that new APIs are introduced to explain away the C++ magic in terms of idiomatic JavaScript.</p>
+
+<p>This is something I can get behind.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/strict-mode-static-scoping/">Strict Mode = Static Scoping</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-19T00:00:00+00:00" pubdate data-updated="true">Mar 19<sup>th</sup>, 2013</time>
+        
+         | <a href="/strict-mode-static-scoping/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It is indeed
+<a href="http://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/">time to start using JavaScript&rsquo;s strict mode</a>.
+There are many reasons, but one of the most compelling is that it brings sanity to JavaScript&rsquo;s scoping rules, by
+guaranteeing static scoping.</p>
+
+<p>Simply put, code is <em>statically scoped</em> if you can statically analyze it and determine what all the identifiers refer
+to. In other words, you can statically determine where every variable was declared. As we&rsquo;ll see, JavaScript&rsquo;s sloppy
+mode does not have this property, giving you yet one more reason to shun it in favor of <code>&quot;use strict&quot;</code>.</p>
+
+<h2 id="sloppy-mode-=-dynamic-scoping">Sloppy Mode = Dynamic Scoping</h2>
+
+<p>Most of the time, JavaScript scoping is fairly simple. You look up the scope chain, as declared in the source code; if
+you can&rsquo;t find something, it must be on the global object. But in sloppy mode, there are several situations that can
+foil this algorithm.</p>
+
+<h3 id="use-of-with">Use of <code>with</code></h3>
+
+<p>Using the <code>with</code> statement completely destroys the sanity of your scope chain:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">__filename</span> <span class="o">=</span> <span class="s2">&quot;/my/cool/file.js&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">anotherContext</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">__filename</span><span class="o">:</span> <span class="s2">&quot;/another/file.js&quot;</span><span class="p">,</span> <span class="nx">__dirname</span><span class="o">:</span> <span class="s2">&quot;/another&quot;</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="o">?</span> <span class="nx">anotherContext</span> <span class="o">:</span> <span class="p">{};</span>
+<span class="kd">with</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">__filename</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>In this example, we can&rsquo;t statically determine if <code>console.log(__filename)</code> is referring to the free <code>__filename</code>
+variable, set to <code>&quot;/my/cool/file.js&quot;</code>, or if it&rsquo;s referring to the property of <code>anotherContext</code>, set to
+<code>&quot;/another/file.js&quot;</code>.</p>
+
+<p>Strict mode fixes this by <a href="http://es5.github.com/#x12.10.1">banning <code>with</code> entirely</a>. Thus, the above code would be a
+syntax error if it were placed in a strict context.</p>
+
+<h3 id="use-of-eval">Use of <code>eval</code></h3>
+
+<p>Using <code>eval</code> in sloppy mode will introduce new variable bindings into your scope chain:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">function</span> <span class="nx">require</span><span class="p">(</span><span class="nx">moduleId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// loading code elided.</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">requireStuff</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;function require(things) { console.log(&#39;We require more &#39; + things); }&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;minerals&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>In this example, we have a similar problem as before: <code>eval</code> might have dynamically introduced a new variable binding.
+Thus, <code>require</code> can refer either to the new function introduced by <code>eval</code> into <code>requireStuff</code>&rsquo;s scope, or to the
+function declared in the outer scope. We just can&rsquo;t know, until runtime!</p>
+
+<p>Strict mode fixes this by <a href="http://es5.github.com/#x10.4.2.1">disallowing <code>eval</code> from introducing new bindings</a>. Thus,
+if the above code were strict, <code>require(&quot;minerals&quot;)</code> would always refer to the outer module-loading <code>require</code> function.</p>
+
+<h2 id="why-does-this-matter?">Why Does This Matter?</h2>
+
+<p>In addition to the obvious implications of this for optimization and inlining in JITers, this matters because static
+analysis is becoming increasingly important in modern, complex JavaScript.</p>
+
+<p>For example, let&rsquo;s say you were writing
+<a href="https://github.com/substack/node-browserify">a tool for using Node.js-style modules in the browser</a>. To do so, you&rsquo;d
+probably need to <a href="https://github.com/substack/module-deps">detect <code>require</code> calls</a>; in particular, if you see <code>require</code>,
+you&rsquo;ll want to know what scope that <code>require</code> comes from: global or local? Similarly, you might want to
+<a href="https://github.com/substack/insert-module-globals">detect</a> references to <code>__filename</code>, <code>__dirname</code>, <code>Buffer</code>, etc. and
+make them available if they&rsquo;re detected.</p>
+
+<p>But in sloppy mode, it is literally <em>unknowable</em> what a given variable refers to. At any time, an enclosing <code>with</code> or a
+nearby <code>eval</code> could come along, and really ruin your day. In such a setting, static analysis is doomed; as we&rsquo;ve seen
+in the above examples, the meaning of identifiers like <code>require</code> or <code>__filename</code> can&rsquo;t be determined until runtime.</p>
+
+<h2 id="so?-just-don&#39;t-use-those-things">So? Just Don&rsquo;t Use Those Things</h2>
+
+<p>A common refrain from people who <a href="https://twitter.com/izs/status/310833154401398784">can&rsquo;t handle typing `&ldquo;use strict&rdquo;</a>
+is that they&rsquo;ll simply not use these features. And this indeed suffices: if you subset the language, perhaps using tools
+like JSHint to enforce your subsetting rules, you can create a more sane programming environment.</p>
+
+<p>Similar arguments are applied commonly in other languages, like prohibiting the use of exceptions or templates in C++.
+Even telling people to not pass expressions to their <code>require</code> calls in Node.js modules falls under this category (with
+the rationale that this breaks the popular browserify tool).</p>
+
+<p>I don&rsquo;t buy these arguments. A language should give its users built-in tools to use it correctly. In the case of
+JavaScript, there is one very clear tool that has been given: a simple, backward-compatible <code>&quot;use strict&quot;</code> pragma at the
+top of your source files. If you think that&rsquo;s difficult, try being a C++ programmer and writing exception-safe code: the
+techniques you need to use are a lot more involved than a single pragma.</p>
+
+<h2 id="use-strict-mode">Use Strict Mode</h2>
+
+<p>In <a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;t=18m50s">the words of Mark Miller</a>, ECMAScript 5 strict mode has
+transitioned JavaScript into the &ldquo;actually good&rdquo; category of programming languages. Let&rsquo;s use it. Opt in to static
+scoping, and a saner language in general. Use strict.</p>
+
+<p><em>This post was inspired by
+<a href="http://www.mail-archive.com/es-discuss@mozilla.org/msg18408.html">a long-ago es-discuss thread</a>, which references
+<a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;t=42m53s">a talk by Mark Miller</a>. Further clarifications were had in
+<a href="http://www.mail-archive.com/es-discuss@mozilla.org/msg22147.html">another, recent es-discuss thread</a>.</em></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/peer-dependencies/">Peer Dependencies</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-08T00:00:00+00:00" pubdate data-updated="true">Feb 8<sup>th</sup>, 2013</time>
+        
+         | <a href="/peer-dependencies/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>npm is awesome as a package manager. In particular, it handles sub-dependencies very well: if my package depends on
+<code>request</code> version 2 and <code>some-other-library</code>, but <code>some-other-library</code> depends on <code>request</code> version 1, the resulting
+dependency graph looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='text'>├── request@2.12.0
+└─┬ some-other-library@1.2.3
+  └── request@1.9.9
+</code></pre></figure>
+
+<p>This is, generally, great: now <code>some-other-library</code> has its own copy of <code>request</code> v1 that it can use, while not
+interfering with my package&rsquo;s v2 copy. Everyone&rsquo;s code works!</p>
+
+<h2 id="the-problem:-plugins">The Problem: Plugins</h2>
+
+<p>There&rsquo;s one use case where this falls down, however: <em>plugins</em>. A plugin package is meant to be used with another &ldquo;host&rdquo;
+package, even though it does not always directly <em>use</em> the host package. There are many examples of this pattern in the
+Node.js package ecosystem already:</p>
+
+<ul>
+<li>Grunt <a href="http://gruntjs.com/#plugins-all">plugins</a></li>
+<li>Chai <a href="http://chaijs.com/plugins">plugins</a></li>
+<li>Levelup <a href="https://npmjs.org/package/level-hooks">plugins</a></li>
+<li>Express <a href="http://expressjs.com/api.html#middleware">middleware</a></li>
+<li>Winston <a href="https://github.com/flatiron/winston/blob/master/docs/transports.md">transports</a></li>
+</ul>
+
+<p>Even if you&rsquo;re not familiar with any of those use cases, surely you recall &ldquo;jQuery plugins&rdquo; from back when you were a
+client-side developer: little <code>&lt;script&gt;</code>s you would drop into your page that would attach things to <code>jQuery.prototype</code>
+for your later convenience.</p>
+
+<p>In essence, plugins are designed to be used with host packages. But more importantly, they&rsquo;re designed to be used with
+<em>particular versions</em> of host packages. For example, versions 1.x and 2.x of my <code>chai-as-promised</code> plugin work with
+<code>chai</code> version 0.5, whereas versions 3.x work with <code>chai</code> 1.x. Or, in the faster-paced and less-semver–friendly world of
+Grunt plugins, version 0.3.1 of <code>grunt-contrib-stylus</code> works with <code>grunt</code> 0.4.0rc4, but breaks when used with <code>grunt</code>
+0.4.0rc5 due to removed APIs.</p>
+
+<p>As a package manager, a large part of npm&rsquo;s job when installing your dependencies is managing their versions. But its
+usual model, with a <code>&quot;dependencies&quot;</code> hash in <code>package.json</code>, clearly falls down for plugins. Most plugins never actually
+depend on their host package, i.e. grunt plugins never do <code>require(&quot;grunt&quot;)</code>, so even if plugins did put down their host
+package as a dependency, the downloaded copy would never be used. So we&rsquo;d be back to square one, with your application
+possibly plugging in the plugin to a host package that it&rsquo;s incompatible with.</p>
+
+<p>Even for plugins that do have such direct dependencies, probably due to the host package supplying utility APIs,
+specifying the dependency in the plugin&rsquo;s <code>package.json</code> would result in a dependency tree with multiple copies of the
+host package—not what you want. For example, let&rsquo;s pretend that <code>winston-mail</code> 0.2.3 specified <code>&quot;winston&quot;: &quot;0.5.x&quot;</code> in
+its <code>&quot;dependencies&quot;</code> hash, since that&rsquo;s the latest version it was tested against. As an app developer, you want the
+latest and greatest stuff, so you look up the latest versions of <code>winston</code> and of <code>winston-mail</code>, putting them in your
+<code>package.json</code> as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='json'><span class="p">{</span>
+  <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;winston&quot;</span><span class="p">:</span> <span class="s2">&quot;0.6.2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;winston-mail&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.3&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>But now, running <code>npm install</code> results in the unexpected dependency graph of</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='text'>├── winston@0.6.2
+└─┬ winston-mail@0.2.3
+  └── winston@0.5.11
+</code></pre></figure>
+
+<p>I&rsquo;ll leave the subtle failures that come from the plugin using a different Winston API than the main application to
+your imagination.</p>
+
+<h2 id="the-solution:-peer-dependencies">The Solution: Peer Dependencies</h2>
+
+<p>What we need is a way of expressing these &ldquo;dependencies&rdquo; between plugins and their host package. Some way of saying, &ldquo;I
+only work when plugged in to version 1.2.x of my host package, so if you install me, be sure that it&rsquo;s alongside a
+compatible host.&rdquo; We call this relationship a <em>peer dependency</em>.</p>
+
+<p>The peer dependency idea has been kicked around for <a href="https://github.com/isaacs/npm/issues/930">literally</a>
+<a href="https://github.com/isaacs/npm/issues/1400">years</a>. After
+<a href="https://github.com/isaacs/npm/issues/1400#issuecomment-5932027">volunteering</a> to get this done &ldquo;over the weekend&rdquo; nine
+months ago, I finally found a free weekend, and now peer dependencies are in npm!</p>
+
+<p>Specifically, they were introduced in a rudimentary form in npm 1.2.0, and refined over the next few releases into
+something I&rsquo;m actually happy with. Today Isaac packaged up npm 1.2.10 into
+<a href="http://blog.nodejs.org/2013/02/06/node-v0-8-19-stable/">Node.js 0.8.19</a>, so if you&rsquo;ve installed the latest version of
+Node, you should be ready to use peer dependencies!</p>
+
+<p>As proof, I present you the results of trying to install <a href="https://npmjs.org/package/jitsu"><code>jitsu</code></a> 0.11.6 with npm
+1.2.10:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='text'>npm ERR! peerinvalid The package flatiron does not satisfy its siblings&#39; peerDependencies requirements!
+npm ERR! peerinvalid Peer flatiron-cli-config@0.1.3 wants flatiron@~0.1.9
+npm ERR! peerinvalid Peer flatiron-cli-users@0.1.4 wants flatiron@~0.3.0
+</code></pre></figure>
+
+<p>As you can see, <code>jitsu</code> depends on two Flatiron-related packages, which themselves peer-depend on conflicting versions
+of Flatiron. Good thing npm was around to help us figure out this conflict, so it could be fixed in version 0.11.7!</p>
+
+<h2 id="using-peer-dependencies">Using Peer Dependencies</h2>
+
+<p>Peer dependencies are pretty simple to use. When writing a plugin, figure out what version of the host package you
+peer-depend on, and add it to your <code>package.json</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='json'><span class="p">{</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;chai-as-promised&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;peerDependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;chai&quot;</span><span class="p">:</span> <span class="s2">&quot;1.x&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></figure>
+
+<p>Now, when installing <code>chai-as-promised</code>, the <code>chai</code> package will come along with it. And if later you try to install
+another Chai plugin that only works with 0.x versions of Chai, you&rsquo;ll get an error. Nice!</p>
+
+<p>One piece of advice: peer dependency requirements, unlike those for regular dependencies, <em>should be lenient</em>. You
+should not lock your peer dependencies down to specific patch versions. It would be really annoying if one Chai plugin
+peer-depended on Chai 1.4.1, while another depended on Chai 1.5.0, simply because the authors were lazy and didn&rsquo;t spend
+the time figuring out the actual minimum version of Chai they are compatible with.</p>
+
+<p>The best way to determine what your peer dependency requirements should be is to actually follow
+<a href="http://semver.org/">semver</a>. Assume that only changes in the host package&rsquo;s major version will break your plugin. Thus,
+if you&rsquo;ve worked with every 1.x version of the host package, use <code>&quot;~1.0&quot;</code> or <code>&quot;1.x&quot;</code> to express this. If you depend on
+features introduced in 1.5.2, use <code>&quot;&gt;= 1.5.2 &lt; 2&quot;</code>.</p>
+
+<p>Now go forth, and peer depend!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="2">&larr; Older</a>
+    
+    <a href="/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/reading-from-sockets/">Reading from Sockets</a>
+      </li>
+    
+      <li class="post">
+        <a href="/reading-from-files/">Reading from Files</a>
+      </li>
+    
+      <li class="post">
+        <a href="/byte-sources-introduction/">Byte Sources: Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a>
+      </li>
+    
+      <li class="post">
+        <a href="/continual-progress-in-the-w3c-tag/">Continual Progress in the W3C TAG</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/domenic">@domenic</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'domenic',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+</div>
+</div>
+<footer><p>
+  Copyright &copy; 2015 - Domenic Denicola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+
+
+<script>
+  var disqus_shortname = 'hiddenvariables';
+  
+    
+    var disqus_script = 'count.js';
+  
+(function () {
+  var dsq = document.createElement('script');
+  dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+  document.body.appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<script>
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.body.appendChild(twitterWidgets);
+})();
+</script>
+
+
+
 

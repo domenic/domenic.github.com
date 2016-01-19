@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Byte Sources: Introduction</title>
+
+
+<meta name="author" content="Domenic Denicola">
+<meta name="description" content="This post is the beginning of a series of posts regarding some of the more interesting issues I&rsquo;ve encountered while working on the Streams &hellip;">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="canonical" href="https://blog.domenic.me/byte-sources-introduction/">
+<link rel="alternate" href="/atom.xml" title="Hidden Variables" type="application/atom+xml">
+<link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/stylesheets/screen.css">
+<script src="/javascripts/ender.js"></script>
+<script src="/javascripts/octopress.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic">
+
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@domenic">
+<meta property="og:title" content="Byte Sources: Introduction">
+<meta property="og:description" content="This post is the beginning of a series of posts regarding some of the more interesting issues I&rsquo;ve encountered while working on the Streams Standard. In the Streams Standard we have the concept of readable streams, which are an abstraction on &hellip;">
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-37626687-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  document.body.appendChild(ga);
+})();
+</script>
+
+
+
+<body   >
+
+<header><hgroup>
+  <h1><a href="/">Hidden Variables</a></h1>
+  <h2>Domenic's blog about coding and stuff</h2>
+</hgroup>
+
+</header>
+<nav><a class="subscription" href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.domenic.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives/">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+<div id="content">
+  <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Byte Sources: Introduction</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-04T00:00:00+00:00" pubdate data-updated="true">Mar 4<sup>th</sup>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><em>This post is the beginning of a series of posts regarding some of the more interesting issues I&rsquo;ve encountered while working on the Streams Standard.</em></p>
+
+<p>In the <a href="http://streams.spec.whatwg.org/">Streams Standard</a> we have the concept of readable streams, which are an abstraction on top of the lower-level <strong>underlying sources</strong>. In an abstract sense an underlying source is &ldquo;where the chunks of data come from.&rdquo; The most basic underlying sources are things like files or HTTP connections. (More complicated ones could be e.g. an underlying source that randomly generates data in-memory for test purposes, or one that synthesizes data from multiple concrete locations.) These basic underlying sources are concerned with direct production of bytes.</p>
+
+<p>The major goal of the Streams Standard is to provide an efficient abstraction specifically for I/O. Thus, to design a suitable readable stream abstraction, we can&rsquo;t just think about general concepts of <a href="https://github.com/kriskowal/gtor/">reactivity</a> or <a href="https://github.com/zenparsing/async-iteration/">async iterables</a> or <a href="https://github.com/jhusain/asyncgenerator#introducing-observable">observables</a>. We need to dig deeper into how, exactly, the underlying sources will work. Otherwise we might find ourselves <a href="https://github.com/whatwg/streams/issues/253">scrambling</a> to reform the API at the last minute when confronted with real-world implementation challenges. (Oops.)</p>
+
+<p>The current revision of the standard describes underlying sources as belonging to two broad categories: push sources, where data is constantly flowing in, and pull sources, where you specifically request it. The prototypal examples of these categories are TCP sockets and file descriptors. Once a TCP connection is open, the remote server will begin pushing data to you. Whereas, with a file, until you ask the OS to do a read, no I/O happens.</p>
+
+<p>This division is conceptually helpful, but it&rsquo;s instructive to go deeper and look at the actual system APIs in play here. Given that concepts like &ldquo;events&rdquo; are way too high-level for an OS API, they end up being shaped quite differently than how you might imagine. We&rsquo;ll assume a POSIX environment for most of this series, but I&rsquo;d like to talk about some Windows specifics toward the end. Along the way we&rsquo;ll continually be trying to bridge the gap between these C APIs and how they might manifest in JavaScript, both to give the less-C-inclined readers a chance, and to illustrate the issues we&rsquo;ve been wrestling with in the Streams Standard.</p>
+
+<p>So far these are the episodes I have planned:</p>
+
+<ol>
+<li>Byte sources: introduction (this post)</li>
+<li><a href="/reading-from-files/">Reading from files</a></li>
+<li><a href="/reading-from-sockets/">Reading from sockets</a></li>
+<li>Byte source APIs on Windows</li>
+<li>Byte source APIs in libuv and io.js</li>
+<li>Readable streams</li>
+</ol>
+
+<p>I will update this post with links to them as they become available.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Domenic Denicola</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-04T00:00:00+00:00" pubdate data-updated="true">Mar 4<sup>th</sup>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/streams/'>streams</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://blog.domenic.me/byte-sources-introduction/" data-via="domenic" data-counturl="https://blog.domenic.me/byte-sources-introduction/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/the-revealing-constructor-pattern/" title="Previous Post: The Revealing Constructor Pattern">&laquo; The Revealing Constructor Pattern</a>
+      
+      
+        <a class="basic-alignment right" href="/reading-from-files/" title="Next Post: Reading from Files">Reading from Files &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/reading-from-sockets/">Reading from Sockets</a>
+      </li>
+    
+      <li class="post">
+        <a href="/reading-from-files/">Reading from Files</a>
+      </li>
+    
+      <li class="post">
+        <a href="/byte-sources-introduction/">Byte Sources: Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a>
+      </li>
+    
+      <li class="post">
+        <a href="/continual-progress-in-the-w3c-tag/">Continual Progress in the W3C TAG</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/domenic">@domenic</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'domenic',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+</div>
+</div>
+<footer><p>
+  Copyright &copy; 2015 - Domenic Denicola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+
+
+<script>
+  var disqus_shortname = 'hiddenvariables';
+  
+    
+    // var disqus_developer = 1;
+    var disqus_identifier = 'https://blog.domenic.me/byte-sources-introduction/';
+    var disqus_url = 'https://blog.domenic.me/byte-sources-introduction/';
+    var disqus_script = 'embed.js';
+  
+(function () {
+  var dsq = document.createElement('script');
+  dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+  document.body.appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<script>
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.body.appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+
