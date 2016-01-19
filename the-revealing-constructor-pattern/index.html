@@ -1,139 +1,90 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>The Revealing Constructor Pattern</title>
-
-
-<meta name="author" content="Domenic Denicola">
-<meta name="description" content="I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including promises and streams. I&rsquo;m &hellip;">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>The Revealing Constructor Pattern</title>
+<meta name="description" content="I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including promises and streams. I&rsquo;m calling it the...">
+
+<link rel="stylesheet" href="/css/main.css">
 <link rel="canonical" href="https://blog.domenic.me/the-revealing-constructor-pattern/">
-<link rel="alternate" href="/atom.xml" title="Hidden Variables" type="application/atom+xml">
-<link rel="icon" href="/favicon.png">
-
-<link rel="stylesheet" href="/stylesheets/screen.css">
-<script src="/javascripts/ender.js"></script>
-<script src="/javascripts/octopress.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic">
+<link rel="alternate" type="application/rss+xml" title="Hidden Variables" href="https://blog.domenic.me/atom.xml">
 
 
+<header class="site-header">
+  <div class="wrapper">
+    <h1 class="site-title"><a href="/">Hidden Variables</a></h1>
+    <p class="tagline">Domenic's blog about coding and stuff</p>
 
-<meta name="twitter:card" content="summary">
-<meta name="twitter:creator" content="@domenic">
-<meta property="og:title" content="The Revealing Constructor Pattern">
-<meta property="og:description" content="I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including promises and streams. I&rsquo;m calling it the revealing constructor pattern. The Promises Example Let&rsquo;s take the case of promises &hellip;">
-
-<script>
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-37626687-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script');
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  document.body.appendChild(ga);
-})();
-</script>
-
-
-
-<body   >
-
-<header><hgroup>
-  <h1><a href="/">Hidden Variables</a></h1>
-  <h2>Domenic's blog about coding and stuff</h2>
-</hgroup>
-
+    <nav class="site-nav">
+      <a href="/archives">Archives</a>
+      <a href="/atom.xml">RSS</a>
+    </nav>
+  </div>
 </header>
-<nav><a class="subscription" href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a>
-<form action="https://www.google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:blog.domenic.me" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/archives/">Archives</a></li>
-</ul>
-
-</nav>
-<div id="main">
-<div id="content">
-  <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">The Revealing Constructor Pattern</h1>
-    
-    
-      <p class="meta">
-        
 
 
+<div class="page-content">
+  <div class="wrapper">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">The Revealing Constructor Pattern</h1>
+    <p class="post-meta">
+      <time datetime="2014-02-14T00:00:00+00:00" itemprop="datePublished">Feb 14, 2014</time>
+      
+      
+ | <a href="/the-revealing-constructor-pattern/#disqus_thread" data-disqus-identifier="https://blog.domenic.me/the-revealing-constructor-pattern/">Comments</a>
 
 
+      | <a href="https://twitter.com/intent/tweet?text=The Revealing Constructor Pattern&amp;url=https://blog.domenic.me/the-revealing-constructor-pattern/&amp;via=domenic">Tweet</a>
+      | posted in 
+  <a class="category-link" href="/categories/javascript">JavaScript</a>, 
+
+  <a class="category-link" href="/categories/promises">Promises</a>, 
+
+  <a class="category-link" href="/categories/streams">Streams</a>
 
 
-
-
-  
-
-
-<time datetime="2014-02-14T00:00:00+00:00" pubdate data-updated="true">Feb 14<sup>th</sup>, 2014</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
-    
+    </p>
   </header>
 
-
-<div class="entry-content"><p>I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including <a href="https://people.mozilla.org/%7Ejorendorff/es6-draft.html#sec-promise-objects">promises</a> and <a href="https://github.com/whatwg/streams">streams</a>. I&rsquo;m calling it the <strong>revealing constructor pattern</strong>.</p>
+  <div class="post-content" itemprop="articleBody">
+    <p>I want to document an interesting pattern we&rsquo;ve seen emerge in some recent web platform specs, including <a href="https://people.mozilla.org/%7Ejorendorff/es6-draft.html#sec-promise-objects">promises</a> and <a href="https://github.com/whatwg/streams">streams</a>. I&rsquo;m calling it the <strong>revealing constructor pattern</strong>.</p>
 
 <h2 id="the-promises-example">The Promises Example</h2>
 
 <p>Let&rsquo;s take the case of promises first, since that may be familiar. You can construct a new promise like so:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Use `resolve` to resolve `p`.</span>
     <span class="c1">// Use `reject` to reject `p`.</span>
 <span class="p">});</span>
-</code></pre></figure>
-
+</code></pre></div>
 <p>We see here that the <code>Promise</code> constructor takes a single function as its sole parameter (called the &ldquo;executor function&rdquo;). It then <em>immediately</em> calls that function with two arguments, <code>resolve</code> and <code>reject</code>. These arguments have the capability to manipulate the internal state of the newly-constructed <code>Promise</code> instance <code>p</code>.</p>
 
 <p>I call this the revealing constructor pattern because the <code>Promise</code> constructor is <em>revealing</em> its internal capabilities, but only to the code that constructs the promise in question. The ability to resolve or reject the promise is only revealed to the constructing code, and is crucially <em>not</em> revealed to anyone <em>using</em> the promise. So if we hand off <code>p</code> to another consumer, say</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
-</code></pre></figure>
-
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+</code></pre></div>
 <p>then we can be sure that this consumer cannot mess with any of the internals that were revealed to us by the constructor. This is as opposed to, for example, putting <code>resolve</code> and <code>reject</code> methods on <code>p</code>, which anyone could call. (And no, adding underscores to the beginning of your method names won&rsquo;t save you.)</p>
 
 <h2 id="historical-origins">Historical Origins</h2>
 
 <p>The first place anyone can remember seeing this pattern is <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211866.aspx">in the WinJS promise implementation</a>. Before that, promise libraries used an awkward concept called a &ldquo;deferred.&rdquo; You would do something like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
 <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">;</span>
 
 <span class="c1">// Use `deferred.resolve` to resolve `p`.</span>
 <span class="c1">// Use `deferred.reject` to reject `p`.</span>
 
 <span class="nx">doThingsWith</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
-</code></pre></figure>
-
+</code></pre></div>
 <p>This was strange in a few ways, but most prominently, it was strange because you were constructing an object without using a constructor. This is generally an antipattern in JavaScript: we want to be able to clearly conceptualize the relationship between instances, constructor functions, and prototypes.</p>
 
 <p>In contrast, with the revealing constructor pattern, we get our nice constructor invariants back. Things like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="nx">p</span> <span class="k">instanceof</span> <span class="nx">Promise</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">p</span> <span class="k">instanceof</span> <span class="nx">Promise</span><span class="p">;</span>
 <span class="nx">p</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">===</span> <span class="nx">Promise</span><span class="p">;</span>
 <span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">===</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
-</code></pre></figure>
-
+</code></pre></div>
 <p>These are all signs that you&rsquo;re dealing with a well-designed &ldquo;class&rdquo; in JavaScript, that will behave as you expect.</p>
 
 <h2 id="the-streams-example">The Streams Example</h2>
@@ -143,8 +94,7 @@ _gaq.push(['_trackPageview']);
 <p>To produce a Node stream representing a specific resource—which is somewhat analogous to producing a promise representing a specific asynchronous operation—you don&rsquo;t use the stream constructor. You don&rsquo;t even use something like the deferred pattern. Instead, you <em>subclass</em> the appropriate stream class. And then you overwrite certain underscore-prefixed methods!</p>
 
 <p>So for a simplified example, here is how you would create a file reader stream using the Node APIs. I&rsquo;ll use ES6 class syntax for brevity, but that is just sugar over the usual ES5 incantations.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kr">class</span> <span class="nx">FileReaderStream</span> <span class="kr">extends</span> <span class="nx">Readable</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">FileReaderStream</span> <span class="kr">extends</span> <span class="nx">Readable</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">filename</span> <span class="o">=</span> <span class="nx">filename</span><span class="p">;</span>
   <span class="p">}</span>
@@ -152,13 +102,12 @@ _gaq.push(['_trackPageview']);
   <span class="nx">_read</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Use `this.filename` to eventually call `this.push(chunk)`</span>
     <span class="c1">// with some data from the file, or `this.push(null)` to close</span>
-    <span class="c1">// the stream, or `this.emit(&quot;error&quot;, e)` with an error.</span>
+    <span class="c1">// the stream, or `this.emit("error", e)` with an error.</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">myNodeStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReaderStream</span><span class="p">(</span><span class="s2">&quot;/path/to/file.txt&quot;</span><span class="p">);</span>
-</code></pre></figure>
-
+<span class="kd">var</span> <span class="nx">myNodeStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReaderStream</span><span class="p">(</span><span class="s2">"/path/to/file.txt"</span><span class="p">);</span>
+</code></pre></div>
 <p>There are two interesting actors here:</p>
 
 <ul>
@@ -171,8 +120,7 @@ _gaq.push(['_trackPageview']);
 <p>In building the streams spec, we realized the Node pattern wasn&rsquo;t the way we wanted to go. Requiring subclassing for every stream instance is not ergonomic. Using underscore-prefixed methods as the extension point isn&rsquo;t realistic either. And letting any user access the capabilities involved is not tenable, in part because it means implementations can&rsquo;t build invariants around who has access to the internal buffer.</p>
 
 <p>In contrast, the revealing constructor pattern works out really well. To create a file reader stream with whatwg/streams, you do something like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><pre class='highlight'><code class='js'><span class="kd">function</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="nx">ReadableStream</span><span class="p">({</span>
     <span class="nx">pull</span><span class="p">(</span><span class="nx">enqueue</span><span class="p">,</span> <span class="nx">close</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">// Use `filename` to eventually call `enqueue(chunk)`</span>
@@ -182,14 +130,13 @@ _gaq.push(['_trackPageview']);
   <span class="p">});</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">myWhatwgStream</span> <span class="o">=</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="s2">&quot;/path/to/file.txt&quot;</span><span class="p">);</span>
-</code></pre></figure>
-
+<span class="kd">var</span> <span class="nx">myWhatwgStream</span> <span class="o">=</span> <span class="nx">createFileReaderStream</span><span class="p">(</span><span class="s2">"/path/to/file.txt"</span><span class="p">);</span>
+</code></pre></div>
 <p>Notice the difference in the external API exposed. If you pass <code>myNodeStream</code> to another function, that function can mess with the stream&rsquo;s internal state as much as it wants, calling <code>push</code>, emitting <code>&quot;error&quot;</code> events, or even (despite the underscore) calling <code>_read</code>. Whereas if you pass <code>myWhatwgStream</code> around, consumers will not be able to do any of those things: the integrity of its internal state will be preserved.</p>
 
 <p>(Plus, no subclassing!)</p>
 
-<h2 id="when-would-i-use-this?">When Would I Use This?</h2>
+<h2 id="when-would-i-use-this">When Would I Use This?</h2>
 
 <p>I admit that that the revealing constructor pattern seems a bit unorthodox. The number of actors involved—viz. the constructor itself, the work-doing function to which capabilities are given, and the capability arguments—can be hard to get your head around, at least the first few times you see them.</p>
 
@@ -200,173 +147,83 @@ _gaq.push(['_trackPageview']);
 <h2 id="postscript">Postscript</h2>
 
 <p>If those examples weren&rsquo;t enough, here&rsquo;s one that you should be able to connect with: <a href="https://gist.github.com/domenic/9003334">an event emitter using the revealing constructor pattern</a>. This is an evolution of some of my <a href="https://github.com/domenic/pubit">earlier work</a> on event emitters with separate capabilities.</p>
-</div>
 
+  </div>
 
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Domenic Denicola</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-14T00:00:00+00:00" pubdate data-updated="true">Feb 14<sup>th</sup>, 2014</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/categories/javascript/'>javascript</a>, <a class='category' href='/categories/promises/'>promises</a>, <a class='category' href='/categories/streams/'>streams</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://blog.domenic.me/the-revealing-constructor-pattern/" data-via="domenic" data-counturl="https://blog.domenic.me/the-revealing-constructor-pattern/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/continual-progress-in-the-w3c-tag/" title="Previous Post: Continual Progress in the W3C TAG">&laquo; Continual Progress in the W3C TAG</a>
-      
-      
-        <a class="basic-alignment right" href="/byte-sources-introduction/" title="Next Post: Byte Sources: Introduction">Byte Sources: Introduction &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
+
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
+    <div id="disqus_thread"></div>
   </section>
 
+
+<script src="https://platform.twitter.com/widgets.js" async></script>
+
+  </div>
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/reading-from-sockets/">Reading from Sockets</a>
-      </li>
-    
-      <li class="post">
-        <a href="/reading-from-files/">Reading from Files</a>
-      </li>
-    
-      <li class="post">
-        <a href="/byte-sources-introduction/">Byte Sources: Introduction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/the-revealing-constructor-pattern/">The Revealing Constructor Pattern</a>
-      </li>
-    
-      <li class="post">
-        <a href="/continual-progress-in-the-w3c-tag/">Continual Progress in the W3C TAG</a>
-      </li>
-    
-  </ul>
-</section>
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <p>Hidden Variables</p>
+        <p>Source at <a href="https://github.com/domenic/blog.domenic.me/">domenic/blog.domenic.me</a></p>
+      </div>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/domenic">@domenic</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/domenic"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">domenic</span></a>
 
-        github.showRepos({
-            user: 'domenic',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
+          </li>
+          
 
+          
+          <li>
+            <a href="https://twitter.com/domenic"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">domenic</span></a>
 
+          </li>
+          
+        </ul>
+      </div>
 
+      <div class="footer-col footer-col-3">
+        <p>Copyright © 2016 Domenic Denicola</p>
+        <p><a href="mailto:d@domenic.me">d@domenic.me</a></p>
+      </div>
+    </div>
 
-
-  
-</aside>
-
-
-</div>
-</div>
-<footer><p>
-  Copyright &copy; 2015 - Domenic Denicola -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
+  </div>
 </footer>
 
 
-<script>
-  var disqus_shortname = 'hiddenvariables';
+
   
     
-    // var disqus_developer = 1;
-    var disqus_identifier = 'https://blog.domenic.me/the-revealing-constructor-pattern/';
-    var disqus_url = 'https://blog.domenic.me/the-revealing-constructor-pattern/';
-    var disqus_script = 'embed.js';
+    <script>
+      "use strict";
+      window.disqus_config = function () {
+        this.page.url = 'https://blog.domenic.me/the-revealing-constructor-pattern/';
+        this.page.identifier = 'https://blog.domenic.me/the-revealing-constructor-pattern/';
+      };
+    </script>
+    <script src="https://hiddenvariables.disqus.com/embed.js" async></script>
   
-(function () {
-  var dsq = document.createElement('script');
-  dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-  document.body.appendChild(dsq);
-}());
-</script>
-
-
-
-
+  <script id="dsq-count-scr" src="https://hiddenvariables.disqus.com/count.js" async></script>
 
 
 <script>
-(function(){
-  var twitterWidgets = document.createElement('script');
-  twitterWidgets.src = '//platform.twitter.com/widgets.js';
-  document.body.appendChild(twitterWidgets);
-})();
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37626687-1', 'auto');
+  ga('send', 'pageview');
 </script>
-
-
-
 
