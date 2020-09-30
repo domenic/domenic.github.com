@@ -5,9 +5,88 @@
     <description>Domenic&#39;s blog about coding and stuff</description>
     <link>https://blog.domenic.me/</link>
     <atom:link href="https://blog.domenic.me/atom.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 19 Jan 2016 03:31:13 +0000</pubDate>
-    <lastBuildDate>Tue, 19 Jan 2016 03:31:13 +0000</lastBuildDate>
+    <pubDate>Wed, 30 Sep 2020 21:03:25 +0000</pubDate>
+    <lastBuildDate>Wed, 30 Sep 2020 21:03:25 +0000</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>DigitalOcean&#39;s Hacktoberfest is Hurting Open Source</title>
+        <description>&lt;p&gt;For the last couple of years, &lt;a href=&quot;https://www.digitalocean.com/&quot;&gt;DigitalOcean&lt;/a&gt; has run
+&lt;a href=&quot;https://hacktoberfest.digitalocean.com/&quot;&gt;Hacktoberfest&lt;/a&gt;, which purports to &amp;ldquo;support open source&amp;rdquo; by giving free
+t-shirts to people who send pull requests to open source repositories.&lt;/p&gt;
+
+&lt;p&gt;In reality, &lt;strong&gt;Hacktoberfest is a corporate-sponsored distributed denial of service attack against the open source
+maintainer community&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;So far today, on &lt;a href=&quot;https://github.com/whatwg/html/pulls?q=is%3Apr+is%3Aclosed+label%3Aspam&quot;&gt;a single repository&lt;/a&gt;, myself
+and fellow maintainers have closed 11 spam pull requests. Each of these generates notifications, often email, to the 485
+watchers of the repository. And each of them requires maintainer time to visit the pull request page, evaluate its
+spamminess, close it, tag it as spam, lock the thread to prevent further spam comments, and then report the spammer to
+GitHub in the hopes of stopping their time-wasting rampage.&lt;/p&gt;
+
+&lt;p&gt;The rate of spam pull requests is, at this time, around four per hour. &lt;em&gt;And it&amp;rsquo;s not even October yet in my timezone.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/hacktoberfest-spam-listing.png&quot; alt=&quot;A screenshot showing a spam query for the whatwg/html repository, which is at this time up to 14 spam PRs&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Myself and other maintainers of the whatwg/html repository are not alone in suffering this deluge.
+&lt;a href=&quot;https://twitter.com/gravitystorm/status/1311386082982924289&quot;&gt;My tweet&lt;/a&gt; got commiseration from
+&lt;a href=&quot;https://mobile.twitter.com/gravitystorm/status/1311386082982924289&quot;&gt;OpenStreetMap, phpMyAdmin&lt;/a&gt;,
+&lt;a href=&quot;https://mobile.twitter.com/ulmerleben/status/1311378655231332355&quot;&gt;PubCSS&lt;/a&gt;,
+&lt;a href=&quot;https://mobile.twitter.com/JakeDChampion/status/1311389420638138370&quot;&gt;GitHub, and the Financial Times&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;DigitalOcean seems to be aware that they have a spam problem. Their solution, per their
+&lt;a href=&quot;https://hacktoberfest.digitalocean.com/faq&quot;&gt;FAQ&lt;/a&gt;, is to put the burden solely on the shoulders of maintainers. If we go
+out of our way to tag a contribution as spam, then&amp;hellip; we slightly decrease the chance of the spammer getting their free
+t-shirt. In reality, the spammer will just keep going, submitting more pull requests to more repositories, until they
+finally find a repository where the maintainer doesn&amp;rsquo;t bother to tag the PR as spam, or where the maintainer isn&amp;rsquo;t
+available during the seven-day window DigitalOcean uses for spam-tracking.&lt;/p&gt;
+
+&lt;p&gt;To be clear, myself and my fellow maintainers did not ask for this. This is not an opt-in situation. If your open source
+project is popular enough, DigitalOcean will incentivize people to spam you. There is no consent involved.&lt;/p&gt;
+
+&lt;p&gt;Hacktoberfest does not support open source. Instead, it drives open source maintainers even closer to
+&lt;a href=&quot;https://www.google.com/search?q=open+source+burnout&quot;&gt;burnout&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/hacktoberfest-spam-pr.png&quot; alt=&quot;A screenshot of a spam PR which adds the heading &amp;quot;Great Work&amp;quot; to the HTML Standard README&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-can-we-do&quot;&gt;What can we do?&lt;/h2&gt;
+
+&lt;p&gt;My most fervent hope is that DigitalOcean will see the harm they are doing to the open source community, and put an end
+to Hacktoberfest. I hope they can do it as soon as possible, before October becomes another lowpoint in the hell-year
+that is 2020. In 2021, they could consider relaunching it as an opt-in project, where maintainers consent on a
+per-repository basis to deal with such t-shirt–incentivized contributors.&lt;/p&gt;
+
+&lt;p&gt;To protect ourselves, maintainers have a few options. First, you can take the feeble step of ensuring that any spam
+against your repositories doesn&amp;rsquo;t contribute to the spammer&amp;rsquo;s &amp;ldquo;t-shirt points&amp;rdquo;, by tagging pull requests with a &amp;ldquo;spam&amp;rdquo;
+label, and &lt;a href=&quot;https://twitter.com/MattIPv4/status/1311390498888781824&quot;&gt;emailing hacktoberfest@digitalocean.com&lt;/a&gt;.
+DigitalOcean themselves, however, admit that
+&lt;a href=&quot;https://twitter.com/MattIPv4/status/1311390054334554113&quot;&gt;this won&amp;rsquo;t stop the problem they&amp;rsquo;ve unleashed on us&lt;/a&gt;. But
+maybe it will contribute to the &lt;a href=&quot;https://github.com/MattIPv4/hacktoberfest-data&quot;&gt;metrics&lt;/a&gt; they collect, which last year
+showed that &amp;ldquo;only&amp;rdquo; 3,712 pull requests were labeled as spam by project maintainers.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re comfortable cutting off genuine contributions from new users, you can try enabling GitHub&amp;rsquo;s
+&lt;a href=&quot;https://docs.github.com/en/free-pro-team@latest/github/building-a-strong-community/limiting-interactions-in-your-repository&quot;&gt;interaction limits&lt;/a&gt;.
+However, you have to do this every 24 hours, and it has the drawback of also disabling issue creation and comments.&lt;/p&gt;
+
+&lt;p&gt;Another promising route would be if GitHub would cut off DigitalOcean&amp;rsquo;s API access, as
+&lt;a href=&quot;https://twitter.com/__agwa/status/1311399074814472194&quot;&gt;Andrew Ayer has suggested&lt;/a&gt;. It&amp;rsquo;s not clear whether DigitalOcean
+is committing a terms of service violation that would support such measures. But they&amp;rsquo;re certainly making GitHub a
+less-pleasant place to be, and I hope GitHub can think seriously about how to discourage such corporate-sponsored
+attacks on the open source community.&lt;/p&gt;
+
+&lt;p&gt;Finally, and most importantly, we can remember that this is how DigitalOcean treats the open source maintainer
+community, and stay away from their products going forward. Although we&amp;rsquo;ve enjoyed using then for hosting the
+&lt;a href=&quot;https://whatwg.org/&quot;&gt;WHATWG&lt;/a&gt; standards organization, this kind of behavior is not something we want to support, so
+we&amp;rsquo;re starting to investigate alternatives.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 30 Sep 2020 21:00:00 +0000</pubDate>
+        <link>https://blog.domenic.me/hacktoberfest/</link>
+        <guid isPermaLink="true">https://blog.domenic.me/hacktoberfest/</guid>
+        
+        
+        <category>Open Source</category>
+        
+      </item>
     
       <item>
         <title>Mathematical Consciousness</title>
@@ -947,114 +1026,6 @@ effort, ensuring that new APIs are introduced to explain away the C++ magic in t
         
         
         <category>Web</category>
-        
-      </item>
-    
-      <item>
-        <title>Strict Mode = Static Scoping</title>
-        <description>&lt;p&gt;It is indeed
-&lt;a href=&quot;http://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/&quot;&gt;time to start using JavaScript&amp;rsquo;s strict mode&lt;/a&gt;.
-There are many reasons, but one of the most compelling is that it brings sanity to JavaScript&amp;rsquo;s scoping rules, by
-guaranteeing static scoping.&lt;/p&gt;
-
-&lt;p&gt;Simply put, code is &lt;em&gt;statically scoped&lt;/em&gt; if you can statically analyze it and determine what all the identifiers refer
-to. In other words, you can statically determine where every variable was declared. As we&amp;rsquo;ll see, JavaScript&amp;rsquo;s sloppy
-mode does not have this property, giving you yet one more reason to shun it in favor of &lt;code&gt;&amp;quot;use strict&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;sloppy-mode-dynamic-scoping&quot;&gt;Sloppy Mode = Dynamic Scoping&lt;/h2&gt;
-
-&lt;p&gt;Most of the time, JavaScript scoping is fairly simple. You look up the scope chain, as declared in the source code; if
-you can&amp;rsquo;t find something, it must be on the global object. But in sloppy mode, there are several situations that can
-foil this algorithm.&lt;/p&gt;
-
-&lt;h3 id=&quot;use-of-with&quot;&gt;Use of &lt;code&gt;with&lt;/code&gt;&lt;/h3&gt;
-
-&lt;p&gt;Using the &lt;code&gt;with&lt;/code&gt; statement completely destroys the sanity of your scope chain:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;__filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/my/cool/file.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;anotherContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;__filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/another/file.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;__dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/another&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;anotherContext&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;In this example, we can&amp;rsquo;t statically determine if &lt;code&gt;console.log(__filename)&lt;/code&gt; is referring to the free &lt;code&gt;__filename&lt;/code&gt;
-variable, set to &lt;code&gt;&amp;quot;/my/cool/file.js&amp;quot;&lt;/code&gt;, or if it&amp;rsquo;s referring to the property of &lt;code&gt;anotherContext&lt;/code&gt;, set to
-&lt;code&gt;&amp;quot;/another/file.js&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Strict mode fixes this by &lt;a href=&quot;http://es5.github.com/#x12.10.1&quot;&gt;banning &lt;code&gt;with&lt;/code&gt; entirely&lt;/a&gt;. Thus, the above code would be a
-syntax error if it were placed in a strict context.&lt;/p&gt;
-
-&lt;h3 id=&quot;use-of-eval&quot;&gt;Use of &lt;code&gt;eval&lt;/code&gt;&lt;/h3&gt;
-
-&lt;p&gt;Using &lt;code&gt;eval&lt;/code&gt; in sloppy mode will introduce new variable bindings into your scope chain:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// loading code elided.&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requireStuff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;function require(things) { console.log(&#39;We require more &#39; + things); }&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;minerals&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;In this example, we have a similar problem as before: &lt;code&gt;eval&lt;/code&gt; might have dynamically introduced a new variable binding.
-Thus, &lt;code&gt;require&lt;/code&gt; can refer either to the new function introduced by &lt;code&gt;eval&lt;/code&gt; into &lt;code&gt;requireStuff&lt;/code&gt;&amp;rsquo;s scope, or to the
-function declared in the outer scope. We just can&amp;rsquo;t know, until runtime!&lt;/p&gt;
-
-&lt;p&gt;Strict mode fixes this by &lt;a href=&quot;http://es5.github.com/#x10.4.2.1&quot;&gt;disallowing &lt;code&gt;eval&lt;/code&gt; from introducing new bindings&lt;/a&gt;. Thus,
-if the above code were strict, &lt;code&gt;require(&amp;quot;minerals&amp;quot;)&lt;/code&gt; would always refer to the outer module-loading &lt;code&gt;require&lt;/code&gt; function.&lt;/p&gt;
-
-&lt;h2 id=&quot;why-does-this-matter&quot;&gt;Why Does This Matter?&lt;/h2&gt;
-
-&lt;p&gt;In addition to the obvious implications of this for optimization and inlining in JITers, this matters because static
-analysis is becoming increasingly important in modern, complex JavaScript.&lt;/p&gt;
-
-&lt;p&gt;For example, let&amp;rsquo;s say you were writing
-&lt;a href=&quot;https://github.com/substack/node-browserify&quot;&gt;a tool for using Node.js-style modules in the browser&lt;/a&gt;. To do so, you&amp;rsquo;d
-probably need to &lt;a href=&quot;https://github.com/substack/module-deps&quot;&gt;detect &lt;code&gt;require&lt;/code&gt; calls&lt;/a&gt;; in particular, if you see &lt;code&gt;require&lt;/code&gt;,
-you&amp;rsquo;ll want to know what scope that &lt;code&gt;require&lt;/code&gt; comes from: global or local? Similarly, you might want to
-&lt;a href=&quot;https://github.com/substack/insert-module-globals&quot;&gt;detect&lt;/a&gt; references to &lt;code&gt;__filename&lt;/code&gt;, &lt;code&gt;__dirname&lt;/code&gt;, &lt;code&gt;Buffer&lt;/code&gt;, etc. and
-make them available if they&amp;rsquo;re detected.&lt;/p&gt;
-
-&lt;p&gt;But in sloppy mode, it is literally &lt;em&gt;unknowable&lt;/em&gt; what a given variable refers to. At any time, an enclosing &lt;code&gt;with&lt;/code&gt; or a
-nearby &lt;code&gt;eval&lt;/code&gt; could come along, and really ruin your day. In such a setting, static analysis is doomed; as we&amp;rsquo;ve seen
-in the above examples, the meaning of identifiers like &lt;code&gt;require&lt;/code&gt; or &lt;code&gt;__filename&lt;/code&gt; can&amp;rsquo;t be determined until runtime.&lt;/p&gt;
-
-&lt;h2 id=&quot;so-just-don-39-t-use-those-things&quot;&gt;So? Just Don&amp;rsquo;t Use Those Things&lt;/h2&gt;
-
-&lt;p&gt;A common refrain from people who &lt;a href=&quot;https://twitter.com/izs/status/310833154401398784&quot;&gt;can&amp;rsquo;t handle typing `&amp;ldquo;use strict&amp;rdquo;&lt;/a&gt;
-is that they&amp;rsquo;ll simply not use these features. And this indeed suffices: if you subset the language, perhaps using tools
-like JSHint to enforce your subsetting rules, you can create a more sane programming environment.&lt;/p&gt;
-
-&lt;p&gt;Similar arguments are applied commonly in other languages, like prohibiting the use of exceptions or templates in C++.
-Even telling people to not pass expressions to their &lt;code&gt;require&lt;/code&gt; calls in Node.js modules falls under this category (with
-the rationale that this breaks the popular browserify tool).&lt;/p&gt;
-
-&lt;p&gt;I don&amp;rsquo;t buy these arguments. A language should give its users built-in tools to use it correctly. In the case of
-JavaScript, there is one very clear tool that has been given: a simple, backward-compatible &lt;code&gt;&amp;quot;use strict&amp;quot;&lt;/code&gt; pragma at the
-top of your source files. If you think that&amp;rsquo;s difficult, try being a C++ programmer and writing exception-safe code: the
-techniques you need to use are a lot more involved than a single pragma.&lt;/p&gt;
-
-&lt;h2 id=&quot;use-strict-mode&quot;&gt;Use Strict Mode&lt;/h2&gt;
-
-&lt;p&gt;In &lt;a href=&quot;http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;amp;t=18m50s&quot;&gt;the words of Mark Miller&lt;/a&gt;, ECMAScript 5 strict mode has
-transitioned JavaScript into the &amp;ldquo;actually good&amp;rdquo; category of programming languages. Let&amp;rsquo;s use it. Opt in to static
-scoping, and a saner language in general. Use strict.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;This post was inspired by
-&lt;a href=&quot;http://www.mail-archive.com/es-discuss@mozilla.org/msg18408.html&quot;&gt;a long-ago es-discuss thread&lt;/a&gt;, which references
-&lt;a href=&quot;http://www.youtube.com/watch?v=Kq4FpMe6cRs&amp;amp;t=42m53s&quot;&gt;a talk by Mark Miller&lt;/a&gt;. Further clarifications were had in
-&lt;a href=&quot;http://www.mail-archive.com/es-discuss@mozilla.org/msg22147.html&quot;&gt;another, recent es-discuss thread&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 19 Mar 2013 00:00:00 +0000</pubDate>
-        <link>https://blog.domenic.me/strict-mode-static-scoping/</link>
-        <guid isPermaLink="true">https://blog.domenic.me/strict-mode-static-scoping/</guid>
-        
-        
-        <category>JavaScript</category>
         
       </item>
     
