@@ -5,8 +5,8 @@
     <description>Domenic&#39;s blog about coding and stuff</description>
     <link>https://blog.domenic.me/</link>
     <atom:link href="https://blog.domenic.me/atom.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 01 Oct 2020 17:33:27 +0000</pubDate>
-    <lastBuildDate>Thu, 01 Oct 2020 17:33:27 +0000</lastBuildDate>
+    <pubDate>Thu, 01 Oct 2020 21:39:12 +0000</pubDate>
+    <lastBuildDate>Thu, 01 Oct 2020 21:39:12 +0000</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -75,7 +75,10 @@ showed that &amp;ldquo;only&amp;rdquo; 3,712 pull requests were labeled as spam 
 
 &lt;p&gt;If you&amp;rsquo;re comfortable cutting off genuine contributions from new users, you can try enabling GitHub&amp;rsquo;s
 &lt;a href=&quot;https://docs.github.com/en/free-pro-team@latest/github/building-a-strong-community/limiting-interactions-in-your-repository&quot;&gt;interaction limits&lt;/a&gt;.
-However, you have to do this every 24 hours, and it has the drawback of also disabling issue creation and comments.&lt;/p&gt;
+However, &lt;del&gt;you have to do this every 24 hours, and&lt;/del&gt; it has the drawback of also disabling issue creation and
+comments. &lt;ins&gt;Update: GitHub has made the limit configurable, and has
+&lt;a href=&quot;https://twitter.com/github/status/1311772722234560517&quot;&gt;a nice cheeky announcement tweet&lt;/a&gt; zooming in on the &amp;ldquo;1 month&amp;rdquo;
+option.&lt;/ins&gt;&lt;/p&gt;
 
 &lt;p&gt;Another promising route would be if GitHub would cut off DigitalOcean&amp;rsquo;s API access, as
 &lt;a href=&quot;https://twitter.com/__agwa/status/1311399074814472194&quot;&gt;Andrew Ayer has suggested&lt;/a&gt;. It&amp;rsquo;s not clear whether DigitalOcean
