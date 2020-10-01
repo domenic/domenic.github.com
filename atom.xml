@@ -5,8 +5,8 @@
     <description>Domenic&#39;s blog about coding and stuff</description>
     <link>https://blog.domenic.me/</link>
     <atom:link href="https://blog.domenic.me/atom.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Sep 2020 21:30:02 +0000</pubDate>
-    <lastBuildDate>Wed, 30 Sep 2020 21:30:02 +0000</lastBuildDate>
+    <pubDate>Thu, 01 Oct 2020 16:26:40 +0000</pubDate>
+    <lastBuildDate>Thu, 01 Oct 2020 16:26:40 +0000</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -32,9 +32,14 @@ GitHub in the hopes of stopping their time-wasting rampage.&lt;/p&gt;
 &lt;a href=&quot;https://twitter.com/gravitystorm/status/1311386082982924289&quot;&gt;My tweet&lt;/a&gt; got commiseration from
 &lt;a href=&quot;https://mobile.twitter.com/gravitystorm/status/1311386082982924289&quot;&gt;OpenStreetMap, phpMyAdmin&lt;/a&gt;,
 &lt;a href=&quot;https://mobile.twitter.com/ulmerleben/status/1311378655231332355&quot;&gt;PubCSS&lt;/a&gt;,
-&lt;a href=&quot;https://mobile.twitter.com/JakeDChampion/status/1311389420638138370&quot;&gt;GitHub, the Financial Times&lt;/a&gt;, a
+&lt;a href=&quot;https://mobile.twitter.com/JakeDChampion/status/1311389420638138370&quot;&gt;GitHub, the Financial Times&lt;/a&gt;,
+&lt;a href=&quot;https://twitter.com/slicknet/status/1311377444188770312&quot;&gt;ESLint&lt;/a&gt;, a
 &lt;a href=&quot;https://mobile.twitter.com/zekjur/status/1311411780162326531&quot;&gt;computer club website&lt;/a&gt;, and
-&lt;a href=&quot;https://mobile.twitter.com/juliusvolz/status/1311412919196844038&quot;&gt;a conference website&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&quot;https://mobile.twitter.com/juliusvolz/status/1311412919196844038&quot;&gt;a conference website&lt;/a&gt;, just within the first couple
+of hours. Since then a dedicated account &amp;ldquo;&lt;a href=&quot;https://twitter.com/shitoberfest&quot;&gt;@shitoberfest&lt;/a&gt;&amp;rdquo; has arisen to document the
+barrage. Some &lt;a href=&quot;https://github.com/search?q=is%3Apr+%22amazing+project%22&amp;amp;type=Issues&quot;&gt;cursory&lt;/a&gt;
+&lt;a href=&quot;https://github.com/search?o=desc&amp;amp;q=is%3Apr+%22improve+docs%22&amp;amp;s=created&amp;amp;type=Issues&quot;&gt;searches&lt;/a&gt; show hundreds of
+thousands of spam pull requests, and rising.&lt;/p&gt;
 
 &lt;p&gt;DigitalOcean seems to be aware that they have a spam problem. Their solution, per their
 &lt;a href=&quot;https://hacktoberfest.digitalocean.com/faq&quot;&gt;FAQ&lt;/a&gt;, is to put the burden solely on the shoulders of maintainers. If we go
@@ -44,7 +49,9 @@ finally find a repository where the maintainer doesn&amp;rsquo;t bother to tag t
 available during the seven-day window DigitalOcean uses for spam-tracking.&lt;/p&gt;
 
 &lt;p&gt;To be clear, myself and my fellow maintainers did not ask for this. This is not an opt-in situation. If your open source
-project is public on GitHub, DigitalOcean will incentivize people to spam you. There is no consent involved.&lt;/p&gt;
+project is public on GitHub, DigitalOcean will incentivize people to spam you. There is no consent involved. Either we
+contribute to DigitalOcean&amp;rsquo;s marketing project, or,
+&lt;a href=&quot;https://twitter.com/SudoFox/status/1311431141702819840&quot;&gt;they suggest, we should quit open source&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Hacktoberfest does not support open source. Instead, it drives open source maintainers even closer to
 &lt;a href=&quot;https://www.google.com/search?q=open+source+burnout&quot;&gt;burnout&lt;/a&gt;.&lt;/p&gt;
