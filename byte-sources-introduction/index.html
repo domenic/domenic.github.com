@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,20 +64,15 @@ In the Streams Standard we have the concept of readable streams, which are an ab
 
 <p>The current revision of the standard describes underlying sources as belonging to two broad categories: push sources, where data is constantly flowing in, and pull sources, where you specifically request it. The prototypal examples of these categories are TCP sockets and file descriptors. Once a TCP connection is open, the remote server will begin pushing data to you. Whereas, with a file, until you ask the OS to do a read, no I/O happens.</p>
 
-<p>This division is conceptually helpful, but it&rsquo;s instructive to go deeper and look at the actual system APIs in play here. Given that concepts like &ldquo;events&rdquo; are way too high-level for an OS API, they end up being shaped quite differently than how you might imagine. We&rsquo;ll assume a POSIX environment for most of this series, but I&rsquo;d like to talk about some Windows specifics toward the end. Along the way we&rsquo;ll continually be trying to bridge the gap between these C APIs and how they might manifest in JavaScript, both to give the less-C-inclined readers a chance, and to illustrate the issues we&rsquo;ve been wrestling with in the Streams Standard.</p>
+<p>This division is conceptually helpful, but it&rsquo;s instructive to go deeper and look at the actual system APIs in play here. Given that concepts like &ldquo;events&rdquo; are way too high-level for an OS API, they end up being shaped quite differently than how you might imagine. We&rsquo;ll assume a POSIX environment for this series. Along the way we&rsquo;ll continually be trying to bridge the gap between these C APIs and how they might manifest in JavaScript, both to give the less-C-inclined readers a chance, and to illustrate the issues we&rsquo;ve been wrestling with in the Streams Standard.</p>
 
-<p>So far these are the episodes I have planned:</p>
+<p>I ended up writing the following posts:</p>
 
 <ol>
 <li>Byte sources: introduction (this post)</li>
 <li><a href="/reading-from-files/">Reading from files</a></li>
 <li><a href="/reading-from-sockets/">Reading from sockets</a></li>
-<li>Byte source APIs on Windows</li>
-<li>Byte source APIs in libuv and io.js</li>
-<li>Readable streams</li>
 </ol>
-
-<p>I will update this post with links to them as they become available.</p>
 
   </div>
 
@@ -136,13 +132,12 @@ In the Streams Standard we have the concept of readable streams, which are an ab
 
 <script src="https://cdn.commento.io/js/count.js"></script>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-37626687-1', 'auto');
-  ga('send', 'pageview');
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-37626687-1', 'auto');
+ga('send', 'pageview');
 </script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
 
